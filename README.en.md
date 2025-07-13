@@ -17,6 +17,9 @@ A concise and efficient online resume editor. It uses Markdown syntax, allowing 
 *   **Drag & Drop Sorting**: Freely reorder sections like "Education" and "Work Experience" by dragging and dropping.
 *   **Single-File Deployment**: All code is contained in a single `index.html` file. No build process, no server needed, ready to use out-of-the-box.
 
+## Resume sample
+![en-sample](./sample/en.png)
+
 ## 💻 How to Use
 
 The biggest advantage of this project is its simplicity. No complex environment setup is required.
