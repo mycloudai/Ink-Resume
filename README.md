@@ -1,3 +1,5 @@
+[English](./README.en.md)
+
 # 墨客简历 (Ink-Resume)
 
 [![语言](https://img.shields.io/badge/language-HTML%2BCSS%2BJS-orange)](https://shields.io/)
@@ -15,12 +17,6 @@
 *   **模块拖拽排序**：通过拖放自由调整“教育背景”、“工作经历”等各个模块的顺序。
 *   **单文件部署**：所有代码都在一个 `index.html` 文件中，无需构建，无需服务器，开箱即用。
 
-## 🚀 效果预览
-
-<!-- 在这里可以插入一张项目截图或GIF动图，以直观展示编辑器效果 -->
-![image](https://i.imgur.com/your-screenshot-url.png) 
-*（请替换为你的项目截图链接）*
-
 ## 💻 如何使用
 
 本项目最大的优点就是简单易用，无需任何复杂的环境配置。
@@ -28,6 +24,8 @@
 1.  下载本项目。
 2.  在文件目录中找到 `index.html` 文件。
 3.  直接用你的浏览器（推荐使用 Chrome 或 Firefox）打开该文件即可开始使用。
+
+> 或者直接使用本项目提供的GitHubPage访问。https://www.mycloudai.org/Ink-Resume/
 
 **是的，就这么简单！无需本地服务器，无需安装任何依赖。**
 
