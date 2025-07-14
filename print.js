@@ -199,6 +199,9 @@ function updatePrintStyle() {
             .resume-content ul, .resume-content ol {
                 font-family: "${customStyles.fontFamily}" !important;
             }
+            .non-print {
+                display: none !important;
+            }
         }
     `;
     
