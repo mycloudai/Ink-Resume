@@ -443,6 +443,46 @@ const i18nData = {
                 { id: 'project-experience', title: 'プロジェクト経験', content: '### マイクロサービスコンテナ化プロジェクト | テックリード | 2023.01 - 2023.08\n- モノリシックアプリケーションをマイクロサービスアーキテクチャに分割\n- Dockerコンテナによるデプロイメント、リソース使用率30%向上\n- 技術スタック：Kubernetes, Docker, Jenkins, GitLab CI\n- 成果：リリースサイクルを2週間から1日に短縮' },
                 { id: 'skills-certificates', title: 'スキル・資格', content: '### スキル\n- **コンテナ技術：** Docker, Kubernetes, Helm\n- **CI/CD：** Jenkins, GitLab CI, GitHub Actions\n- **クラウドプラットフォーム：** AWS, Azure, Google Cloud\n\n### 資格\n- AWS認定DevOpsエンジニア - プロフェッショナル\n- 認定Kubernetesアドミニストレータ (CKA)' }
             ],
+        },
+        'ko-KR': {
+            basic_info: `### 김철수\n**전화:** 010-0000-0000  \n**이메일:** kim@email.com  \n**주소:** 서울특별시 강남구  \n**GitHub:** https://github.com/kimchulsoo`,
+            sections: [
+                { id: 'summary', title: '자기소개', content: '- 5년간 DevOps 엔지니어 경력, 클라우드 네이티브 기술 스택에 능숙\n- Docker, Kubernetes 등 컨테이너 기술 전문\n- CI/CD 파이프라인 설계 및 최적화에 능함\n- 문제 분석 및 해결 능력 탁월' },
+                { id: 'education', title: '학력', content: '### 서울대학교 | 컴퓨터공학과 | 학사 | 2015–2019\n- 주요 과목: 자료구조, 알고리즘, 운영체제, 컴퓨터 네트워크\n- GPA: 3.8/4.0\n- 우수 졸업생 수상' },
+                { id: 'work-experience', title: '경력사항', content: '### 삼성SDS | DevOps 엔지니어 | 2019.07 - 현재\n- CI/CD 프로세스 설계 및 최적화, 배포 효율 50% 향상\n- Kubernetes 클러스터 운영 관리, 99.9% 가용성 유지\n- Terraform 기반 인프라 코드 관리\n- 모니터링 및 알림 시스템 구축으로 장애 조기 감지' },
+                { id: 'project-experience', title: '프로젝트 경험', content: '### 마이크로서비스 컨테이너화 프로젝트 | 기술 리더 | 2023.01 - 2023.08\n- 모놀리식 앱을 마이크로서비스 아키텍처로 전환\n- Docker 기반 배포로 자원 활용도 30% 향상\n- 기술 스택: Kubernetes, Docker, Jenkins, GitLab CI\n- 결과: 배포 주기 2주 → 1일로 단축' },
+                { id: 'skills-certificates', title: '기술 및 자격증', content: '### 기술\n- **컨테이너 기술:** Docker, Kubernetes, Helm\n- **CI/CD:** Jenkins, GitLab CI, GitHub Actions\n- **클라우드 플랫폼:** AWS, Azure, Google Cloud\n\n### 자격증\n- AWS 공인 DevOps Engineer – Professional\n- CKA (Certified Kubernetes Administrator)' }
+            ]
+        },
+        'fr-FR': {
+            basic_info: `### Jean Dupont\n**Téléphone :** 06 00 00 00 00  \n**Email :** jean.dupont@email.com  \n**Adresse :** Paris, France  \n**GitHub :** https://github.com/jeandupont`,
+            sections: [
+                { id: 'resume-summary', title: 'Résumé', content: '- 5 ans d’expérience en DevOps, maîtrise du cloud-native\n- Expert en conteneurs Docker, Kubernetes\n- Conception et optimisation de CI/CD\n- Forte capacité d’analyse et de résolution de problèmes' },
+                { id: 'education', title: 'Formation', content: '### École Polytechnique | Informatique | Licence | 2015–2019\n- Cours principaux : Structures de données, Algorithmes, OS, Réseaux\n- Mention Bien\n- Diplômé d’honneur' },
+                { id: 'work-experience', title: 'Expérience Professionnelle', content: '### Capgemini | Ingénieur DevOps | 2019.07 - Présent\n- Conception et optimisation de pipelines CI/CD (+50 % de rapidité)\n- Gestion de clusters Kubernetes (disponibilité 99,9 %)\n- Infrastructure as Code avec Terraform\n- Mise en place de monitoring et alerting' },
+                { id: 'project-experience', title: 'Projets', content: '### Projet Microservices & Conteneurs | Tech Lead | 2023.01 - 2023.08\n- Refactorisation d’une application monolithe en microservices\n- Déploiement Docker, +30 % d’utilisation des ressources\n- Stack : Kubernetes, Docker, Jenkins, GitLab CI\n- Résultat : cycle de livraison réduit de 2 semaines à 1 jour' },
+                { id: 'skills-certificates', title: 'Compétences & Certifications', content: '### Compétences\n- **Conteneurs :** Docker, Kubernetes, Helm\n- **CI/CD :** Jenkins, GitLab CI, GitHub Actions\n- **Cloud :** AWS, Azure, Google Cloud\n\n### Certifications\n- AWS Certified DevOps Engineer – Professional\n- Certified Kubernetes Administrator (CKA)' }
+            ]
+        },
+        'de-DE': {
+            basic_info: `### Max Mustermann\n**Telefon:** 0123 456789  \n**E‑Mail:** max.mustermann@email.de  \n**Adresse:** Berlin, Deutschland  \n**GitHub:** https://github.com/maxmustermann`,
+            sections: [
+                { id: 'resume-summary', title: 'Zusammenfassung', content: '- 5 Jahre Erfahrung als DevOps‑Ingenieur, cloud‑native Technologien\n- Experte für Docker und Kubernetes\n- CI/CD‑Pipelines designen und optimieren\n- Starke Analyse‑ und Problemlösungsfähigkeiten' },
+                { id: 'education', title: 'Ausbildung', content: '### Technische Universität Berlin | Informatik | B.Sc. | 2015–2019\n- Kernfächer: Datenstrukturen, Algorithmen, Betriebssysteme, Netzwerke\n- Note : 1,5\n- Abschluss mit Auszeichnung' },
+                { id: 'work-experience', title: 'Berufserfahrung', content: '### Siemens | DevOps‑Ingenieur | 2019.07 – Heute\n- Design und Optimierung von CI/CD Pipelines (+50 % Effizienz)\n- Verwaltung von Kubernetes‑Clustern (Verfügbarkeit 99,9 %)\n- Infrastructure as Code mit Terraform\n- Aufbau von Monitoring und Alerting‑Systemen' },
+                { id: 'project-experience', title: 'Projekte', content: '### Microservices‑Containerisierung | Tech Lead | 2023.01 – 2023.08\n- Monolithische App in Microservices umgewandelt\n- Docker‑Deployment, +30 % Ressourcenauslastung\n- Stack: Kubernetes, Docker, Jenkins, GitLab CI\n- Ergebnis: Release‑Zyklus von 2 Wochen auf 1 Tag reduziert' },
+                { id: 'skills-certificates', title: 'Fähigkeiten & Zertifikate', content: '### Fähigkeiten\n- **Container:** Docker, Kubernetes, Helm\n- **CI/CD:** Jenkins, GitLab CI, GitHub Actions\n- **Cloud:** AWS, Azure, Google Cloud\n\n### Zertifikate\n- AWS Certified DevOps Engineer – Professional\n- Certified Kubernetes Administrator (CKA)' }
+            ]
+        },
+        'es-ES': {
+            basic_info: `### Juan Pérez\n**Teléfono:** 600 00 00 00  \n**Correo:** juan.perez@email.com  \n**Ubicación:** Madrid, España  \n**GitHub:** https://github.com/juanperez`,
+            sections: [
+                { id: 'resume-summary', title: 'Resumen', content: '- 5 años como ingeniero DevOps, con stack cloud‑native\n- Experto en Docker y Kubernetes\n- Diseño y optimización de CI/CD\n- Alta capacidad de análisis y resolución de problemas' },
+                { id: 'education', title: 'Formación', content: '### Universidad Politécnica de Madrid | Informática | Grado | 2015–2019\n- Asignaturas clave: Estructuras de datos, Algoritmos, Sistemas Operativos, Redes\n- Nota media: 8,5/10\n- Graduado con honores' },
+                { id: 'work-experience', title: 'Experiencia Laboral', content: '### Telefónica | Ingeniero DevOps | 2019.07 – Presente\n- Diseñé y optimicé pipelines CI/CD (+50 % eficiencia)\n- Mantuve clústeres Kubernetes con 99,9 % de uptime\n- Infrastructure as Code con Terraform\n- Implementé monitoreo y alertas' },
+                { id: 'project-experience', title: 'Proyectos', content: '### Proyecto de Microservicios y Contenedores | Tech Lead | 2023.01 – 2023.08\n- Migración de monolito a microservicios\n- Despliegue Docker, +30 % uso de recursos\n- Stack: Kubernetes, Docker, Jenkins, GitLab CI\n- Resultado: ciclo de entrega de 2 semanas a 1 día' },
+                { id: 'skills-certificates', title: 'Habilidades y Certificaciones', content: '### Habilidades\n- **Contenedores:** Docker, Kubernetes, Helm\n- **CI/CD:** Jenkins, GitLab CI, GitHub Actions\n- **Cloud:** AWS, Azure, Google Cloud\n\n### Certificaciones\n- AWS Certified DevOps Engineer – Professional\n- Certified Kubernetes Administrator (CKA)' }
+            ]
         }
     },
     defaultSettings: {
