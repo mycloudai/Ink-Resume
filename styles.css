@@ -1,0 +1,392 @@
+:root {
+    /* CSS变量，用于实时预览 */
+    --live-title-font-size: 22px;
+    --live-content-font-size: 14px;
+    --live-line-height: 0.9;
+    --live-page-padding: 15mm;
+    --preview-scale: 0.8;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Microsoft YaHei', Arial, sans-serif;
+    background-color: #f1f3f4;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 550px 1fr; 
+    gap: 30px;
+    min-height: calc(100vh - 40px);
+    /* 移除固定高度，改为最小高度 */
+}
+
+.privacy-notice {
+    background-color: #f8d7da; /* 替换为：淡红色背景 */
+    border: 1px solid #f5c6cb;  /* 替换为：稍深的红色边框 */
+    color: #721c24;             /* 替换为：深红色文字，保证可读性 */
+    padding: 15px;
+    margin-bottom: 25px;       
+    border-radius: 8px;        
+    font-size: 14px;
+    line-height: 1.6;          
+    font-weight: bold;         /* 关键修改：将字体设置为粗体 */
+}
+
+.editor-panel {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    padding: 25px;
+    overflow-y: auto;
+    border: 1px solid #e8eaed;
+    /* 固定高度，保持编辑面板滚动 */
+    height: calc(100vh - 40px);
+    position: sticky;
+    top: 0;
+}
+
+.preview-panel {
+    background: #f1f3f4;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    /* 移除高度和overflow限制，让内容自然展开 */
+    position: relative;
+    border: 1px solid #e8eaed;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    /* 自适应内容高度 */
+    min-height: calc(100vh - 40px);
+}
+
+.resume-preview {
+    /* A4比例宽度，自适应容器 */
+    width: 100%;
+    max-width: calc(100vw - 650px); /* 减去编辑面板和间距 */
+    min-height: auto;
+    padding: var(--live-page-padding, 15mm);
+    background: white;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    box-sizing: border-box;
+    position: relative;
+    margin-bottom: 20px;
+    /* 移除固定比例，让内容自然撑开高度 */
+}
+
+/* 完全移除分页指示器 */
+.resume-preview::after {
+    display: none;
+}
+
+.page-indicator {
+    display: none;
+}
+
+.section {
+    margin-bottom: 20px;
+    position: relative;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border: 1px solid #e8eaed;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.section h3 {
+    color: #3c4043;
+    font-weight: 600;
+    margin: 0;
+}
+
+.delete-section-btn {
+    background: #dc3545;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.delete-section-btn:hover {
+    background: #c82333;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #5f6368;
+    font-size: 14px;
+}
+
+input[type="text"], input[type="email"], textarea, input[type="number"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #dadce0;
+    border-radius: 6px;
+    font-size: 14px;
+    background-color: #ffffff;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input[type="text"]:focus, input[type="email"]:focus, textarea:focus, input[type="number"]:focus {
+    outline: none;
+    border-color: #b8860b;
+    box-shadow: 0 0 0 3px rgba(184, 134, 11, 0.1);
+}
+
+textarea {
+    min-height: 100px;
+    resize: vertical;
+    font-family: 'Courier New', monospace;
+}
+
+.photo-upload {
+    margin-bottom: 15px;
+}
+
+.photo-preview {
+    width: 120px;
+    height: 160px;
+    border: 2px dashed #bdc1c6;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 12px;
+    overflow: hidden;
+    background-color: #f8f9fa;
+    transition: border-color 0.2s;
+    cursor: pointer;
+}
+
+.photo-preview:hover {
+    border-color: #b8860b;
+}
+
+.photo-preview img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+}
+
+.photo-placeholder {
+    color: #80868b;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.export-btn {
+    background: linear-gradient(135deg, #5f6368 0%, #b8860b 100%);
+    color: white;
+    border: none;
+    padding: 14px 28px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 25px;
+    width: 100%;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 10px rgba(184, 134, 11, 0.2);
+}
+
+.export-btn:hover {
+    background: linear-gradient(135deg, #4a4d52 0%, #9a7209 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(184, 134, 11, 0.3);
+}
+
+.add-section-btn {
+    background: #28a745;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    width: 100%;
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+}
+
+.add-section-btn:hover {
+    background: #218838;
+    transform: translateY(-1px);
+}
+
+.resume-header {
+    display: flex;
+    gap: 12mm;
+    align-items: flex-start;
+    margin-bottom: 8mm;
+}
+
+.resume-photo {
+    flex-shrink: 0;
+    width: 120px;
+    height: 160px;
+}
+
+.resume-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.resume-basic-info {
+    flex: 1;
+    height: 160px;
+}
+
+#basicInfoPreview {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+#basicInfoPreview > * {
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    line-height: var(--live-line-height) !important;
+}
+
+#basicInfoPreview h3 {
+     font-size: var(--live-title-font-size) !important;
+}
+
+#basicInfoPreview p {
+     font-size: var(--live-content-font-size) !important;
+}
+
+.resume-section {
+    margin-bottom: 6mm;
+}
+
+.resume-section h2 {
+    color: #3c4043;
+    padding-bottom: 2mm;
+    margin-bottom: 4mm;
+    font-weight: 700;
+    position: relative;
+    border-bottom: 1.5px solid #b8860b !important;
+    font-size: var(--live-title-font-size) !important;
+}
+
+.resume-content {
+    color: #5f6368;
+    font-size: var(--live-content-font-size) !important;
+    line-height: var(--live-line-height) !important;
+}
+
+.resume-content h1,
+.resume-content h2,
+.resume-content h3,
+.resume-content h4,
+.resume-content h5,
+.resume-content h6 {
+    color: #3c4043;
+    margin-top: 4mm;
+    margin-bottom: 2mm;
+    font-weight: 600;
+    border-bottom: none !important;
+}
+
+.resume-content ul {
+    padding-left: 20px;
+}
+
+.resume-content li {
+    margin-bottom: 1mm;
+}
+
+.resume-content p {
+    margin-bottom: 2mm;
+}
+
+#printSettings {
+    margin-top: 20px;
+    padding: 20px;
+    border: 1px solid #e8eaed;
+    border-radius: 8px;
+    background: #f8f9fa;
+}
+
+#printSettings h4 {
+    margin-bottom: 15px;
+    color: #3c4043;
+}
+
+#printSettings input[type="range"] {
+    width: 60%;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+#printSettings span {
+    color: #5f6368;
+    font-weight: 600;
+    vertical-align: middle;
+}
+
+/* 页面统计信息 */
+.page-info {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(0,0,0,0.8);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 12px;
+    z-index: 1000;
+}
+
+/* 语言切换按钮样式 */
+.lang-switcher {
+    margin-bottom: 20px;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.lang-switcher button {
+    padding: 8px 16px;
+    border: 1px solid #ccc;
+    background: white;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.lang-switcher button.active {
+    background: #b8860b;
+    color: white;
+    border-color: #b8860b;
+}
