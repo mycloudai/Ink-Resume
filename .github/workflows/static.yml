@@ -1,5 +1,5 @@
-# Simple workflow for deploying static content to GitHub Pages
-name: Deploy static content to Pages
+# Workflow for building multi-language HTML and deploying to GitHub Pages
+name: Build and Deploy to Pages
 
 on:
   # Runs on pushes targeting the default branch
@@ -31,6 +31,19 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      
+      - name: Build multi-language HTML files
+        run: |
+          echo "Building multi-language HTML files..."
+          node build.js
+          echo "✅ Build completed"
+          ls -la *.html
+      
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact

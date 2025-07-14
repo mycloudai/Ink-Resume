@@ -1,5 +1,118 @@
 // 多语言数据和逻辑
 const i18nData = {
+    // 语言配置元数据
+    languages: {
+        'zh-CN': {
+            name: '中文',
+            filename: 'index.html',
+            isDefault: true
+        },
+        'en-US': {
+            name: 'English',
+            filename: 'en.html',
+            isDefault: false
+        },
+        'ja-JP': {
+            name: '日本語',
+            filename: 'ja.html',
+            isDefault: false
+        },
+        'ko-KR': {
+            name: '한국어',
+            filename: 'ko.html',
+            isDefault: false
+        },
+        'fr-FR': {
+            name: 'Français',
+            filename: 'fr.html',
+            isDefault: false
+        },
+        'de-DE': {
+            name: 'Deutsch',
+            filename: 'de.html',
+            isDefault: false
+        },
+        'es-ES': {
+            name: 'Español',
+            filename: 'es.html',
+            isDefault: false
+        }
+    },
+    
+    // 静态文本翻译
+    staticTexts: {
+        'zh-CN': {
+            pagesText: '页数',
+            photoUpload: '照片上传',
+            selectPhoto: '选择照片',
+            removePhoto: '移除照片',
+            education: '教育经历',
+            experience: '工作经历',
+            projects: '项目经验',
+            skills: '技能特长'
+        },
+        'en-US': {
+            pagesText: 'Pages',
+            photoUpload: 'Photo Upload',
+            selectPhoto: 'Select Photo',
+            removePhoto: 'Remove Photo',
+            education: 'Education',
+            experience: 'Experience',
+            projects: 'Projects',
+            skills: 'Skills'
+        },
+        'ja-JP': {
+            pagesText: 'ページ',
+            photoUpload: '写真アップロード',
+            selectPhoto: '写真を選択',
+            removePhoto: '写真を削除',
+            education: '学歴',
+            experience: '職歴',
+            projects: 'プロジェクト',
+            skills: 'スキル'
+        },
+        'ko-KR': {
+            pagesText: '페이지',
+            photoUpload: '사진 업로드',
+            selectPhoto: '사진 선택',
+            removePhoto: '사진 제거',
+            education: '학력',
+            experience: '경력',
+            projects: '프로젝트',
+            skills: '기술'
+        },
+        'fr-FR': {
+            pagesText: 'Pages',
+            photoUpload: 'Télécharger une photo',
+            selectPhoto: 'Sélectionner une photo',
+            removePhoto: 'Supprimer la photo',
+            education: 'Formation',
+            experience: 'Expérience',
+            projects: 'Projets',
+            skills: 'Compétences'
+        },
+        'de-DE': {
+            pagesText: 'Seiten',
+            photoUpload: 'Foto hochladen',
+            selectPhoto: 'Foto auswählen',
+            removePhoto: 'Foto entfernen',
+            education: 'Bildung',
+            experience: 'Erfahrung',
+            projects: 'Projekte',
+            skills: 'Fähigkeiten'
+        },
+        'es-ES': {
+            pagesText: 'Páginas',
+            photoUpload: 'Subir foto',
+            selectPhoto: 'Seleccionar foto',
+            removePhoto: 'Eliminar foto',
+            education: 'Educación',
+            experience: 'Experiencia',
+            projects: 'Proyectos',
+            skills: 'Habilidades'
+        }
+    },
+    
     translations: {
         'zh-CN': {
             pageTitle: '简历模板编辑器',
@@ -34,7 +147,16 @@ const i18nData = {
             exportSuccessFilename: '简历数据.yaml',
             importSuccess: '导入成功',
             importError: '导入失败，文件格式可能不正确。',
-            privacyNotice: '重要提示：本页面所有内容（包括照片）仅在您的本地浏览器中处理，不会上传至任何服务器，请放心使用。请使用导入导出数据功能保存您的数据，所有数据可能会在刷新页面后丢失。'
+            privacyNotice: '重要提示：本页面所有内容（包括照片）仅在您的本地浏览器中处理，不会上传至任何服务器，请放心使用。请使用导入导出数据功能保存您的数据，所有数据可能会在刷新页面后丢失。',
+            // 风格自定义相关
+            styleCustomization: '风格自定义',
+            fontFamily: '字体选择',
+            dividerColor: '分割线颜色',
+            resetStyles: '恢复默认样式',
+            fontDefault: '默认字体',
+            fontSimSun: '宋体',
+            fontTimes: 'Times New Roman',
+            fontArial: 'Arial'
         },
         'en-US': {
             pageTitle: 'Resume Template Editor',
@@ -69,7 +191,226 @@ const i18nData = {
             exportSuccessFilename: 'Resume_Data.yaml',
             importSuccess: 'Import successful',
             importError: 'Import failed. The file format might be incorrect.',
-            privacyNotice: 'Important Notice: All content on this page (including photos) is processed locally in your browser and will NOT be uploaded to any server. Feel free to use it. Pls use "Export/Import" feature to save your data in time, all the data may lose after refreshing this page.'
+            privacyNotice: 'Important Notice: All content on this page (including photos) is processed locally in your browser and will NOT be uploaded to any server. Feel free to use it. Pls use "Export/Import" feature to save your data in time, all the data may lose after refreshing this page.',
+            // Style customization related
+            styleCustomization: 'Style Customization',
+            fontFamily: 'Font Family',
+            dividerColor: 'Divider Color',
+            resetStyles: 'Reset to Default',
+            fontDefault: 'Default Font',
+            fontSimSun: 'SimSun',
+            fontTimes: 'Times New Roman',
+            fontArial: 'Arial'
+        },
+        'ja-JP': {
+            pageTitle: '履歴書テンプレートエディタ',
+            printResume: '履歴書を印刷',
+            exportData: 'データエクスポート',
+            importData: 'データインポート',
+            printSettings: '印刷設定',
+            pageMargin: '左右余白 (mm)',
+            scaling: '拡大率 (%)',
+            titleFontSize: 'タイトルフォントサイズ (px)',
+            contentFontSize: 'コンテンツフォントサイズ (px)',
+            lineHeight: '行間',
+            confirmPrint: '印刷実行',
+            cancel: 'キャンセル',
+            basicInfo: '基本情報',
+            personalPhoto: '個人写真',
+            photoPlaceholder: 'クリックして写真をアップロード',
+            basicInfoMarkdown: '基本情報 (Markdown対応)',
+            basicInfoPlaceholder: '### 田中太郎...',
+            addSection: '+ セクションを追加',
+            pageInfo: 'ページ',
+            addSectionDialogTitle: '新しいセクションを追加',
+            newSectionTitlePlaceholder: 'セクションのタイトルを入力',
+            ok: 'OK',
+            delete: '削除',
+            dragToSort: 'ドラッグして並び替え',
+            switchLangConfirm: '言語を切り替えると、現在の内容が新しい言語のデフォルトテンプレートで上書きされます。続行しますか？',
+            enterSectionTitlePrompt: 'セクションのタイトルを入力してください',
+            confirmDeleteSection: 'このセクションを削除してもよろしいですか？',
+            exportError: 'エクスポートに失敗しました: ',
+            exportSuccessFilename: '履歴書データ.yaml',
+            importSuccess: 'インポートが完了しました',
+            importError: 'インポートに失敗しました。ファイル形式が正しくない可能性があります。',
+            privacyNotice: '重要なお知らせ：このページのすべてのコンテンツ（写真を含む）は、お客様のローカルブラウザでのみ処理され、サーバーにアップロードされることはありません。安心してご利用ください。データの保存には「エクスポート/インポート」機能をご利用ください。ページを更新するとデータが失われる可能性があります。',
+            styleCustomization: 'スタイルのカスタマイズ',
+            fontFamily: 'フォント選択',
+            dividerColor: '区切り線の色',
+            resetStyles: 'デフォルトスタイルに戻す',
+            fontDefault: 'デフォルトフォント',
+            fontSimSun: 'SimSun',
+            fontTimes: 'Times New Roman',
+            fontArial: 'Arial'
+        },
+        'ko-KR': {
+            pageTitle: '이력서 템플릿 에디터',
+            printResume: '이력서 인쇄',
+            exportData: '데이터 내보내기',
+            importData: '데이터 가져오기',
+            printSettings: '인쇄 설정',
+            pageMargin: '좌우 여백 (mm)',
+            scaling: '확대/축소 (%)',
+            titleFontSize: '제목 글꼴 크기 (px)',
+            contentFontSize: '내용 글꼴 크기 (px)',
+            lineHeight: '줄 간격',
+            confirmPrint: '인쇄 실행',
+            cancel: '취소',
+            basicInfo: '기본 정보',
+            personalPhoto: '개인 사진',
+            photoPlaceholder: '클릭하여 사진 업로드',
+            basicInfoMarkdown: '기본 정보 (마크다운 지원)',
+            basicInfoPlaceholder: '### 김철수...',
+            addSection: '+ 섹션 추가',
+            pageInfo: '페이지',
+            addSectionDialogTitle: '새 섹션 추가',
+            newSectionTitlePlaceholder: '섹션 제목 입력',
+            ok: '확인',
+            delete: '삭제',
+            dragToSort: '드래그하여 정렬',
+            switchLangConfirm: '언어를 변경하면 현재 내용이 새 언어의 기본 템플릿으로 덮어쓰여집니다. 계속하시겠습니까?',
+            enterSectionTitlePrompt: '섹션 제목을 입력하세요',
+            confirmDeleteSection: '이 섹션을 삭제하시겠습니까?',
+            exportError: '내보내기 실패: ',
+            exportSuccessFilename: '이력서_데이터.yaml',
+            importSuccess: '가져오기 완료',
+            importError: '가져오기 실패. 파일 형식이 올바르지 않을 수 있습니다.',
+            privacyNotice: '중요 공지: 이 페이지의 모든 내용(사진 포함)은 브라우저에서 로컬로 처리되며 서버에 업로드되지 않습니다. 안심하고 사용하세요.',
+            styleCustomization: '스타일 커스터마이징',
+            fontFamily: '글꼴 선택',
+            dividerColor: '구분선 색상',
+            resetStyles: '기본 스타일로 재설정',
+            fontDefault: '기본 글꼴',
+            fontSimSun: 'SimSun',
+            fontTimes: 'Times New Roman',
+            fontArial: 'Arial'
+        },
+        'fr-FR': {
+            pageTitle: 'Éditeur de CV',
+            printResume: 'Imprimer CV',
+            exportData: 'Exporter',
+            importData: 'Importer',
+            printSettings: 'Paramètres d\'impression',
+            pageMargin: 'Marge (mm)',
+            scaling: 'Échelle (%)',
+            titleFontSize: 'Taille titre (px)',
+            contentFontSize: 'Taille contenu (px)',
+            lineHeight: 'Hauteur ligne',
+            confirmPrint: 'Imprimer',
+            cancel: 'Annuler',
+            basicInfo: 'Infos de base',
+            personalPhoto: 'Photo',
+            photoPlaceholder: 'Cliquez pour photo',
+            basicInfoMarkdown: 'Infos de base (Markdown)',
+            basicInfoPlaceholder: '### Jean Dupont...',
+            addSection: '+ Ajouter section',
+            pageInfo: 'Pages',
+            addSectionDialogTitle: 'Nouvelle section',
+            newSectionTitlePlaceholder: 'Titre de section',
+            ok: 'OK',
+            delete: 'Supprimer',
+            dragToSort: 'Glisser pour trier',
+            switchLangConfirm: 'Changer de langue remplacera le contenu. Continuer?',
+            enterSectionTitlePrompt: 'Entrez un titre',
+            confirmDeleteSection: 'Supprimer cette section?',
+            exportError: 'Erreur export: ',
+            exportSuccessFilename: 'CV_Données.yaml',
+            importSuccess: 'Import réussi',
+            importError: 'Erreur import',
+            privacyNotice: 'Important: Tout est traité localement, rien n\'est envoyé au serveur.',
+            styleCustomization: 'Style',
+            fontFamily: 'Police',
+            dividerColor: 'Couleur séparateur',
+            resetStyles: 'Réinitialiser',
+            fontDefault: 'Police par défaut',
+            fontSimSun: 'SimSun',
+            fontTimes: 'Times New Roman',
+            fontArial: 'Arial'
+        },
+        'de-DE': {
+            pageTitle: 'Lebenslauf Editor',
+            printResume: 'CV drucken',
+            exportData: 'Exportieren',
+            importData: 'Importieren',
+            printSettings: 'Druckeinstellungen',
+            pageMargin: 'Rand (mm)',
+            scaling: 'Skalierung (%)',
+            titleFontSize: 'Titel-Größe (px)',
+            contentFontSize: 'Text-Größe (px)',
+            lineHeight: 'Zeilenhöhe',
+            confirmPrint: 'Drucken',
+            cancel: 'Abbrechen',
+            basicInfo: 'Grunddaten',
+            personalPhoto: 'Foto',
+            photoPlaceholder: 'Foto hochladen',
+            basicInfoMarkdown: 'Grunddaten (Markdown)',
+            basicInfoPlaceholder: '### Max Mustermann...',
+            addSection: '+ Abschnitt',
+            pageInfo: 'Seiten',
+            addSectionDialogTitle: 'Neuer Abschnitt',
+            newSectionTitlePlaceholder: 'Abschnittstitel',
+            ok: 'OK',
+            delete: 'Löschen',
+            dragToSort: 'Ziehen zum Sortieren',
+            switchLangConfirm: 'Sprache wechseln überschreibt Inhalt. Fortfahren?',
+            enterSectionTitlePrompt: 'Titel eingeben',
+            confirmDeleteSection: 'Abschnitt löschen?',
+            exportError: 'Export Fehler: ',
+            exportSuccessFilename: 'CV_Daten.yaml',
+            importSuccess: 'Import erfolgreich',
+            importError: 'Import Fehler',
+            privacyNotice: 'Wichtig: Alles wird lokal verarbeitet, nichts wird an Server gesendet.',
+            styleCustomization: 'Stil',
+            fontFamily: 'Schriftart',
+            dividerColor: 'Trennlinie-Farbe',
+            resetStyles: 'Zurücksetzen',
+            fontDefault: 'Standard-Schrift',
+            fontSimSun: 'SimSun',
+            fontTimes: 'Times New Roman',
+            fontArial: 'Arial'
+        },
+        'es-ES': {
+            pageTitle: 'Editor de CV',
+            printResume: 'Imprimir CV',
+            exportData: 'Exportar',
+            importData: 'Importar',
+            printSettings: 'Configuración impresión',
+            pageMargin: 'Margen (mm)',
+            scaling: 'Escala (%)',
+            titleFontSize: 'Tamaño título (px)',
+            contentFontSize: 'Tamaño contenido (px)',
+            lineHeight: 'Altura línea',
+            confirmPrint: 'Imprimir',
+            cancel: 'Cancelar',
+            basicInfo: 'Info básica',
+            personalPhoto: 'Foto',
+            photoPlaceholder: 'Click para foto',
+            basicInfoMarkdown: 'Info básica (Markdown)',
+            basicInfoPlaceholder: '### Juan Pérez...',
+            addSection: '+ Agregar sección',
+            pageInfo: 'Páginas',
+            addSectionDialogTitle: 'Nueva sección',
+            newSectionTitlePlaceholder: 'Título sección',
+            ok: 'OK',
+            delete: 'Eliminar',
+            dragToSort: 'Arrastrar para ordenar',
+            switchLangConfirm: 'Cambiar idioma sobrescribirá contenido. ¿Continuar?',
+            enterSectionTitlePrompt: 'Ingrese título',
+            confirmDeleteSection: '¿Eliminar esta sección?',
+            exportError: 'Error exportación: ',
+            exportSuccessFilename: 'CV_Datos.yaml',
+            importSuccess: 'Importación exitosa',
+            importError: 'Error importación',
+            privacyNotice: 'Importante: Todo se procesa localmente, nada se envía al servidor.',
+            styleCustomization: 'Estilo',
+            fontFamily: 'Fuente',
+            dividerColor: 'Color divisor',
+            resetStyles: 'Restablecer',
+            fontDefault: 'Fuente por defecto',
+            fontSimSun: 'SimSun',
+            fontTimes: 'Times New Roman',
+            fontArial: 'Arial'
         }
     },
     defaultContent: {
@@ -92,6 +433,16 @@ const i18nData = {
                 { id: 'project-experience', title: 'Project Experience', content: '### Microservice Containerization Project | Tech Lead | 2023.01 - 2023.08\n- Refactored a monolithic application into a microservices architecture\n- Deployed using Docker containers, increasing resource utilization by 30%\n- Tech Stack: Kubernetes, Docker, Jenkins, GitLab CI\n- Achievement: Reduced release cycle from 2 weeks to 1 day' },
                 { id: 'skills-certificates', title: 'Skills & Certificates', content: '### Skills\n- **Container Tech:** Docker, Kubernetes, Helm\n- **CI/CD:** Jenkins, GitLab CI, GitHub Actions\n- **Cloud Platforms:** AWS, Azure, Google Cloud\n\n### Certificates\n- AWS Certified DevOps Engineer – Professional\n- Certified Kubernetes Administrator (CKA)' }
             ],
+        },
+        'ja-JP': {
+            basic_info: `### 田中太郎\n**電話：** 03-0000-0000  \n**メール：** tanaka@email.com  \n**所在地：** 東京都渋谷区  \n**GitHub：** https://github.com/tanaka`,
+            sections: [
+                { id: 'summary', title: '自己PR', content: '- DevOpsエンジニアとして5年の経験、クラウドネイティブ技術スタックに精通\n- DockerやKubernetesなどのコンテナ技術のエキスパート\n- CI/CDパイプラインの設計と最適化に長けている\n- 優れた問題分析・解決能力を有する' },
+                { id: 'education', title: '学歴', content: '### 東京大学 | 情報工学科 | 学士 | 2015-2019\n- 主要科目：データ構造、アルゴリズム、オペレーティングシステム、コンピュータネットワーク\n- GPA: 3.8/4.0\n- 優秀卒業生として表彰' },
+                { id: 'work-experience', title: '職歴', content: '### ソフトバンク | DevOpsエンジニア | 2019.07 - 現在\n- CI/CDプロセスの設計・最適化により、リリース効率を50%向上\n- Kubernetesクラスターの運用管理、サービス稼働率99.9%を維持\n- Terraformを用いたInfrastructure as Codeの管理\n- 監視・アラートシステムの構築により、システム異常の迅速な検知・対応を実現' },
+                { id: 'project-experience', title: 'プロジェクト経験', content: '### マイクロサービスコンテナ化プロジェクト | テックリード | 2023.01 - 2023.08\n- モノリシックアプリケーションをマイクロサービスアーキテクチャに分割\n- Dockerコンテナによるデプロイメント、リソース使用率30%向上\n- 技術スタック：Kubernetes, Docker, Jenkins, GitLab CI\n- 成果：リリースサイクルを2週間から1日に短縮' },
+                { id: 'skills-certificates', title: 'スキル・資格', content: '### スキル\n- **コンテナ技術：** Docker, Kubernetes, Helm\n- **CI/CD：** Jenkins, GitLab CI, GitHub Actions\n- **クラウドプラットフォーム：** AWS, Azure, Google Cloud\n\n### 資格\n- AWS認定DevOpsエンジニア - プロフェッショナル\n- 認定Kubernetesアドミニストレータ (CKA)' }
+            ],
         }
     },
     defaultSettings: {
@@ -107,13 +458,6 @@ let currentLang = 'zh-CN'; // 默认语言
 
 function setLanguage(lang, isInitialLoad = false) {
     if (!i18nData.translations[lang]) return;
-
-    // 如果不是首次加载，且切换了语言，则提示用户
-    if (!isInitialLoad && lang !== currentLang) {
-        if (!confirm(i18nData.translations[lang].switchLangConfirm)) {
-            return; // 用户取消
-        }
-    }
     
     currentLang = lang;
     document.documentElement.lang = lang;
@@ -136,7 +480,7 @@ function setLanguage(lang, isInitialLoad = false) {
         btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
     });
 
-    // 如果不是首次加载，或首次加载时，加载默认数据
+    // 如果不是首次加载，加载默认数据
     if (!isInitialLoad) {
          loadDefaultData(lang);
     }

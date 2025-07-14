@@ -1,0 +1,13 @@
+{
+  "name": "ink-resume",
+  "version": "1.0.0",
+  "description": "A multilingual resume template editor",
+  "main": "build.js",
+  "scripts": {
+    "build": "node build.js",
+    "dev": "node build.js && echo 'Multi-language versions generated. Open index.html for Chinese or en.html for English'"
+  },
+  "keywords": ["resume", "template", "multilingual", "markdown"],
+  "author": "",
+  "license": "MIT"
+}

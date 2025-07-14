@@ -22,6 +22,11 @@ document.addEventListener('DOMContentLoaded', function() {
     updatePreview();
     updatePrintStyle();
     
+    // 初始化风格自定义功能
+    if (typeof initializeCustomStyles === 'function') {
+        initializeCustomStyles();
+    }
+    
     window.addEventListener('resize', updatePageIndicators);
 
     // Tab键支持
@@ -274,7 +279,8 @@ function getCurrentSettings() {
             scaling: document.getElementById('scaling').value,
             page_margin: document.getElementById('pageMargin').value,
             line_height: document.getElementById('lineHeight').value
-        }
+        },
+        custom_styles: typeof getCurrentCustomStyles === 'function' ? getCurrentCustomStyles() : null
     };
 }
 
@@ -333,6 +339,11 @@ function applyData(data, lang = 'zh-CN') {
     renderSections();
     updatePreview();
     updatePrintStyle();
+    
+    // 应用自定义样式设置（如果存在）
+    if (typeof applyCustomStylesFromData === 'function') {
+        applyCustomStylesFromData(data.custom_styles);
+    }
     
     // 重新设置照片上传功能，确保语言切换后仍能正常工作
     setupPhotoUpload();

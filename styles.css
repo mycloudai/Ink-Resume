@@ -5,6 +5,10 @@
     --live-line-height: 0.9;
     --live-page-padding: 15mm;
     --preview-scale: 0.8;
+    
+    /* 自定义风格变量 */
+    --custom-font-family: 'Microsoft YaHei', Arial, sans-serif;
+    --custom-divider-color: #b8860b;
 }
 
 * {
@@ -79,6 +83,7 @@ body {
     box-sizing: border-box;
     position: relative;
     margin-bottom: 20px;
+    font-family: var(--custom-font-family, 'Microsoft YaHei', Arial, sans-serif);
     /* 移除固定比例，让内容自然撑开高度 */
 }
 
@@ -295,7 +300,7 @@ textarea {
     margin-bottom: 4mm;
     font-weight: 700;
     position: relative;
-    border-bottom: 1.5px solid #b8860b !important;
+    border-bottom: 1.5px solid var(--custom-divider-color, #b8860b) !important;
     font-size: var(--live-title-font-size) !important;
 }
 
@@ -389,4 +394,88 @@ textarea {
     background: #b8860b;
     color: white;
     border-color: #b8860b;
+}
+
+/* 风格自定义面板样式 */
+#styleCustomization {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border: 2px solid #dee2e6;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+}
+
+#styleCustomization .section-header h3 {
+    color: #495057;
+    font-weight: 700;
+    font-size: 16px;
+}
+
+select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #dadce0;
+    border-radius: 6px;
+    font-size: 14px;
+    background-color: #ffffff;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 8px center;
+    background-repeat: no-repeat;
+    background-size: 16px;
+    appearance: none;
+    cursor: pointer;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+select:focus {
+    outline: none;
+    border-color: #b8860b;
+    box-shadow: 0 0 0 3px rgba(184, 134, 11, 0.1);
+}
+
+.color-picker-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px;
+    border: 1px solid #dadce0;
+    border-radius: 6px;
+    background-color: #ffffff;
+    transition: border-color 0.2s;
+}
+
+.color-picker-wrapper:hover {
+    border-color: #b8860b;
+}
+
+input[type="color"] {
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    background: none;
+    padding: 0;
+}
+
+input[type="color"]::-webkit-color-swatch {
+    border: 2px solid #dee2e6;
+    border-radius: 4px;
+}
+
+input[type="color"]::-webkit-color-swatch-wrapper {
+    padding: 0;
+    border: none;
+    border-radius: 4px;
+}
+
+.color-picker-wrapper span {
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    color: #6c757d;
+    font-weight: 600;
+    background: #f8f9fa;
+    padding: 4px 8px;
+    border-radius: 4px;
+    border: 1px solid #e9ecef;
+    min-width: 70px;
+    text-align: center;
 }

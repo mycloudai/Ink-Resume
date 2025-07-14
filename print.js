@@ -15,6 +15,26 @@ function updatePrintStyle() {
     const pageMargin = document.getElementById('pageMargin').value;
     const lineHeight = document.getElementById('lineHeight').value;
     
+    // 获取自定义样式设置
+    let customStyles;
+    try {
+        customStyles = (typeof getCurrentCustomStyles === 'function') ? getCurrentCustomStyles() : null;
+    } catch (e) {
+        customStyles = null;
+    }
+    
+    // 如果无法获取自定义样式，使用默认值
+    if (!customStyles) {
+        customStyles = {
+            fontFamily: 'Microsoft YaHei, Arial, sans-serif',
+            dividerColor: '#b8860b'
+        };
+    }
+    
+    // 调试信息：显示当前字体设置
+    console.log('Print font family:', customStyles.fontFamily);
+    
+    
     document.getElementById('titleFontValue').textContent = titleFontSize + 'px';
     document.getElementById('contentFontValue').textContent = contentFontSize + 'px';
     document.getElementById('scalingValue').textContent = scaling + '%';
@@ -42,11 +62,18 @@ function updatePrintStyle() {
                 size: A4;
                 margin: 15mm ${pageMargin}mm;
             }
+            :root {
+                --custom-font-family: "${customStyles.fontFamily}" !important;
+            }
+            * {
+                font-family: "${customStyles.fontFamily}" !important;
+            }
             body {
                 background: white !important;
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
                 font-size: ${Math.round(contentFontSize * scaling / 100)}px !important;
+                font-family: "${customStyles.fontFamily}" !important;
             }
             .container {
                 display: block !important;
@@ -70,7 +97,12 @@ function updatePrintStyle() {
                 height: auto !important;
                 width: 100% !important;
                 max-width: none !important;
+                background: white !important;
+                font-family: "${customStyles.fontFamily}" !important;
                 /* 移除zoom，使用字体缩放代替 */
+            }
+            .resume-preview, .resume-preview * {
+                font-family: "${customStyles.fontFamily}" !important;
             }
             .page-info {
                 display: none !important;
@@ -122,17 +154,20 @@ function updatePrintStyle() {
                 page-break-inside: avoid;
                 color: #3c4043 !important;
                 font-weight: 700 !important;
-                border-bottom: 1.5px solid #b8860b !important;
+                border-bottom: 1.5px solid ${customStyles.dividerColor} !important;
+                font-family: "${customStyles.fontFamily}" !important;
             }
             #basicInfoPreview h3 {
                 font-size: ${Math.round(titleFontSize * scaling / 100)}px !important;
                 color: #3c4043 !important;
                 font-weight: 600 !important;
+                font-family: "${customStyles.fontFamily}" !important;
             }
             #basicInfoPreview p, .resume-content {
                 font-size: ${Math.round(contentFontSize * scaling / 100)}px !important;
                 line-height: ${lineHeight} !important;
                 color: #5f6368 !important;
+                font-family: "${customStyles.fontFamily}" !important;
             }
             .resume-content h1,
             .resume-content h2,
@@ -145,18 +180,24 @@ function updatePrintStyle() {
                 margin-bottom: 2mm !important;
                 font-weight: 600 !important;
                 border-bottom: none !important;
+                font-family: "${customStyles.fontFamily}" !important;
             }
             .resume-content p {
                 orphans: 3;
                 widows: 3;
                 margin-bottom: 2mm !important;
+                font-family: "${customStyles.fontFamily}" !important;
             }
             .resume-content li {
                 page-break-inside: avoid;
                 margin-bottom: 1mm !important;
+                font-family: "${customStyles.fontFamily}" !important;
             }
             .resume-content ul {
                 padding-left: 20px !important;
+            }
+            .resume-content ul, .resume-content ol {
+                font-family: "${customStyles.fontFamily}" !important;
             }
         }
     `;
@@ -177,14 +218,72 @@ function stripLinks(containerElement) {
 function doPrint() {
     hidePrintSettings();
     
+    // 强制移除旧的打印样式标签以确保重新生成
+    const oldPrintStyleTag = document.getElementById('original-print-styles');
+    if (oldPrintStyleTag) {
+        oldPrintStyleTag.remove();
+    }
+    
+    // 获取当前字体设置并强制更新CSS变量
+    let customStyles;
+    try {
+        customStyles = (typeof getCurrentCustomStyles === 'function') ? getCurrentCustomStyles() : null;
+    } catch (e) {
+        customStyles = null;
+    }
+    
+    if (!customStyles) {
+        customStyles = {
+            fontFamily: 'Microsoft YaHei, Arial, sans-serif',
+            dividerColor: '#b8860b'
+        };
+    }
+    
+    // 强制更新CSS变量
+    document.documentElement.style.setProperty('--custom-font-family', customStyles.fontFamily);
+    console.log('Forcing CSS variable update for print:', customStyles.fontFamily);
+    
+    // 确保打印样式是最新的，包括自定义样式
+    updatePrintStyle();
+    
     // 隐藏页面信息
     const pageInfo = document.getElementById('pageInfo');
     pageInfo.style.display = 'none';
     
     stripLinks(document.getElementById('resumePreview'));
     
+    // 直接修改DOM元素的字体样式作为备用方案
+    const resumePreview = document.getElementById('resumePreview');
+    const allElements = resumePreview.querySelectorAll('*');
+    const originalStyles = [];
+    
+    // 保存原始样式并应用打印字体
+    allElements.forEach((element, index) => {
+        originalStyles[index] = element.style.fontFamily;
+        element.style.setProperty('font-family', customStyles.fontFamily, 'important');
+    });
+    
+    // 也为主容器设置字体
+    const originalResumeStyle = resumePreview.style.fontFamily;
+    resumePreview.style.setProperty('font-family', customStyles.fontFamily, 'important');
+    
     setTimeout(() => {
         window.print();
+        
+        // 恢复原始样式
+        allElements.forEach((element, index) => {
+            if (originalStyles[index]) {
+                element.style.fontFamily = originalStyles[index];
+            } else {
+                element.style.removeProperty('font-family');
+            }
+        });
+        
+        if (originalResumeStyle) {
+            resumePreview.style.fontFamily = originalResumeStyle;
+        } else {
+            resumePreview.style.removeProperty('font-family');
+        }
         
         // 恢复显示
         pageInfo.style.display = 'block';
