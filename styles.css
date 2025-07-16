@@ -817,3 +817,41 @@ input[type="color"]::-webkit-color-swatch-wrapper {
     min-width: 70px;
     text-align: center;
 }
+
+.preview-panel {
+    position: relative;
+}
+
+.print-btn-vertical {
+    position: absolute;
+    right: -90px; /* 调整距离右边框的位置 */
+    top: 0;
+    bottom: 0;
+    width: 60px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    border-radius: 0 8px 8px 0;
+    color: white;
+    font-weight: 5000;
+    font-size: 25px; 
+    cursor: pointer;
+    z-index: 100;
+    writing-mode: vertical-lr;
+    text-orientation: mixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    transition: all 0.3s ease;
+}
+
+.print-btn-vertical:hover {
+    background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+    transform: translateX(2px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+}
+
+.print-btn-vertical span {
+    transform: rotate(0deg);
+    white-space: nowrap;
+}
