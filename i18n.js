@@ -147,7 +147,7 @@ const i18nData = {
             exportSuccessFilename: '简历数据.yaml',
             importSuccess: '导入成功',
             importError: '导入失败，文件格式可能不正确。',
-            privacyNotice: '重要提示：本页面所有内容（包括照片）仅在您的本地浏览器中处理，不会上传至任何服务器，请放心使用。请使用导入导出数据功能保存您的数据，所有数据可能会在刷新页面或者切换语言后丢失。',
+            privacyNotice: '重要提示：本页面所有内容（包括照片）仅在您的本地浏览器中处理，不会上传至任何服务器，请放心使用。数据会自动缓存在本地浏览器中，页面刷新后不会丢失数据。如需重置本地缓存，请点击"清理缓存"按钮。建议使用导入导出功能永久保存您的数据。',
             // 风格自定义相关
             styleCustomization: '风格自定义',
             fontFamily: '字体选择',
@@ -156,7 +156,10 @@ const i18nData = {
             fontDefault: '默认字体',
             fontSimSun: '宋体',
             fontTimes: 'Times New Roman',
-            fontArial: 'Arial'
+            fontArial: 'Arial',
+            clearCache: '清理缓存',
+            clearCacheConfirm: '确定要清理所有本地缓存数据吗？这将删除自动保存的内容。',
+            clearCacheSuccess: '缓存已清理'
         },
         'en-US': {
             pageTitle: 'Ink Resume Online Markdown Resume Editor',
@@ -191,7 +194,7 @@ const i18nData = {
             exportSuccessFilename: 'Resume_Data.yaml',
             importSuccess: 'Import successful',
             importError: 'Import failed. The file format might be incorrect.',
-            privacyNotice: 'Important Notice: All content on this page (including photos) is processed only in your local browser and is NOT uploaded to any server. Please feel safe to use. Use the import/export function to save your data, as all data may be lost upon page refresh or language switching.',            // Style customization related
+            privacyNotice: 'Important Notice: All content on this page (including photos) is processed only in your local browser and is NOT uploaded to any server. Please feel safe to use. Data is automatically cached in your local browser and will not be lost after page refresh. To reset local cache, click the "Clear Cache" button. We recommend using the import/export function to permanently save your data.',            // Style customization related
             styleCustomization: 'Style Customization',
             fontFamily: 'Font Family',
             dividerColor: 'Divider Color',
@@ -199,7 +202,10 @@ const i18nData = {
             fontDefault: 'Default Font',
             fontSimSun: 'SimSun',
             fontTimes: 'Times New Roman',
-            fontArial: 'Arial'
+            fontArial: 'Arial',
+            clearCache: 'Clear Cache',
+            clearCacheConfirm: 'Are you sure you want to clear all local cache data? This will delete auto-saved content.',
+            clearCacheSuccess: 'Cache cleared'
         },
         'ja-JP': {
             pageTitle: 'Ink Resume オンライン markdown 履歴書エディタ',
@@ -241,7 +247,10 @@ const i18nData = {
             fontDefault: 'デフォルトフォント',
             fontSimSun: 'SimSun',
             fontTimes: 'Times New Roman',
-            fontArial: 'Arial'
+            fontArial: 'Arial',
+            clearCache: 'キャッシュをクリア',
+            clearCacheConfirm: 'すべてのローカルキャッシュデータをクリアしますか？自動保存された内容が削除されます。',
+            clearCacheSuccess: 'キャッシュがクリアされました'
         },
         'ko-KR': {
             pageTitle: 'Ink Resume 온라인 마크다운 이력서 편집기',
@@ -283,7 +292,10 @@ const i18nData = {
             fontDefault: '기본 글꼴',
             fontSimSun: 'SimSun',
             fontTimes: 'Times New Roman',
-            fontArial: 'Arial'
+            fontArial: 'Arial',
+            clearCache: '캐시 지우기',
+            clearCacheConfirm: '모든 로컬 캐시 데이터를 지우시겠습니까? 자동 저장된 내용이 삭제됩니다.',
+            clearCacheSuccess: '캐시가 지워졌습니다'
         },
         'fr-FR': {
             pageTitle: 'Ink Resume - Éditeur de CV Markdown en ligne',
@@ -325,7 +337,10 @@ const i18nData = {
             fontDefault: 'Police par défaut',
             fontSimSun: 'SimSun',
             fontTimes: 'Times New Roman',
-            fontArial: 'Arial'
+            fontArial: 'Arial',
+            clearCache: 'Vider le cache',
+            clearCacheConfirm: 'Voulez-vous vraiment vider toutes les données du cache local ? Cela supprimera le contenu sauvegardé automatiquement.',
+            clearCacheSuccess: 'Cache vidé'
         },
         'de-DE': {
             pageTitle: 'Ink Resume - Online Markdown Lebenslauf Editor',
@@ -367,7 +382,10 @@ const i18nData = {
             fontDefault: 'Standard-Schrift',
             fontSimSun: 'SimSun',
             fontTimes: 'Times New Roman',
-            fontArial: 'Arial'
+            fontArial: 'Arial',
+            clearCache: 'Cache leeren',
+            clearCacheConfirm: 'Sind Sie sicher, dass Sie alle lokalen Cache-Daten löschen möchten? Dies löscht automatisch gespeicherte Inhalte.',
+            clearCacheSuccess: 'Cache geleert'
         },
         'es-ES': {
             pageTitle: 'Ink Resume - Editor de CV Markdown en línea',
@@ -409,7 +427,10 @@ const i18nData = {
             fontDefault: 'Fuente por defecto',
             fontSimSun: 'SimSun',
             fontTimes: 'Times New Roman',
-            fontArial: 'Arial'
+            fontArial: 'Arial',
+            clearCache: 'Limpiar caché',
+            clearCacheConfirm: '¿Está seguro de que desea limpiar todos los datos de caché local? Esto eliminará el contenido guardado automáticamente.',
+            clearCacheSuccess: 'Caché limpiado'
         }
     },
     defaultContent: {

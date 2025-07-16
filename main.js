@@ -27,6 +27,12 @@ document.addEventListener('DOMContentLoaded', function() {
         initializeCustomStyles();
     }
     
+    // 初始化本地存储功能
+    if (typeof initializeStorage === 'function') {
+        initializeStorage();
+    }
+    
+    
     window.addEventListener('resize', updatePageIndicators);
 
     // Tab键支持

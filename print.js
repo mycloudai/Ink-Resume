@@ -1,11 +1,29 @@
 // 打印相关功能模块
 
 function showPrintSettings() { 
-    document.getElementById('printSettings').style.display = 'block'; 
+    const sidebar = document.getElementById('printSettingsSidebar');
+    const overlay = document.getElementById('printSidebarOverlay');
+    
+    overlay.style.display = 'block';
+    sidebar.style.display = 'block';
+    
+    // 使用requestAnimationFrame确保display设置生效后再改变transform
+    requestAnimationFrame(() => {
+        sidebar.style.transform = 'translateX(0)';
+    });
 }
 
 function hidePrintSettings() { 
-    document.getElementById('printSettings').style.display = 'none'; 
+    const sidebar = document.getElementById('printSettingsSidebar');
+    const overlay = document.getElementById('printSidebarOverlay');
+    
+    sidebar.style.transform = 'translateX(100%)';
+    
+    // 等待动画完成后隐藏
+    setTimeout(() => {
+        overlay.style.display = 'none';
+        sidebar.style.display = 'none';
+    }, 300);
 }
 
 function updatePrintStyle() {
@@ -61,22 +79,62 @@ function updatePrintStyle() {
             @page {
                 size: A4;
                 margin: 15mm ${pageMargin}mm;
+                background: white;
             }
             :root {
                 --custom-font-family: "${customStyles.fontFamily}" !important;
             }
             * {
                 font-family: "${customStyles.fontFamily}" !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                background: transparent !important;
+                background-image: none !important;
+                animation: none !important;
+            }
+            *::before, *::after {
+                display: none !important;
+                background: none !important;
+                background-image: none !important;
+                content: none !important;
+            }
+            html {
+                background: white !important;
+                background-color: white !important;
+                background-image: none !important;
             }
             body {
                 background: white !important;
+                background-color: white !important;
+                background-image: none !important;
+                background-attachment: initial !important;
+                background-position: initial !important;
+                background-repeat: initial !important;
+                background-size: initial !important;
+                animation: none !important;
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
                 font-size: ${Math.round(contentFontSize * scaling / 100)}px !important;
                 font-family: "${customStyles.fontFamily}" !important;
+                color: #000 !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+            body::before {
+                display: none !important;
+                background: none !important;
+                background-image: none !important;
+                content: none !important;
+            }
+            body::after {
+                display: none !important;
+                background: none !important;
+                background-image: none !important;
+                content: none !important;
             }
             .container {
                 display: block !important;
+                background: white !important;
             }
             .editor-panel {
                 display: none !important;
@@ -99,10 +157,33 @@ function updatePrintStyle() {
                 max-width: none !important;
                 background: white !important;
                 font-family: "${customStyles.fontFamily}" !important;
+                color: #000 !important;
+                display: block !important;
+                visibility: visible !important;
+                opacity: 1 !important;
                 /* 移除zoom，使用字体缩放代替 */
+            }
+            /* 隐藏语言切换按钮和非打印元素 */
+            .lang-switcher {
+                display: none !important;
+            }
+            .non-print {
+                display: none !important;
             }
             .resume-preview, .resume-preview * {
                 font-family: "${customStyles.fontFamily}" !important;
+                color: #000 !important;
+                visibility: visible !important;
+                opacity: 1 !important;
+            }
+            .resume-header, .resume-section, .resume-content {
+                display: block !important;
+                visibility: visible !important;
+                opacity: 1 !important;
+                color: #000 !important;
+            }
+            .resume-content * {
+                color: #000 !important;
             }
             .page-info {
                 display: none !important;
@@ -152,21 +233,21 @@ function updatePrintStyle() {
                 margin-bottom: 4mm !important;
                 page-break-after: avoid;
                 page-break-inside: avoid;
-                color: #3c4043 !important;
+                color: #000 !important;
                 font-weight: 700 !important;
                 border-bottom: 1.5px solid ${customStyles.dividerColor} !important;
                 font-family: "${customStyles.fontFamily}" !important;
             }
             #basicInfoPreview h3 {
                 font-size: ${Math.round(titleFontSize * scaling / 100)}px !important;
-                color: #3c4043 !important;
+                color: #000 !important;
                 font-weight: 600 !important;
                 font-family: "${customStyles.fontFamily}" !important;
             }
             #basicInfoPreview p, .resume-content {
                 font-size: ${Math.round(contentFontSize * scaling / 100)}px !important;
                 line-height: ${lineHeight} !important;
-                color: #5f6368 !important;
+                color: #000 !important;
                 font-family: "${customStyles.fontFamily}" !important;
             }
             .resume-content h1,
@@ -175,7 +256,7 @@ function updatePrintStyle() {
             .resume-content h4,
             .resume-content h5,
             .resume-content h6 {
-                color: #3c4043 !important;
+                color: #000 !important;
                 margin-top: 4mm !important;
                 margin-bottom: 2mm !important;
                 font-weight: 600 !important;

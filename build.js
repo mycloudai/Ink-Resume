@@ -82,6 +82,7 @@ function processTemplate(template, langCode, i18nData) {
         .replace(/{{PRINT_RESUME}}/g, translations.printResume || 'Print Resume')
         .replace(/{{EXPORT_DATA}}/g, translations.exportData || 'Export Data')
         .replace(/{{IMPORT_DATA}}/g, translations.importData || 'Import Data')
+        .replace(/{{CLEAR_CACHE}}/g, translations.clearCache || 'Clear Cache')
         .replace(/{{STYLE_CUSTOMIZATION}}/g, translations.styleCustomization || 'Style Customization')
         .replace(/{{FONT_FAMILY}}/g, translations.fontFamily || 'Font Family')
         .replace(/{{FONT_DEFAULT}}/g, translations.fontDefault || 'Default Font')
