@@ -170,6 +170,9 @@ function updatePrintStyle() {
             .non-print {
                 display: none !important;
             }
+            #save-status {
+                display: none !important;
+            }
             .resume-preview, .resume-preview * {
                 font-family: "${customStyles.fontFamily}" !important;
                 color: #000 !important;
