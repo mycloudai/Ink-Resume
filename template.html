@@ -37,13 +37,13 @@
             
             
             <div style="display: flex; gap: 10px; margin-bottom: 20px;">
-                <button onclick="exportData()" class="glass-btn" style="flex: 1; background: rgba(184, 134, 11, 0.2); border-color: rgba(184, 134, 11, 0.3);" data-i18n-key="exportData">{{EXPORT_DATA}}</button>
+                <button onclick="exportData()" class="btn btn-primary" style="flex: 1;" data-i18n-key="exportData">{{EXPORT_DATA}}</button>
                 <input type="file" id="importFile" accept=".yaml,.yml" style="display: none;" onchange="importData(event)">
-                <button onclick="document.getElementById('importFile').click()" class="glass-btn" style="flex: 1; background: rgba(95, 99, 104, 0.2); border-color: rgba(95, 99, 104, 0.3);" data-i18n-key="importData">{{IMPORT_DATA}}</button>
+                <button onclick="document.getElementById('importFile').click()" class="btn btn-secondary" style="flex: 1;" data-i18n-key="importData">{{IMPORT_DATA}}</button>
             </div>
             
             <div style="margin-bottom: 20px;">
-                <button onclick="clearLocalCache()" class="glass-btn" style="width: 100%; background: rgba(220, 53, 69, 0.2); border-color: rgba(220, 53, 69, 0.3);" data-i18n-key="clearCache">{{CLEAR_CACHE}}</button>
+                <button onclick="clearLocalCache()" class="btn btn-danger" style="width: 100%;" data-i18n-key="clearCache">{{CLEAR_CACHE}}</button>
             </div>
             
             <!-- 风格自定义面板 -->
@@ -68,7 +68,7 @@
                     </div>
                 </div>
                 <div class="section-content">
-                    <button onclick="resetCustomStyles()" class="glass-btn" style="width: 100%; background: rgba(108, 117, 125, 0.2); border-color: rgba(108, 117, 125, 0.3);" data-i18n-key="resetStyles">{{RESET_STYLES}}</button>
+                    <button onclick="resetCustomStyles()" class="btn btn-warning" style="width: 100%;" data-i18n-key="resetStyles">{{RESET_STYLES}}</button>
                 </div>
             </div>
             
@@ -96,7 +96,7 @@
             
             <div id="dynamicSections"></div>
             
-            <button class="add-section-btn" onclick="showAddSectionDialog()" data-i18n-key="addSection">{{ADD_SECTION}}</button>
+            <button class="btn btn-success" onclick="showAddSectionDialog()" data-i18n-key="addSection">{{ADD_SECTION}}</button>
         </div>
 
         <!-- 预览面板 -->
@@ -121,8 +121,8 @@
         <h3 style="margin-bottom: 20px; color: #3c4043;" data-i18n-key="addSectionDialogTitle">{{ADD_SECTION_DIALOG_TITLE}}</h3>
         <input type="text" id="newSectionTitle" data-i18n-key="newSectionTitlePlaceholder" placeholder="{{NEW_SECTION_TITLE_PLACEHOLDER}}" style="width: 300px; margin-bottom: 20px;">
         <div style="text-align: right;">
-            <button onclick="addNewSection()" class="glass-btn" style="background: rgba(40, 167, 69, 0.2); border-color: rgba(40, 167, 69, 0.3); margin-right: 10px;" data-i18n-key="ok">{{OK}}</button>
-            <button onclick="hideAddSectionDialog()" class="glass-btn" style="background: rgba(108, 117, 125, 0.2); border-color: rgba(108, 117, 125, 0.3);" data-i18n-key="cancel">{{CANCEL}}</button>
+            <button onclick="addNewSection()" class="btn btn-success" style="margin-right: 10px;" data-i18n-key="ok">{{OK}}</button>
+            <button onclick="hideAddSectionDialog()" class="btn btn-dark" data-i18n-key="cancel">{{CANCEL}}</button>
         </div>
     </div>
     
@@ -130,7 +130,7 @@
     <div id="printSettingsSidebar" style="display: none; position: fixed; top: 0; right: 0; width: 320px; height: 100%; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border-left: 1px solid rgba(255, 255, 255, 0.3); z-index: 1002; padding: 20px; overflow-y: auto; transform: translateX(100%); transition: transform 0.3s ease;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
             <h3 style="margin: 0; color: #3c4043;" data-i18n-key="printSettings">{{PRINT_SETTINGS}}</h3>
-            <button onclick="hidePrintSettings()" class="glass-btn" style="background: rgba(108, 117, 125, 0.2); border-color: rgba(108, 117, 125, 0.3); width: 32px; height: 32px; padding: 0; display: flex; align-items: center; justify-content: center; font-size: 16px;">✕</button>
+            <button onclick="hidePrintSettings()" class="btn btn-dark" style="width: 32px; height: 32px; padding: 0; display: flex; align-items: center; justify-content: center; font-size: 16px;">✕</button>
         </div>
 
         <div class="form-group">

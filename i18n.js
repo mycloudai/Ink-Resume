@@ -116,7 +116,7 @@ const i18nData = {
     translations: {
         'zh-CN': {
             pageTitle: 'Ink Resume - 在线markdown简历编辑器',
-            printResume: '打印简历',
+            printResume: '👇打印简历👆',
             exportData: '导出数据',
             importData: '导入数据',
             printSettings: '打印设置',
@@ -140,6 +140,7 @@ const i18nData = {
             delete: '删除',
             dragToSort: '拖动此处排序',
             // 提示信息
+            switchLangWarning: '切换语言会导致缓存被清空，请使用导出数据功能及时保存数据。确定要切换吗？',
             switchLangConfirm: '切换语言将会使用新语言的默认模板覆盖当前内容，确定要切换吗？',
             enterSectionTitlePrompt: '请输入部分标题',
             confirmDeleteSection: '确定要删除这个部分吗？',
@@ -147,7 +148,7 @@ const i18nData = {
             exportSuccessFilename: '简历数据.yaml',
             importSuccess: '导入成功',
             importError: '导入失败，文件格式可能不正确。',
-            privacyNotice: '重要提示：本页面所有内容（包括照片）仅在您的本地浏览器中处理，不会上传至任何服务器，请放心使用。数据会自动缓存在本地浏览器中，页面刷新后不会丢失数据。如需重置本地缓存，请点击"清理缓存"按钮。切换语言后，缓存也会被重置，请在切换前导出数据以防丢失。建议使用导入导出功能永久保存您的数据。',
+            privacyNotice: '重要提示：本页面所有内容（包括照片）仅在您的本地浏览器中处理，不会上传至任何服务器，请放心使用。数据会自动缓存在本地浏览器中，页面刷新后不会丢失数据。如需重置本地缓存，请点击"清理缓存"按钮。建议使用导入导出功能永久保存您的数据。',
             // 风格自定义相关
             styleCustomization: '风格自定义',
             fontFamily: '字体选择',
@@ -163,7 +164,7 @@ const i18nData = {
         },
         'en-US': {
             pageTitle: 'Ink Resume - Online Markdown Resume Editor',
-            printResume: 'Print Resume',
+            printResume: '👇Print Resume👆',
             exportData: 'Export Data',
             importData: 'Import Data',
             printSettings: 'Print Settings',
@@ -187,6 +188,7 @@ const i18nData = {
             delete: 'Delete',
             dragToSort: 'Drag to sort',
             // Alerts and Prompts
+            switchLangWarning: 'Switching languages will clear the cache. Please use the export data function to save your data in time. Are you sure you want to switch?',
             switchLangConfirm: 'Switching languages will overwrite current content with the new language\'s default template. Are you sure?',
             enterSectionTitlePrompt: 'Please enter a section title',
             confirmDeleteSection: 'Are you sure you want to delete this section?',
@@ -194,7 +196,7 @@ const i18nData = {
             exportSuccessFilename: 'Resume_Data.yaml',
             importSuccess: 'Import successful',
             importError: 'Import failed. The file format might be incorrect.',
-            privacyNotice: 'Important Notice: All content on this page (including photos) is processed only in your local browser and is NOT uploaded to any server. Please feel safe to use. Data is automatically cached in your local browser and will not be lost after page refresh. To reset local cache, click the "Clear Cache" button. Switching language will also reset the cache. Please export your data before switching. We recommend using the import/export function to permanently save your data.',            // Style customization related
+            privacyNotice: 'Important Notice: All content on this page (including photos) is processed only in your local browser and is NOT uploaded to any server. Please feel safe to use. Data is automatically cached in your local browser and will not be lost after page refresh. To reset local cache, click the "Clear Cache" button. We recommend using the import/export function to permanently save your data.',            // Style customization related
             styleCustomization: 'Style Customization',
             fontFamily: 'Font Family',
             dividerColor: 'Divider Color',
@@ -209,7 +211,7 @@ const i18nData = {
         },
         'ja-JP': {
             pageTitle: 'Ink Resume - オンライン markdown 履歴書エディタ',
-            printResume: '履歴書を印刷',
+            printResume: '👇履歴書を印刷👆',
             exportData: 'データエクスポート',
             importData: 'データインポート',
             printSettings: '印刷設定',
@@ -232,6 +234,7 @@ const i18nData = {
             ok: 'OK',
             delete: '削除',
             dragToSort: 'ドラッグして並び替え',
+            switchLangWarning: '言語を切り替えるとキャッシュがクリアされます。データを保存するために、エクスポート機能を使用してください。切り替えますか？',
             switchLangConfirm: '言語を切り替えると、現在の内容が新しい言語のデフォルトテンプレートで上書きされます。続行しますか？',
             enterSectionTitlePrompt: 'セクションのタイトルを入力してください',
             confirmDeleteSection: 'このセクションを削除してもよろしいですか？',
@@ -239,7 +242,7 @@ const i18nData = {
             exportSuccessFilename: '履歴書データ.yaml',
             importSuccess: 'インポートが完了しました',
             importError: 'インポートに失敗しました。ファイル形式が正しくない可能性があります。',
-            privacyNotice: '重要なお知らせ：このページのすべての内容（写真を含む）はお使いのローカルブラウザでのみ処理され、サーバーには一切アップロードされません。安心してご利用ください。データは自動的にローカルに保存され、ページを更新しても失われません。キャッシュをリセットするには「キャッシュをクリア」ボタンをクリックしてください。言語を切り替えるとキャッシュもリセットされます。切り替え前にデータをエクスポートしてください。インポート・エクスポート機能のご利用をおすすめします。',
+            privacyNotice: '重要なお知らせ：このページのすべての内容（写真を含む）はお使いのローカルブラウザでのみ処理され、サーバーには一切アップロードされません。安心してご利用ください。データは自動的にローカルに保存され、ページを更新しても失われません。キャッシュをリセットするには「キャッシュをクリア」ボタンをクリックしてください。インポート・エクスポート機能のご利用をおすすめします。',
             styleCustomization: 'スタイルのカスタマイズ',
             fontFamily: 'フォント選択',
             dividerColor: '区切り線の色',
@@ -254,7 +257,7 @@ const i18nData = {
         },
         'ko-KR': {
             pageTitle: 'Ink Resume - 온라인 마크다운 이력서 편집기',
-            printResume: '이력서 인쇄',
+            printResume: '👇이력서 인쇄👆',
             exportData: '데이터 내보내기',
             importData: '데이터 가져오기',
             printSettings: '인쇄 설정',
@@ -277,6 +280,7 @@ const i18nData = {
             ok: '확인',
             delete: '삭제',
             dragToSort: '드래그하여 정렬',
+            switchLangWarning: '언어를 변경하면 캐시가 지워집니다. 데이터 내보내기 기능을 사용하여 데이터를 저장하십시오. 전환하시겠습니까?',
             switchLangConfirm: '언어를 변경하면 현재 내용이 새 언어의 기본 템플릿으로 덮어쓰여집니다. 계속하시겠습니까?',
             enterSectionTitlePrompt: '섹션 제목을 입력하세요',
             confirmDeleteSection: '이 섹션을 삭제하시겠습니까?',
@@ -284,7 +288,7 @@ const i18nData = {
             exportSuccessFilename: '이력서_데이터.yaml',
             importSuccess: '가져오기 완료',
             importError: '가져오기 실패. 파일 형식이 올바르지 않을 수 있습니다.',
-            privacyNotice: '중요 공지: 이 페이지의 모든 내용(사진 포함)은 사용자의 로컬 브라우저에서만 처리되며, 서버로 업로드되지 않습니다. 안심하고 사용하셔도 됩니다. 데이터는 로컬에 자동 저장되며 페이지 새로 고침 시 손실되지 않습니다. 로컬 캐시를 초기화하려면 "캐시 지우기" 버튼을 클릭하세요. 언어를 변경하면 캐시도 초기화됩니다. 변경 전에 데이터를 내보내 주세요. 데이터를 영구적으로 보관하려면 내보내기/가져오기 기능을 사용하세요.',
+            privacyNotice: '중요 공지: 이 페이지의 모든 내용(사진 포함)은 사용자의 로컬 브라우저에서만 처리되며, 서버로 업로드되지 않습니다. 안심하고 사용하셔도 됩니다. 데이터는 로컬에 자동 저장되며 페이지 새로 고침 시 손실되지 않습니다. 로컬 캐시를 초기화하려면 "캐시 지우기" 버튼을 클릭하세요. 데이터를 영구적으로 보관하려면 내보내기/가져오기 기능을 사용하세요.',
             styleCustomization: '스타일 커스터마이징',
             fontFamily: '글꼴 선택',
             dividerColor: '구분선 색상',
@@ -299,7 +303,7 @@ const i18nData = {
         },
         'fr-FR': {
             pageTitle: 'Ink Resume - Éditeur de CV Markdown en ligne',
-            printResume: 'Imprimer CV',
+            printResume: '👇Imprimer CV👆',
             exportData: 'Exporter',
             importData: 'Importer',
             printSettings: 'Paramètres d\'impression',
@@ -322,6 +326,7 @@ const i18nData = {
             ok: 'OK',
             delete: 'Supprimer',
             dragToSort: 'Glisser pour trier',
+            switchLangWarning: 'Changer de langue effacera le cache. Veuillez utiliser la fonction exporter les données pour sauvegarder vos données. Êtes-vous sûr de vouloir changer?',
             switchLangConfirm: 'Changer de langue remplacera le contenu. Continuer?',
             enterSectionTitlePrompt: 'Entrez un titre',
             confirmDeleteSection: 'Supprimer cette section?',
@@ -329,7 +334,7 @@ const i18nData = {
             exportSuccessFilename: 'CV_Données.yaml',
             importSuccess: 'Import réussi',
             importError: 'Erreur import',
-            privacyNotice: 'Avis important : Tout le contenu de cette page (y compris les photos) est traité uniquement dans votre navigateur local et n’est jamais envoyé à un serveur. Vous pouvez l’utiliser en toute confiance. Les données sont automatiquement sauvegardées localement et ne seront pas perdues lors du rechargement de la page. Pour réinitialiser le cache, cliquez sur "Vider le cache". Le changement de langue réinitialisera également le cache. Veuillez exporter vos données avant de changer de langue. Nous vous recommandons d’utiliser les fonctions d’import/export pour sauvegarder vos données.',
+            privacyNotice: 'Avis important : Tout le contenu de cette page (y compris les photos) est traité uniquement dans votre navigateur local et n’est jamais envoyé à un serveur. Vous pouvez l’utiliser en toute confiance. Les données sont automatiquement sauvegardées localement et ne seront pas perdues lors du rechargement de la page. Pour réinitialiser le cache, cliquez sur "Vider le cache". Nous vous recommandons d’utiliser les fonctions d’import/export pour sauvegarder vos données.',
             styleCustomization: 'Style',
             fontFamily: 'Police',
             dividerColor: 'Couleur séparateur',
@@ -344,7 +349,7 @@ const i18nData = {
         },
         'de-DE': {
             pageTitle: 'Ink Resume - Online Markdown Lebenslauf Editor',
-            printResume: 'CV drucken',
+            printResume: '👇CV drucken👆',
             exportData: 'Exportieren',
             importData: 'Importieren',
             printSettings: 'Druckeinstellungen',
@@ -367,6 +372,7 @@ const i18nData = {
             ok: 'OK',
             delete: 'Löschen',
             dragToSort: 'Ziehen zum Sortieren',
+            switchLangWarning: 'Das Ändern der Sprache löscht den Cache. Bitte verwenden Sie die Datenexportfunktion, um Ihre Daten zu speichern. Möchten Sie wirklich wechseln?',
             switchLangConfirm: 'Sprache wechseln überschreibt Inhalt. Fortfahren?',
             enterSectionTitlePrompt: 'Titel eingeben',
             confirmDeleteSection: 'Abschnitt löschen?',
@@ -374,7 +380,7 @@ const i18nData = {
             exportSuccessFilename: 'CV_Daten.yaml',
             importSuccess: 'Import erfolgreich',
             importError: 'Import Fehler',
-            privacyNotice: 'Wichtiger Hinweis: Alle Inhalte dieser Seite (einschließlich Fotos) werden ausschließlich lokal in Ihrem Browser verarbeitet und NICHT an einen Server gesendet. Sie können die Seite bedenkenlos verwenden. Die Daten werden automatisch lokal gespeichert und gehen beim Neuladen der Seite nicht verloren. Um den lokalen Cache zurückzusetzen, klicken Sie auf "Cache leeren". Beim Sprachwechsel wird der Cache ebenfalls zurückgesetzt. Bitte exportieren Sie Ihre Daten vor dem Wechsel. Nutzen Sie die Import-/Exportfunktion zur dauerhaften Sicherung Ihrer Daten.',
+            privacyNotice: 'Wichtiger Hinweis: Alle Inhalte dieser Seite (einschließlich Fotos) werden ausschließlich lokal in Ihrem Browser verarbeitet und NICHT an einen Server gesendet. Sie können die Seite bedenkenlos verwenden. Die Daten werden automatisch lokal gespeichert und gehen beim Neuladen der Seite nicht verloren. Um den lokalen Cache zurückzusetzen, klicken Sie auf "Cache leeren". Nutzen Sie die Import-/Exportfunktion zur dauerhaften Sicherung Ihrer Daten.',
             styleCustomization: 'Stil',
             fontFamily: 'Schriftart',
             dividerColor: 'Trennlinie-Farbe',
@@ -389,7 +395,7 @@ const i18nData = {
         },
         'es-ES': {
             pageTitle: 'Ink Resume - Editor de CV Markdown en línea',
-            printResume: 'Imprimir CV',
+            printResume: '👇Imprimir CV👆',
             exportData: 'Exportar',
             importData: 'Importar',
             printSettings: 'Configuración impresión',
@@ -412,6 +418,7 @@ const i18nData = {
             ok: 'OK',
             delete: 'Eliminar',
             dragToSort: 'Arrastrar para ordenar',
+            switchLangWarning: 'Cambiar el idioma borrará la memoria caché. Utilice la función de exportar datos para guardar sus datos. ¿Está seguro de que desea cambiar?',
             switchLangConfirm: 'Cambiar idioma sobrescribirá contenido. ¿Continuar?',
             enterSectionTitlePrompt: 'Ingrese título',
             confirmDeleteSection: '¿Eliminar esta sección?',
@@ -419,7 +426,7 @@ const i18nData = {
             exportSuccessFilename: 'CV_Datos.yaml',
             importSuccess: 'Importación exitosa',
             importError: 'Error importación',
-            privacyNotice: 'Aviso importante: Todo el contenido de esta página (incluidas las fotos) se procesa únicamente en su navegador local y NO se sube a ningún servidor. Puede usarlo con confianza. Los datos se guardan automáticamente en su navegador y no se perderán al actualizar la página. Para restablecer el caché local, haga clic en "Limpiar caché". Cambiar el idioma también restablecerá el caché. Exporte sus datos antes de cambiar de idioma. Le recomendamos usar la función de importación/exportación para guardar sus datos de forma permanente.',
+            privacyNotice: 'Aviso importante: Todo el contenido de esta página (incluidas las fotos) se procesa únicamente en su navegador local y NO se sube a ningún servidor. Puede usarlo con confianza. Los datos se guardan automáticamente en su navegador y no se perderán al actualizar la página. Para restablecer el caché local, haga clic en "Limpiar caché". Le recomendamos usar la función de importación/exportación para guardar sus datos de forma permanente.',
             styleCustomization: 'Estilo',
             fontFamily: 'Fuente',
             dividerColor: 'Color divisor',
@@ -518,6 +525,12 @@ let currentLang = 'zh-CN'; // 默认语言
 
 function setLanguage(lang, isInitialLoad = false) {
     if (!i18nData.translations[lang]) return;
+
+    if (!isInitialLoad && lang !== currentLang) {
+        if (!confirm(i18nData.translations[currentLang].switchLangWarning)) {
+            return;
+        }
+    }
     
     currentLang = lang;
     document.documentElement.lang = lang;
