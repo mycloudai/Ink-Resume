@@ -963,20 +963,18 @@ input[type="color"]::-webkit-color-swatch-wrapper {
 
 .print-btn-vertical {
     position: absolute;
-    right: -90px; /* 调整距离右边框的位置 */
-    top: 0;
-    bottom: 0;
-    width: 60px;
+    right: 10px; /* 调整距离右边框的位置 */
+    top: 10px; /* 调整距离顶部的距离 */
+    width: auto; /* 宽度自适应内容 */
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     border: none;
-    border-radius: 0 8px 8px 0;
+    border-radius: 8px; /* 四角都圆角 */
     color: white;
-    font-weight: 5000;
-    font-size: 25px; 
+    font-weight: 600; /* 调整字体粗细 */
+    font-size: 14px; /* 调整字体大小 */
+    padding: 10px 20px; /* 调整内边距 */
     cursor: pointer;
     z-index: 100;
-    writing-mode: vertical-lr;
-    text-orientation: mixed;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -986,12 +984,11 @@ input[type="color"]::-webkit-color-swatch-wrapper {
 
 .print-btn-vertical:hover {
     background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
-    transform: translateX(2px);
+    transform: translateY(-2px); /* 向上浮动效果 */
     box-shadow: 0 6px 16px rgba(0,0,0,0.2);
 }
 
 .print-btn-vertical span {
-    transform: rotate(0deg);
     white-space: nowrap;
 }
 

@@ -123,7 +123,7 @@ const i18nData = {
     translations: {
         'zh-CN': {
             pageTitle: 'Ink Resume - 在线markdown简历编辑器',
-            printResume: '👇打印简历👆',
+            printResume: '打印简历',
             exportData: '导出数据',
             importData: '导入数据',
             printSettings: '打印设置',
@@ -188,7 +188,7 @@ const i18nData = {
         },
         'en-US': {
             pageTitle: 'Ink Resume - Online Markdown Resume Editor',
-            printResume: '👇Print Resume👆',
+            printResume: 'Print Resume',
             exportData: 'Export Data',
             importData: 'Import Data',
             printSettings: 'Print Settings',
@@ -252,7 +252,7 @@ const i18nData = {
         },
         'ja-JP': {
             pageTitle: 'Ink Resume - オンライン markdown 履歴書エディタ',
-            printResume: '👇履歴書を印刷👆',
+            printResume: '履歴書を印刷',
             exportData: 'データエクスポート',
             importData: 'データインポート',
             printSettings: '印刷設定',
@@ -315,7 +315,7 @@ const i18nData = {
         },
         'ko-KR': {
             pageTitle: 'Ink Resume - 온라인 마크다운 이력서 편집기',
-            printResume: '👇이력서 인쇄👆',
+            printResume: '이력서 인쇄',
             exportData: '데이터 내보내기',
             importData: '데이터 가져오기',
             printSettings: '인쇄 설정',
@@ -378,7 +378,7 @@ const i18nData = {
         },
         'fr-FR': {
             pageTitle: 'Ink Resume - Éditeur de CV Markdown en ligne',
-            printResume: '👇Imprimer CV👆',
+            printResume: 'Imprimer CV',
             exportData: 'Exporter',
             importData: 'Importer',
             printSettings: 'Paramètres d\'impression',
@@ -441,7 +441,7 @@ const i18nData = {
         },
         'de-DE': {
             pageTitle: 'Ink Resume - Online Markdown Lebenslauf Editor',
-            printResume: '👇CV drucken👆',
+            printResume: 'CV drucken',
             exportData: 'Exportieren',
             importData: 'Importieren',
             printSettings: 'Druckeinstellungen',
@@ -504,7 +504,7 @@ const i18nData = {
         },
         'es-ES': {
             pageTitle: 'Ink Resume - Editor de CV Markdown en línea',
-            printResume: '👇Imprimir CV👆',
+            printResume: 'Imprimir CV',
             exportData: 'Exportar',
             importData: 'Importar',
             printSettings: 'Configuración impresión',
