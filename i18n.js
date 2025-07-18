@@ -5,36 +5,43 @@ const i18nData = {
         'zh-CN': {
             name: '中文',
             filename: 'index.html',
+            helpFile: 'help/zh-CN.md',
             isDefault: true
         },
         'en-US': {
             name: 'English',
             filename: 'en.html',
+            helpFile: 'help/en-US.md',
             isDefault: false
         },
         'ja-JP': {
             name: '日本語',
             filename: 'ja.html',
+            helpFile: 'help/ja-JP.md',
             isDefault: false
         },
         'ko-KR': {
             name: '한국어',
             filename: 'ko.html',
+            helpFile: 'help/ko-KR.md',
             isDefault: false
         },
         'fr-FR': {
             name: 'Français',
             filename: 'fr.html',
+            helpFile: 'help/fr-FR.md',
             isDefault: false
         },
         'de-DE': {
             name: 'Deutsch',
             filename: 'de.html',
+            helpFile: 'help/de-DE.md',
             isDefault: false
         },
         'es-ES': {
             name: 'Español',
             filename: 'es.html',
+            helpFile: 'help/es-ES.md',
             isDefault: false
         }
     },
@@ -169,7 +176,14 @@ const i18nData = {
             editMode: '编辑模式',
             editContent: '编辑内容',
             contentEdit: '内容编辑',
-            autoSaving: '自动保存中...'
+            autoSaving: '自动保存中...',
+            // 帮助相关
+            help: '帮助',
+            helpTitle: '使用帮助',
+            helpLoading: '加载帮助内容中...',
+            helpLoadError: '帮助内容加载失败，请检查网络连接',
+            closeHelp: '关闭帮助',
+            techSupport: '技术支持'
         },
         'en-US': {
             pageTitle: 'Ink Resume - Online Markdown Resume Editor',
@@ -225,7 +239,14 @@ const i18nData = {
             editMode: 'Edit Mode',
             editContent: 'Edit Content',
             contentEdit: 'Content Edit',
-            autoSaving: 'Auto saving...'
+            autoSaving: 'Auto saving...',
+            // 帮助相关
+            help: 'Help',
+            helpTitle: 'User Guide',
+            helpLoading: 'Loading help content...',
+            helpLoadError: 'Failed to load help content, please check network connection',
+            closeHelp: 'Close Help',
+            techSupport: 'Technical Support'
         },
         'ja-JP': {
             pageTitle: 'Ink Resume - オンライン markdown 履歴書エディタ',
@@ -280,7 +301,14 @@ const i18nData = {
             editMode: '編集モード',
             editContent: 'コンテンツ編集',
             contentEdit: 'コンテンツ編集',
-            autoSaving: '自動保存中...'
+            autoSaving: '自動保存中...',
+            // 帮助相关
+            help: 'ヘルプ',
+            helpTitle: '使用ガイド',
+            helpLoading: 'ヘルプコンテンツを読み込み中...',
+            helpLoadError: 'ヘルプコンテンツの読み込みに失敗しました。ネットワーク接続を確認してください',
+            closeHelp: 'ヘルプを閉じる',
+            techSupport: '技術サポート'
         },
         'ko-KR': {
             pageTitle: 'Ink Resume - 온라인 마크다운 이력서 편집기',
@@ -335,7 +363,14 @@ const i18nData = {
             editMode: '편집 모드',
             editContent: '내용 편집',
             contentEdit: '내용 편집',
-            autoSaving: '자동 저장 중...'
+            autoSaving: '자동 저장 중...',
+            // 帮助相关
+            help: '도움말',
+            helpTitle: '사용 가이드',
+            helpLoading: '도움말 콘텐츠 로딩 중...',
+            helpLoadError: '도움말 콘텐츠 로드에 실패했습니다. 네트워크 연결을 확인해주세요',
+            closeHelp: '도움말 닫기',
+            techSupport: '기술 지원'
         },
         'fr-FR': {
             pageTitle: 'Ink Resume - Éditeur de CV Markdown en ligne',
@@ -390,7 +425,14 @@ const i18nData = {
             editMode: 'Mode édition',
             editContent: 'Éditer le contenu',
             contentEdit: 'Édition contenu',
-            autoSaving: 'Sauvegarde automatique...'
+            autoSaving: 'Sauvegarde automatique...',
+            // 帮助相关            
+            help: "Aide",
+            helpTitle: "Guide d'utilisation",
+            helpLoading: "Chargement du contenu d'aide...",
+            helpLoadError: "Échec du chargement du contenu d'aide, veuillez vérifier la connexion réseau",
+            closeHelp: "Fermer l'aide",
+            techSupport: "Support Technique"
         },
         'de-DE': {
             pageTitle: 'Ink Resume - Online Markdown Lebenslauf Editor',
@@ -445,7 +487,14 @@ const i18nData = {
             editMode: 'Bearbeitungsmodus',
             editContent: 'Inhalt bearbeiten',
             contentEdit: 'Inhalt bearbeiten',
-            autoSaving: 'Automatisch speichern...'
+            autoSaving: 'Automatisch speichern...',
+            // 帮助相关
+            help: 'Hilfe',
+            helpTitle: 'Benutzerhandbuch',
+            helpLoading: 'Hilfeinhalt wird geladen...',
+            helpLoadError: 'Laden des Hilfeinhalts fehlgeschlagen, bitte überprüfen Sie die Netzwerkverbindung',
+            closeHelp: 'Hilfe schließen',
+            techSupport: 'Technischer Support'
         },
         'es-ES': {
             pageTitle: 'Ink Resume - Editor de CV Markdown en línea',
@@ -500,7 +549,14 @@ const i18nData = {
             editMode: 'Modo edición',
             editContent: 'Editar contenido',
             contentEdit: 'Editar contenido',
-            autoSaving: 'Guardado automático...'
+            autoSaving: 'Guardado automático...',
+            // 帮助相关
+            help: 'Ayuda',
+            helpTitle: 'Guía de usuario',
+            helpLoading: 'Cargando contenido de ayuda...',
+            helpLoadError: 'Error al cargar el contenido de ayuda, verifique la conexión de red',
+            closeHelp: 'Cerrar ayuda',
+            techSupport: 'Soporte Técnico'
         }
     },
     defaultContent: {
@@ -585,6 +641,7 @@ const i18nData = {
 };
 
 let currentLang = 'zh-CN'; // 默认语言
+window.currentLang = currentLang; // 暴露给window对象以供帮助系统使用
 
 function setLanguage(lang, isInitialLoad = false) {
     if (!i18nData.translations[lang]) return;
@@ -596,6 +653,7 @@ function setLanguage(lang, isInitialLoad = false) {
     }
     
     currentLang = lang;
+    window.currentLang = lang; // 更新window对象中的语言设置
     document.documentElement.lang = lang;
 
     // 更新所有静态UI文本

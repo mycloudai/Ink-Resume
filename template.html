@@ -15,12 +15,16 @@
     <script src="storage.js"></script>
     <script src="styles-custom.js"></script>
     <script src="print.js"></script>
+    <script src="help.js"></script>
     <script src="main.js"></script>
 </head>
 <body> 
     <div class="non-print github-banner">
         <img src="icon.png" alt="Logo" style="height: 20px;">
-        <span>View on <a href="https://github.com/mycloudai/Ink-Resume" target="_blank" class="github-link">GitHub: MyCloudAI/Ink-Resume</a></span>
+        <span>View source code on<a href="https://github.com/mycloudai/Ink-Resume" target="_blank" class="github-link">GitHub: MyCloudAI/Ink-Resume</a></span>
+        <a href="https://github.com/mycloudai/Ink-Resume/issues/new/choose" target="_blank" class="btn btn-warning" style="padding: 8px 16px; font-size: 14px; margin-left: 10px;" data-i18n-key="techSupport" title="{{TECH_SUPPORT}}">
+            🔧 {{TECH_SUPPORT}}
+        </a>
     </div>
     <!-- 页面信息显示 -->
     <div class="page-info" id="pageInfo">{{PAGES_TEXT}}: 1</div>
@@ -30,9 +34,14 @@
         <div class="editor-panel">
             <div class="privacy-notice" data-i18n-key="privacyNotice"></div>
             
-            <!-- 语言切换器 -->
-            <div class="lang-switcher">
-                {{LANGUAGE_BUTTONS}}
+            <!-- 语言切换器和帮助按钮 -->
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <div class="lang-switcher" style="margin-bottom: 0;">
+                    {{LANGUAGE_BUTTONS}}
+                </div>
+                <button onclick="openHelpModal()" class="btn btn-info" style="padding: 8px 16px; font-size: 14px;" data-i18n-key="help" title="{{HELP}}">
+                    ❓ {{HELP}}
+                </button>
             </div>
             
             
@@ -189,6 +198,21 @@
             
             <div style="margin-top: 15px; text-align: center;">
                 <p style="color: #666; font-size: 14px; margin: 0;">💡 支持 Markdown 语法 • 自动保存 • ESC 退出</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 帮助页面模态框 -->
+    <div id="helpModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 3000; overflow: hidden;">
+        <div id="helpModalContent" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90%; max-width: 1000px; height: 80%; background: white; border-radius: 16px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); display: flex; flex-direction: column; overflow: hidden;">
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 20px 30px; border-bottom: 1px solid #e8eaed; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+                <h2 style="margin: 0; font-size: 24px; font-weight: 600;" id="helpModalTitle" data-i18n-key="helpTitle">{{HELP_TITLE}}</h2>
+                <button onclick="closeHelpModal()" style="background: rgba(255,255,255,0.2); border: none; color: white; width: 36px; height: 36px; border-radius: 50%; cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease;">✕</button>
+            </div>
+            <div style="flex: 1; overflow-y: auto; padding: 30px; background: #f8f9fa;">
+                <div id="helpContent" style="max-width: none; font-size: 16px; line-height: 1.6; color: #333;">
+                    <div style="text-align: center; padding: 40px; color: #666;" data-i18n-key="helpLoading">{{HELP_LOADING}}</div>
+                </div>
             </div>
         </div>
     </div>

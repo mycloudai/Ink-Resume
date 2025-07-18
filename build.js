@@ -105,13 +105,65 @@ function processTemplate(template, langCode, i18nData) {
         .replace(/{{ADD_SECTION}}/g, translations.addSection || '+ Add Section')
         .replace(/{{ADD_SECTION_DIALOG_TITLE}}/g, translations.addSectionDialogTitle || 'Add New Section')
         .replace(/{{NEW_SECTION_TITLE_PLACEHOLDER}}/g, translations.newSectionTitlePlaceholder || 'Enter section title')
-        .replace(/{{OK}}/g, translations.ok || 'OK');
+        .replace(/{{OK}}/g, translations.ok || 'OK')
+        .replace(/{{HELP}}/g, translations.help || 'Help')
+        .replace(/{{HELP_TITLE}}/g, translations.helpTitle || 'Help')
+        .replace(/{{HELP_LOADING}}/g, translations.helpLoading || 'Loading help content...');
+    
+    // 加载并嵌入所有语言的帮助内容
+    result = embedAllHelpContent(result, languages);
     
     // 生成动态语言切换器
     const languageButtons = generateLanguageSwitcher(languages, langCode);
     result = result.replace(/{{LANGUAGE_BUTTONS}}/g, languageButtons);
     
     return result;
+}
+
+// 读取指定语言的帮助内容
+function loadHelpContentForLang(langCode, languages) {
+    const helpFile = languages[langCode].helpFile;
+    
+    if (!fs.existsSync(helpFile)) {
+        console.error(`Help file ${helpFile} not found for ${langCode}`);
+        process.exit(1);
+    }
+    
+    try {
+        return fs.readFileSync(helpFile, 'utf8');
+    } catch (error) {
+        console.error(`Failed to read help file ${helpFile}:`, error.message);
+        process.exit(1);
+    }
+}
+
+// 将所有语言的帮助内容嵌入HTML
+function embedAllHelpContent(html, languages) {
+    let allHelpContents = {};
+    
+    // 读取所有语言的帮助内容
+    for (const [langCode, langConfig] of Object.entries(languages)) {
+        const helpContent = loadHelpContentForLang(langCode, languages);
+        // 转义markdown内容中的特殊字符，准备嵌入JavaScript
+        const escapedContent = helpContent
+            .replace(/\\/g, '\\\\')
+            .replace(/`/g, '\\`')
+            .replace(/\${/g, '\\${');
+        
+        allHelpContents[langCode] = escapedContent;
+    }
+    
+    // 生成嵌入所有帮助内容的脚本
+    let scriptContent = '\n    <script>\n        // 编译时嵌入的所有语言帮助内容\n        window.ALL_HELP_CONTENTS = {\n';
+    
+    for (const [langCode, content] of Object.entries(allHelpContents)) {
+        scriptContent += `            '${langCode}': \`${content}\`,\n`;
+    }
+    
+    scriptContent += `        };\n        \n        // 获取当前语言的帮助内容\n        function getCurrentHelpContent() {\n            return window.ALL_HELP_CONTENTS[window.currentLang] || window.ALL_HELP_CONTENTS['zh-CN'];\n        }\n    </script>`;
+    
+    // 在help.js脚本后插入
+    return html.replace('<script src="help.js"></script>', '<script src="help.js"></script>' + scriptContent);
 }
 
 // 主构建函数

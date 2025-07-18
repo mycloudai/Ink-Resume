@@ -12,20 +12,29 @@ A concise and efficient online resume editor. It uses Markdown syntax, allowing 
 
 *   **Real-time Preview**: Type on the left, and instantly see the rendered resume on the right.
 *   **Markdown Support**: Use simple and intuitive Markdown syntax (e.g., `###` for headings, `-` for lists) to format your resume content.
+*   **Focus Edit Mode**: Provides a dedicated focus edit mode for each text input area, supporting:
+    *   Entering by clicking the "📝" button next to the textarea or by double-clicking the textarea.
+    *   A full-screen immersive editing experience.
+    *   Automatic content saving with status prompts.
+    *   `Ctrl+S` for quick saving.
+    *   `ESC` key to quickly exit edit mode.
+    *   The edit mode title dynamically displays the name of the current section being edited.
 *   **Rich Print Settings**: Before printing, you can freely adjust page margins, overall scaling, title/content font sizes, and line height to achieve the best A4 print layout.
 *   **Multi-language Support**: Built-in support for 7 languages with UI and default templates, switchable with a single click.
-    - 🇨🇳 中文 (Chinese) - `index.html`
+    - 🇨🇳 Chinese (zh-CN) - `index.html`
     - 🇺🇸 English - `en.html`  
-    - 🇯🇵 日本語 (Japanese) - `ja.html`
-    - 🇰🇷 한국어 (Korean) - `ko.html`
-    - 🇫🇷 Français (French) - `fr.html`
-    - 🇩🇪 Deutsch (German) - `de.html`
-    - 🇪🇸 Español (Spanish) - `es.html`
+    - 🇯🇵 Japanese - `ja.html`
+    - 🇰🇷 Korean - `ko.html`
+    - 🇫🇷 French - `fr.html`
+    - 🇩🇪 German - `de.html`
+    - 🇪🇸 Spanish - `es.html`
 *   **Data Import/Export**: Export your resume content to a `.yaml` file for backup, or restore from a file, making migration and version control easy.
+*   **Auto-save & Cache Management**: Edited content is automatically saved to the browser's local cache, so data is not lost upon page refresh. A "Clear Cache" function is provided to clear all locally stored data.
 *   **Drag & Drop Sorting**: Freely reorder sections like "Education" and "Work Experience" by dragging and dropping.
-*   **Style Customization**: Support font selection (SimSun, Arial, etc.) and divider color customization with perfect print font adaptation.
-*   **Template Architecture**: Single template generates multi-language versions for easy maintenance and language expansion.
-*   **Automated Deployment**: Auto-build and deploy via GitHub Actions with GitHub Pages support.
+*   **Style Customization**: Supports font selection (SimSun, Arial, etc.) and divider color customization with perfect print font adaptation.
+*   **Tab Key Support**: Pressing the `Tab` key in a text input area will automatically insert 4 spaces instead of changing focus, facilitating Markdown formatting.
+*   **Technical Support Button & Issue Templates**: A "Technical Support" button is provided at the top of the page, linking directly to the GitHub Issues page with pre-set templates for Bug Reports, Feature Requests, etc., making it easy for users to submit issues and suggestions.
+*   **Privacy Protection**: All content (including photos) is processed only in your local browser and is NOT uploaded to any server. Please feel safe to use.
 
 ## Resume sample
 ![en-sample](./sample/en.png)
@@ -38,6 +47,11 @@ Access the online version directly: **https://www.mycloudai.org/Ink-Resume/**
 
 - Chinese version: `index.html` (default)
 - English version: `en.html`
+- Japanese version: `ja.html`
+- Korean version: `ko.html`
+- French version: `fr.html`
+- German version: `de.html`
+- Spanish version: `es.html`
 
 ### 💽 Local Use
 
@@ -45,6 +59,11 @@ Access the online version directly: **https://www.mycloudai.org/Ink-Resume/**
 2. Find the corresponding language HTML file in the directory:
    - `index.html` - Chinese version
    - `en.html` - English version
+   - `ja.html` - Japanese version
+   - `ko.html` - Korean version
+   - `fr.html` - French version
+   - `de.html` - German version
+   - `es.html` - Spanish version
 3. Simply open it with your browser (Chrome or Firefox recommended)
 
 **No local server or dependencies required!**
