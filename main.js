@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // 初始化 Markdown 聚焦编辑模式
-    setupMarkdownEditMode();
+    setupMarkdownEditMode(); // 首次加载时调用
     
     window.addEventListener('resize', updatePageIndicators);
 
@@ -140,6 +140,7 @@ function renderSections() {
                 sections.splice(index, 0, moved);
                 renderSections();
                 updatePreview();
+                setupMarkdownEditMode(); // 每次重新渲染部分时调用
             }
         };
         
@@ -349,6 +350,7 @@ function applyData(data, lang = 'zh-CN') {
     renderSections();
     updatePreview();
     updatePrintStyle();
+    setupMarkdownEditMode(); // 导入数据后调用
     
     // 应用自定义样式设置（如果存在）
     if (typeof applyCustomStylesFromData === 'function') {
