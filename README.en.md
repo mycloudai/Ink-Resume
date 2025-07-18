@@ -1,6 +1,8 @@
 [中文](./README.md) | [Multi-language Guide](./MULTILANG.md)
-
-# Ink-Resume
+---
+# A free resume generator. Build your resume online!
+---
+# Ink-Resume 
 
 [![Language](https://img.shields.io/badge/language-HTML%2BCSS%2BJS-orange)](https://shields.io/)
 [![License](https://img.shields.io/badge/license-MIT-blue)](https://opensource.org/licenses/MIT)

@@ -1,5 +1,7 @@
 [English](./README.en.md) | [多语言系统说明](./MULTILANG.md)
-
+---
+# 一个免费的简历生成器，在线开始构建你的简历吧！
+---
 # 墨客简历 (Ink-Resume)
 
 [![语言](https://img.shields.io/badge/language-HTML%2BCSS%2BJS-orange)](https://shields.io/)
