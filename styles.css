@@ -1182,3 +1182,15 @@ input[type="color"]::-webkit-color-swatch-wrapper {
         font-size: 12px;
     }
 }
+
+@media print {
+    .print-btn-vertical {
+        display: none !important;
+    }
+    .non-print {
+        display: none !important;
+    }
+    .page-info {
+        display: none !important;
+    }
+}
