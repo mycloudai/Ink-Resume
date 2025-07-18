@@ -183,7 +183,8 @@ const i18nData = {
             helpLoading: '加载帮助内容中...',
             helpLoadError: '帮助内容加载失败，请检查网络连接',
             closeHelp: '关闭帮助',
-            techSupport: '技术支持'
+            techSupport: '技术支持',
+            markdownTip: '💡 支持 Markdown 语法 • 自动保存 • ESC 退出'
         },
         'en-US': {
             pageTitle: 'Ink Resume - Online Markdown Resume Editor',
@@ -246,7 +247,8 @@ const i18nData = {
             helpLoading: 'Loading help content...',
             helpLoadError: 'Failed to load help content, please check network connection',
             closeHelp: 'Close Help',
-            techSupport: 'Technical Support'
+            techSupport: 'Technical Support',
+            markdownTip: '💡 Markdown syntax supported • Auto-save • ESC to exit'
         },
         'ja-JP': {
             pageTitle: 'Ink Resume - オンライン markdown 履歴書エディタ',
@@ -308,7 +310,8 @@ const i18nData = {
             helpLoading: 'ヘルプコンテンツを読み込み中...',
             helpLoadError: 'ヘルプコンテンツの読み込みに失敗しました。ネットワーク接続を確認してください',
             closeHelp: 'ヘルプを閉じる',
-            techSupport: '技術サポート'
+            techSupport: '技術サポート',
+            markdownTip: '💡 Markdown構文対応 • 自動保存 • ESCで終了'
         },
         'ko-KR': {
             pageTitle: 'Ink Resume - 온라인 마크다운 이력서 편집기',
@@ -370,7 +373,8 @@ const i18nData = {
             helpLoading: '도움말 콘텐츠 로딩 중...',
             helpLoadError: '도움말 콘텐츠 로드에 실패했습니다. 네트워크 연결을 확인해주세요',
             closeHelp: '도움말 닫기',
-            techSupport: '기술 지원'
+            techSupport: '기술 지원',
+            markdownTip: '💡 마크다운 문법 지원 • 자동 저장 • ESC로 종료'
         },
         'fr-FR': {
             pageTitle: 'Ink Resume - Éditeur de CV Markdown en ligne',
@@ -432,7 +436,8 @@ const i18nData = {
             helpLoading: "Chargement du contenu d'aide...",
             helpLoadError: "Échec du chargement du contenu d'aide, veuillez vérifier la connexion réseau",
             closeHelp: "Fermer l'aide",
-            techSupport: "Support Technique"
+            techSupport: "Support Technique",
+            markdownTip: '💡 Syntaxe Markdown prise en charge • Sauvegarde automatique • Échap pour quitter'
         },
         'de-DE': {
             pageTitle: 'Ink Resume - Online Markdown Lebenslauf Editor',
@@ -492,9 +497,10 @@ const i18nData = {
             help: 'Hilfe',
             helpTitle: 'Benutzerhandbuch',
             helpLoading: 'Hilfeinhalt wird geladen...',
-            helpLoadError: 'Laden des Hilfeinhalts fehlgeschlagen, bitte überprüfen Sie die Netzwerkverbindung',
+            helpLoadError: 'Laden des Hilfeinhalts fehlgeschlagen, bitte überprüfen Sie网络连接',
             closeHelp: 'Hilfe schließen',
-            techSupport: 'Technischer Support'
+            techSupport: 'Technischer Support',
+            markdownTip: '💡 Markdown-Syntax unterstützt • Automatische Speicherung • ESC zum Beenden'
         },
         'es-ES': {
             pageTitle: 'Ink Resume - Editor de CV Markdown en línea',
@@ -556,7 +562,8 @@ const i18nData = {
             helpLoading: 'Cargando contenido de ayuda...',
             helpLoadError: 'Error al cargar el contenido de ayuda, verifique la conexión de red',
             closeHelp: 'Cerrar ayuda',
-            techSupport: 'Soporte Técnico'
+            techSupport: 'Soporte Técnico',
+            markdownTip: '💡 Sintaxis Markdown compatible • Guardado automático • ESC para salir'
         }
     },
     defaultContent: {
