@@ -161,7 +161,15 @@ const i18nData = {
             fontArial: 'Arial',
             clearCache: '清理缓存',
             clearCacheConfirm: '确定要清理所有本地缓存数据吗？这将删除自动保存的内容。',
-            clearCacheSuccess: '缓存已清理'
+            clearCacheSuccess: '缓存已清理',
+            // 编辑模式相关
+            focusEdit: '聚焦编辑',
+            saveAndExit: '保存并退出',
+            exitFocusEdit: '退出聚焦编辑',
+            editMode: '编辑模式',
+            editContent: '编辑内容',
+            contentEdit: '内容编辑',
+            autoSaving: '自动保存中...'
         },
         'en-US': {
             pageTitle: 'Ink Resume - Online Markdown Resume Editor',
@@ -209,7 +217,15 @@ const i18nData = {
             fontArial: 'Arial',
             clearCache: 'Clear Cache',
             clearCacheConfirm: 'Are you sure you want to clear all local cache data? This will delete auto-saved content.',
-            clearCacheSuccess: 'Cache cleared'
+            clearCacheSuccess: 'Cache cleared',
+            // 编辑模式相关
+            focusEdit: 'Focus Edit',
+            saveAndExit: 'Save & Exit',
+            exitFocusEdit: 'Exit Focus Edit',
+            editMode: 'Edit Mode',
+            editContent: 'Edit Content',
+            contentEdit: 'Content Edit',
+            autoSaving: 'Auto saving...'
         },
         'ja-JP': {
             pageTitle: 'Ink Resume - オンライン markdown 履歴書エディタ',
@@ -256,7 +272,15 @@ const i18nData = {
             fontArial: 'Arial',
             clearCache: 'キャッシュをクリア',
             clearCacheConfirm: 'すべてのローカルキャッシュデータをクリアしますか？自動保存された内容が削除されます。',
-            clearCacheSuccess: 'キャッシュがクリアされました'
+            clearCacheSuccess: 'キャッシュがクリアされました',
+            // 编辑模式相关
+            focusEdit: '集中編集',
+            saveAndExit: '保存して終了',
+            exitFocusEdit: '集中編集終了',
+            editMode: '編集モード',
+            editContent: 'コンテンツ編集',
+            contentEdit: 'コンテンツ編集',
+            autoSaving: '自動保存中...'
         },
         'ko-KR': {
             pageTitle: 'Ink Resume - 온라인 마크다운 이력서 편집기',
@@ -303,7 +327,15 @@ const i18nData = {
             fontArial: 'Arial',
             clearCache: '캐시 지우기',
             clearCacheConfirm: '모든 로컬 캐시 데이터를 지우시겠습니까? 자동 저장된 내용이 삭제됩니다.',
-            clearCacheSuccess: '캐시가 지워졌습니다'
+            clearCacheSuccess: '캐시가 지워졌습니다',
+            // 编辑模式相关
+            focusEdit: '집중 편집',
+            saveAndExit: '저장 후 나가기',
+            exitFocusEdit: '집중 편집 나가기',
+            editMode: '편집 모드',
+            editContent: '내용 편집',
+            contentEdit: '내용 편집',
+            autoSaving: '자동 저장 중...'
         },
         'fr-FR': {
             pageTitle: 'Ink Resume - Éditeur de CV Markdown en ligne',
@@ -350,7 +382,15 @@ const i18nData = {
             fontArial: 'Arial',
             clearCache: 'Vider le cache',
             clearCacheConfirm: 'Voulez-vous vraiment vider toutes les données du cache local ? Cela supprimera le contenu sauvegardé automatiquement.',
-            clearCacheSuccess: 'Cache vidé'
+            clearCacheSuccess: 'Cache vidé',
+            // 编辑模式相关
+            focusEdit: 'Édition ciblée',
+            saveAndExit: 'Sauvegarder et quitter',
+            exitFocusEdit: 'Quitter édition ciblée',
+            editMode: 'Mode édition',
+            editContent: 'Éditer le contenu',
+            contentEdit: 'Édition contenu',
+            autoSaving: 'Sauvegarde automatique...'
         },
         'de-DE': {
             pageTitle: 'Ink Resume - Online Markdown Lebenslauf Editor',
@@ -397,7 +437,15 @@ const i18nData = {
             fontArial: 'Arial',
             clearCache: 'Cache leeren',
             clearCacheConfirm: 'Sind Sie sicher, dass Sie alle lokalen Cache-Daten löschen möchten? Dies löscht automatisch gespeicherte Inhalte.',
-            clearCacheSuccess: 'Cache geleert'
+            clearCacheSuccess: 'Cache geleert',
+            // 编辑模式相关
+            focusEdit: 'Fokus-Bearbeitung',
+            saveAndExit: 'Speichern & Beenden',
+            exitFocusEdit: 'Fokus-Bearbeitung beenden',
+            editMode: 'Bearbeitungsmodus',
+            editContent: 'Inhalt bearbeiten',
+            contentEdit: 'Inhalt bearbeiten',
+            autoSaving: 'Automatisch speichern...'
         },
         'es-ES': {
             pageTitle: 'Ink Resume - Editor de CV Markdown en línea',
@@ -444,7 +492,15 @@ const i18nData = {
             fontArial: 'Arial',
             clearCache: 'Limpiar caché',
             clearCacheConfirm: '¿Está seguro de que desea limpiar todos los datos de caché local? Esto eliminará el contenido guardado automáticamente.',
-            clearCacheSuccess: 'Caché limpiado'
+            clearCacheSuccess: 'Caché limpiado',
+            // 编辑模式相关
+            focusEdit: 'Edición enfocada',
+            saveAndExit: 'Guardar y salir',
+            exitFocusEdit: 'Salir edición enfocada',
+            editMode: 'Modo edición',
+            editContent: 'Editar contenido',
+            contentEdit: 'Editar contenido',
+            autoSaving: 'Guardado automático...'
         }
     },
     defaultContent: {

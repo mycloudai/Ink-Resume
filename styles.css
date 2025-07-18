@@ -236,15 +236,86 @@ textarea {
     min-height: 120px;
     resize: vertical;
     font-family: 'Courier New', monospace;
-    transition: all 0.3s ease;
+    transition: height 0.1s ease;
     line-height: 1.6;
+    overflow: auto;
 }
+
 
 textarea:focus {
     min-height: 200px;
     transform: scale(1.02);
     z-index: 10;
     position: relative;
+}
+
+/* Markdown 聚焦编辑模式样式 */
+#markdownEditOverlay {
+    /* 移除背景模糊，让用户可以看到实时预览 */
+}
+
+#markdownEditPanel {
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+
+#markdownFocusEditor {
+    transition: all 0.3s ease;
+}
+
+#markdownFocusEditor:focus {
+    border-color: #667eea;
+    box-shadow: 0 6px 30px rgba(0,0,0,0.15), 0 0 0 3px rgba(184, 134, 11, 0.1);
+    transform: none;
+}
+
+/* 编辑模式的响应式设计 */
+@media (max-width: 768px) {
+    #markdownEditPanel {
+        width: 70% !important;
+    }
+}
+
+/* Textarea 容器和聚焦编辑按钮 */
+.textarea-wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.focus-edit-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 28px;
+    height: 28px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    border-radius: 6px;
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    opacity: 0.7;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.focus-edit-btn:hover {
+    opacity: 1;
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+}
+
+.focus-edit-btn:active {
+    transform: scale(0.95);
+}
+
+/* 当textarea获得焦点时，按钮更加明显 */
+.textarea-wrapper:focus-within .focus-edit-btn {
+    opacity: 1;
 }
 
 

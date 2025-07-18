@@ -32,6 +32,8 @@ document.addEventListener('DOMContentLoaded', function() {
         initializeStorage();
     }
     
+    // 初始化 Markdown 聚焦编辑模式
+    setupMarkdownEditMode();
     
     window.addEventListener('resize', updatePageIndicators);
 
@@ -187,6 +189,8 @@ function addNewSection() {
     renderSections();
     updatePreview();
     hideAddSectionDialog();
+    // 重新设置新添加的textarea的编辑模式
+    setupMarkdownEditMode();
 }
 
 function deleteSection(id) {
@@ -353,4 +357,192 @@ function applyData(data, lang = 'zh-CN') {
     
     // 重新设置照片上传功能，确保语言切换后仍能正常工作
     setupPhotoUpload();
+}
+
+// Markdown 聚焦编辑功能
+let currentEditingTextarea = null;
+let autoSaveTimer = null;
+let autoSaveDelay = 1000; // 1秒延迟自动保存
+
+function enterMarkdownEditMode(textareaElement) {
+    currentEditingTextarea = textareaElement;
+    const overlay = document.getElementById('markdownEditOverlay');
+    const panel = document.getElementById('markdownEditPanel');
+    const focusEditor = document.getElementById('markdownFocusEditor');
+    const editTitle = panel.querySelector('h2[data-i18n-key="editMode"]');
+    
+    // 获取当前编辑块的名称
+    let blockName = i18nData.translations[currentLang].contentEdit || '内容编辑';
+    
+    // 如果是基本信息textarea
+    if (textareaElement.id === 'basicInfo') {
+        blockName = i18nData.translations[currentLang].basicInfo || i18nData.translations[currentLang].contentEdit || '基本信息';
+    } else {
+        // 如果是section textarea，找到对应的section标题
+        const sectionDiv = textareaElement.closest('.section');
+        if (sectionDiv) {
+            const titleElement = sectionDiv.querySelector('h3');
+            if (titleElement) {
+                blockName = titleElement.textContent || i18nData.translations[currentLang].contentEdit || '内容编辑';
+            }
+        }
+    }
+    
+    // 更新编辑模式标题
+    editTitle.textContent = blockName;
+    
+    // 复制当前内容到聚焦编辑器
+    focusEditor.value = textareaElement.value;
+    
+    // 显示编辑模式
+    overlay.style.display = 'block';
+    
+    // 使用 requestAnimationFrame 确保动画正常执行
+    requestAnimationFrame(() => {
+        panel.style.transform = 'translateX(0)';
+        // 稍微延迟聚焦，确保动画开始
+        setTimeout(() => {
+            focusEditor.focus();
+        }, 100);
+    });
+    
+    // 添加键盘快捷键支持
+    focusEditor.addEventListener('keydown', handleMarkdownEditKeydown);
+    
+    // 添加自动保存功能
+    focusEditor.addEventListener('input', handleAutoSave);
+}
+
+// 自动保存处理函数
+function handleAutoSave() {
+    // 清除之前的计时器
+    if (autoSaveTimer) {
+        clearTimeout(autoSaveTimer);
+    }
+    
+    // 设置新的计时器
+    autoSaveTimer = setTimeout(() => {
+        autoSaveContent();
+    }, autoSaveDelay);
+}
+
+// 执行自动保存
+function autoSaveContent() {
+    if (!currentEditingTextarea) return;
+    
+    const focusEditor = document.getElementById('markdownFocusEditor');
+    const autoSaveStatus = document.getElementById('autoSaveStatus');
+    
+    // 保存内容到原始textarea
+    currentEditingTextarea.value = focusEditor.value;
+    
+    // 触发输入事件以更新预览
+    const event = new Event('input', { bubbles: true });
+    currentEditingTextarea.dispatchEvent(event);
+    
+    // 显示自动保存状态
+    autoSaveStatus.textContent = i18nData.translations[currentLang].autoSaving || '自动保存中...';
+    autoSaveStatus.style.opacity = '1';
+    
+    // 2秒后隐藏状态
+    setTimeout(() => {
+        autoSaveStatus.style.opacity = '0';
+    }, 2000);
+}
+
+// 兼容旧函数名，自动保存并退出
+function saveAndExitMarkdownEdit() {
+    exitMarkdownEditMode();
+}
+
+// 退出聚焦编辑模式（由于有自动保存，只需要退出）
+function exitMarkdownEditMode() {
+    if (!currentEditingTextarea) return;
+    
+    const focusEditor = document.getElementById('markdownFocusEditor');
+    const overlay = document.getElementById('markdownEditOverlay');
+    const panel = document.getElementById('markdownEditPanel');
+    
+    // 清除自动保存计时器
+    if (autoSaveTimer) {
+        clearTimeout(autoSaveTimer);
+        autoSaveTimer = null;
+    }
+    
+    // 最后一次保存
+    autoSaveContent();
+    
+    // 隐藏编辑模式
+    panel.style.transform = 'translateX(-100%)';
+    
+    // 等待动画完成后隐藏元素
+    setTimeout(() => {
+        overlay.style.display = 'none';
+        currentEditingTextarea = null;
+        
+        // 移除事件监听器
+        focusEditor.removeEventListener('keydown', handleMarkdownEditKeydown);
+        focusEditor.removeEventListener('input', handleAutoSave);
+    }, 400);
+}
+
+function handleMarkdownEditKeydown(event) {
+    // Ctrl+S 快速保存（现在只是触发自动保存）
+    if (event.ctrlKey && event.key === 's') {
+        event.preventDefault();
+        autoSaveContent();
+    }
+    
+    // ESC 退出编辑模式
+    if (event.key === 'Escape') {
+        event.preventDefault();
+        exitMarkdownEditMode();
+    }
+}
+
+// 为所有 textarea 添加聚焦编辑功能
+function setupMarkdownEditMode() {
+    const textareas = document.querySelectorAll('textarea');
+    textareas.forEach(textarea => {
+        // 跳过已经处理过的textarea
+        if (textarea.parentNode.classList.contains('textarea-wrapper')) {
+            return;
+        }
+        
+        // 创建包装容器
+        const wrapper = document.createElement('div');
+        wrapper.className = 'textarea-wrapper';
+        
+        // 将textarea包装在容器中
+        textarea.parentNode.insertBefore(wrapper, textarea);
+        wrapper.appendChild(textarea);
+        
+        // 创建聚焦编辑按钮
+        const focusBtn = document.createElement('button');
+        focusBtn.className = 'focus-edit-btn';
+        focusBtn.innerHTML = '📝';
+        focusBtn.type = 'button';
+        focusBtn.title = i18nData.translations[currentLang].focusEdit || '聚焦编辑'; // 添加提示文本
+        
+        // 绑定点击事件
+        focusBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            enterMarkdownEditMode(textarea);
+        });
+        
+        wrapper.appendChild(focusBtn);
+        
+        // 保留双击事件作为备选
+        textarea.removeEventListener('dblclick', handleTextareaDoubleClick);
+        textarea.addEventListener('dblclick', handleTextareaDoubleClick);
+    });
+}
+
+function handleTextareaDoubleClick(event) {
+    // 防止事件冒泡
+    event.preventDefault();
+    event.stopPropagation();
+    
+    enterMarkdownEditMode(this);
 }
