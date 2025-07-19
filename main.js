@@ -14,8 +14,17 @@ marked.setOptions({
 
 // 页面初始化
 document.addEventListener('DOMContentLoaded', function() {
-    setLanguage('zh-CN', true); // 首次加载，不弹窗
-    loadDefaultData('zh-CN'); // 加载默认中文数据
+    const savedLang = getSavedLanguage(); // 获取保存的语言
+    setLanguage(savedLang, true); // 首次加载，不弹窗
+
+    let dataRestored = false;
+    if (typeof initializeStorage === 'function') {
+        dataRestored = initializeStorage();
+    }
+
+    if (!dataRestored) {
+        loadDefaultData(savedLang); // 加载对应语言的默认数据
+    }
     
     initializeBasicInfo();
     renderSections();
@@ -27,9 +36,9 @@ document.addEventListener('DOMContentLoaded', function() {
         initializeCustomStyles();
     }
     
-    // 初始化本地存储功能
-    if (typeof initializeStorage === 'function') {
-        initializeStorage();
+    // 初始化模板系统
+    if (typeof ResumeTemplates !== 'undefined') {
+        ResumeTemplates.init();
     }
     
     // 初始化 Markdown 聚焦编辑模式
@@ -281,6 +290,7 @@ function getPhotoData() {
 // 数据管理
 function getCurrentSettings() {
     return {
+        language: currentLang, // 添加语言设置
         basic_info: document.getElementById('basicInfo').value,
         photo: getPhotoData(),
         sections: sections,
@@ -291,7 +301,8 @@ function getCurrentSettings() {
             page_margin: document.getElementById('pageMargin').value,
             line_height: document.getElementById('lineHeight').value
         },
-        custom_styles: typeof getCurrentCustomStyles === 'function' ? getCurrentCustomStyles() : null
+        custom_styles: typeof getCurrentCustomStyles === 'function' ? getCurrentCustomStyles() : null,
+        template: typeof ResumeTemplates !== 'undefined' ? ResumeTemplates.getCurrentTemplateData() : null
     };
 }
 
@@ -318,6 +329,12 @@ function importData(event) {
     reader.onload = (e) => {
         try {
             const data = jsyaml.load(e.target.result);
+            
+            // 检查并处理语言设置
+            if (data.language && data.language !== currentLang) {
+                setLanguage(data.language, false, false); // 切换语言，但不加载默认数据
+            }
+            
             applyData(data);
             alert(i18nData.translations[currentLang].importSuccess);
         } catch (err) {
@@ -352,7 +369,12 @@ function applyData(data, lang = 'zh-CN') {
     updatePrintStyle();
     setupMarkdownEditMode(); // 导入数据后调用
     
-    // 应用自定义样式设置（如果存在）
+    // 恢复模板设置（如果存在）
+    if (typeof ResumeTemplates !== 'undefined' && data.template) {
+        ResumeTemplates.restoreFromData(data.template);
+    }
+    
+    // 应用自定义样式设置（如果存在），确保它在模板恢复之后执行
     if (typeof applyCustomStylesFromData === 'function') {
         applyCustomStylesFromData(data.custom_styles);
     }

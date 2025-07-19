@@ -19,7 +19,6 @@ class AutoSaveManager {
 
     init() {
         // 页面加载时尝试恢复数据
-        this.restoreData();
         
         // 监听页面关闭事件，强制保存
         window.addEventListener('beforeunload', () => {
@@ -356,6 +355,9 @@ function initializeStorage() {
     autoSaveManager = new AutoSaveManager();
     resumeManager = new ResumeManager();
 
+    // 页面加载时尝试恢复数据
+    const restored = autoSaveManager.restoreData();
+
     // 监听输入变化，触发自动保存
     document.addEventListener('input', (e) => {
         if (e.target.tagName === 'TEXTAREA' || e.target.tagName === 'INPUT') {
@@ -370,6 +372,8 @@ function initializeStorage() {
 
     // 添加控制按钮到界面（可选）
     addStorageControls();
+
+    return restored;
 }
 
 // 添加存储控制按钮

@@ -1,0 +1,349 @@
+/* 简历模板样式系统 */
+
+/* 模板选择器样式 */
+.template-section {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border: 2px solid #dee2e6;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+    margin-bottom: 25px;
+}
+
+.template-section .section-header h3 {
+    color: #495057;
+    font-weight: 700;
+    font-size: 16px;
+}
+
+.current-template-info {
+    margin-top: 10px;
+    padding: 8px 12px;
+    background: rgba(184, 134, 11, 0.1);
+    border-radius: 6px;
+    border-left: 3px solid #b8860b;
+}
+
+.current-template-info small {
+    color: #6c757d;
+    font-size: 12px;
+}
+
+.current-template-info span {
+    color: #b8860b;
+    font-weight: 600;
+    margin-left: 5px;
+}
+
+/* 模板面板样式 */
+.template-panel {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 400px;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(10px);
+    border-right: 1px solid rgba(255, 255, 255, 0.3);
+    z-index: 2000;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    overflow-y: auto;
+    box-shadow: 2px 0 20px rgba(0,0,0,0.15);
+}
+
+.template-panel-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 1999;
+}
+
+.template-panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 25px;
+    border-bottom: 1px solid #e9ecef;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.template-panel-header h3 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.template-close-btn {
+    width: 32px !important;
+    height: 32px !important;
+    padding: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 16px !important;
+    background: rgba(255,255,255,0.2) !important;
+    border: 1px solid rgba(255,255,255,0.3) !important;
+}
+
+.template-panel-content {
+    padding: 25px;
+}
+
+.template-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.template-panel .template-grid {
+    grid-template-columns: 1fr;
+}
+
+.template-option {
+    background: white;
+    border: 2px solid #e9ecef;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    overflow: hidden;
+    position: relative;
+}
+
+.template-option:hover {
+    border-color: #b8860b;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.template-option.active {
+    border-color: #b8860b;
+    background: linear-gradient(135deg, #fff9e6 0%, #ffffff 100%);
+    box-shadow: 0 4px 15px rgba(184, 134, 11, 0.2);
+}
+
+.template-option.active::before {
+    content: '✓';
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: #b8860b;
+    color: white;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
+    z-index: 10;
+}
+
+.template-preview {
+    height: 100px;
+    background: #f8f9fa;
+    padding: 15px;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.template-preview-content {
+    height: 100%;
+    position: relative;
+}
+
+.preview-header h4 {
+    margin: 0 0 10px 0;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.preview-section {
+    border-left: 2px solid;
+    padding-left: 8px;
+    margin-top: 8px;
+}
+
+.preview-line {
+    height: 2px;
+    background: #dee2e6;
+    margin: 3px 0;
+    border-radius: 1px;
+}
+
+.preview-line.short {
+    width: 60%;
+}
+
+.template-info {
+    padding: 12px 15px;
+}
+
+.template-info h4 {
+    margin: 0 0 5px 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: #495057;
+}
+
+.template-info p {
+    margin: 0;
+    font-size: 11px;
+    color: #6c757d;
+    line-height: 1.3;
+}
+
+/* 模板特定样式 */
+
+/* 经典模板 */
+.template-classic .resume-section h2 {
+    border-bottom: 2px solid var(--custom-divider-color, #b8860b);
+    padding-bottom: 8px;
+    margin-bottom: 15px;
+}
+
+.template-classic .resume-header {
+    padding-bottom: 20px;
+    margin-bottom: 25px;
+}
+
+/* 现代模板 */
+.template-modern .resume-section h2 {
+    background: var(--custom-divider-color, #2196F3);
+    color: white;
+    padding: 8px 15px;
+    margin: -5px -15px 15px -15px;
+    border-radius: 6px 0 0 6px;
+    border: none;
+}
+
+.template-modern .resume-header {
+    background: rgba(var(--custom-divider-color-rgb, 33, 150, 243), 0.1);
+    border-left: 4px solid var(--custom-divider-color, #2196F3);
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 25px;
+}
+
+.template-modern .resume-content {
+    position: relative;
+}
+
+.template-modern .resume-content::before {
+    content: '';
+    position: absolute;
+    left: -10px;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: var(--custom-divider-color, #2196F3);
+    border-radius: 2px;
+}
+
+/* 优雅模板 */
+.template-elegant .resume-section h2 {
+    text-align: center;
+    border: none;
+    position: relative;
+    margin-bottom: 20px;
+    font-style: italic;
+}
+
+.template-elegant .resume-section h2::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 2px;
+    background: var(--custom-divider-color, #8e44ad);
+}
+
+.template-elegant .resume-header {
+    text-align: center;
+    border-bottom: 2px double var(--custom-divider-color, #8e44ad);
+    padding-bottom: 20px;
+    margin-bottom: 30px;
+}
+
+.template-elegant .resume-content {
+    text-align: justify;
+}
+
+/* 极简模板 */
+.template-minimal .resume-section h2 {
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: none;
+    border-left: 4px solid var(--custom-divider-color, #333);
+    padding-left: 15px;
+    margin-bottom: 12px;
+}
+
+.template-minimal .resume-header {
+    margin-bottom: 20px;
+}
+
+.template-minimal .resume-content {
+    font-size: calc(var(--live-content-font-size) - 1px);
+}
+
+/* 专业模板 */
+.template-professional .resume-section h2 {
+    background: var(--custom-divider-color, #1f4e79);
+    color: white;
+    padding: 10px 20px;
+    margin: 0 -20px 20px -20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+    border: none;
+}
+
+.template-professional .resume-header {
+    background: rgba(var(--custom-divider-color-rgb, 31, 78, 121), 0.05);
+    border-left: 5px solid var(--custom-divider-color, #1f4e79);
+    padding: 25px;
+    margin-bottom: 25px;
+}
+
+.template-professional .resume-content h3 {
+    color: var(--template-accent-color, #1f4e79);
+    font-weight: 600;
+}
+
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .template-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .template-option {
+        max-width: none;
+    }
+}
+
+/* 打印样式完全由 print.js 处理，避免冲突 */
+
+/* 模板变量覆盖 */
+:root {
+    --template-line-height: 1.5;
+    --template-section-spacing: 20px;
+    --template-accent-color: #b8860b;
+}
+
+/* 应用模板行高 */
+.resume-content {
+    line-height: var(--live-line-height) !important;
+}
+
+/* 应用模板段落间距 */
+.resume-section {
+    margin-bottom: var(--template-section-spacing) !important;
+}

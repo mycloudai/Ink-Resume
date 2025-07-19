@@ -30,7 +30,7 @@ A concise and efficient online resume editor. It uses Markdown syntax, allowing 
     - 🇫🇷 French - `fr.html`
     - 🇩🇪 German - `de.html`
     - 🇪🇸 Spanish - `es.html`
-*   **Data Import/Export**: Export your resume content to a `.yaml` file for backup, or restore from a file, making migration and version control easy.
+*   **Data Import/Export**: Export your resume content to a `.yaml` file for backup, or restore from a file, making migration and version control easy. The latest version supports including language settings in the exported data, and will automatically switch to the corresponding language upon import.
 *   **Auto-save & Cache Management**: Edited content is automatically saved to the browser's local cache, so data is not lost upon page refresh. A "Clear Cache" function is provided to clear all locally stored data.
 *   **Drag & Drop Sorting**: Freely reorder sections like "Education" and "Work Experience" by dragging and dropping.
 *   **Style Customization**: Supports font selection (SimSun, Arial, etc.) and divider color customization with perfect print font adaptation.

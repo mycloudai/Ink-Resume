@@ -73,218 +73,179 @@ function updatePrintStyle() {
         document.head.appendChild(printStyleTag);
     }
 
-    // 原始代码的打印样式 - 修复zoom问题
+    // 最简化的打印样式 - 只做必要的事情
     printStyleTag.innerHTML = `
         @media print {
             @page {
                 size: A4;
                 margin: 15mm ${pageMargin}mm;
-                background: white;
             }
-            :root {
-                --custom-font-family: "${customStyles.fontFamily}" !important;
-            }
+            
+            /* 强制所有元素背景透明 */
             * {
-                font-family: "${customStyles.fontFamily}" !important;
-                -webkit-print-color-adjust: exact !important;
-                print-color-adjust: exact !important;
-                background: transparent !important;
-                background-image: none !important;
-                animation: none !important;
-            }
-            *::before, *::after {
-                display: none !important;
                 background: none !important;
+                background-color: transparent !important;
                 background-image: none !important;
-                content: none !important;
-            }
-            html {
-                background: white !important;
-                background-color: white !important;
-                background-image: none !important;
-            }
-            body {
-                background: white !important;
-                background-color: white !important;
-                background-image: none !important;
-                background-attachment: initial !important;
-                background-position: initial !important;
-                background-repeat: initial !important;
-                background-size: initial !important;
-                animation: none !important;
                 -webkit-print-color-adjust: exact !important;
+                color-adjust: exact !important;
                 print-color-adjust: exact !important;
-                font-size: ${Math.round(contentFontSize * scaling / 100)}px !important;
-                font-family: "${customStyles.fontFamily}" !important;
-                color: #000 !important;
+            }
+            
+            /* 移除所有背景 - 让浏览器使用默认白色 */
+            html, body {
+                background: none !important;
+                background-color: transparent !important;
+                background-image: none !important;
                 margin: 0 !important;
                 padding: 0 !important;
             }
-            body::before {
-                display: none !important;
+            
+            /* 移除所有容器的背景和装饰效果 */
+            .container, .preview-panel {
                 background: none !important;
+                background-color: transparent !important;
                 background-image: none !important;
-                content: none !important;
+                border-radius: 0 !important;
+                box-shadow: none !important;
+                border: none !important;
+                backdrop-filter: none !important;
             }
-            body::after {
-                display: none !important;
-                background: none !important;
-                background-image: none !important;
-                content: none !important;
-            }
-            .container {
-                display: block !important;
-                background: white !important;
-            }
+            
+            /* 不要强制移除简历内容的背景 - 这会破坏模板样式 */
+            
+            /* 隐藏编辑面板，只显示预览 */
             .editor-panel {
                 display: none !important;
             }
-            .preview-panel {
+            
+            .container {
                 display: block !important;
+                background: none !important;
+            }
+            
+            .preview-panel {
+                width: 100% !important;
                 padding: 0 !important;
                 border: none !important;
-                box-shadow: none !important;
-                background: white !important;
-                overflow: visible !important;
+                background: none !important;
             }
+            
             .resume-preview {
-                padding: 0 !important;
-                box-shadow: none !important;
-                page-break-inside: auto;
-                min-height: auto !important;
-                height: auto !important;
                 width: 100% !important;
                 max-width: none !important;
-                background: white !important;
+                padding: var(--live-page-padding, 15mm) !important;
                 font-family: "${customStyles.fontFamily}" !important;
-                color: #000 !important;
-                display: block !important;
+                font-size: ${Math.round(contentFontSize * scaling / 100)}px !important;
+                /* 移除所有装饰效果，让背景透明 */
+                background: none !important;
+                background-color: transparent !important;
+                background-image: none !important;
+                border-radius: 0 !important;
+                box-shadow: none !important;
+                border: none !important;
+                backdrop-filter: none !important;
+                /* 确保内容可见 */
+                color: inherit !important;
                 visibility: visible !important;
                 opacity: 1 !important;
-                /* 移除zoom，使用字体缩放代替 */
             }
-            /* 隐藏语言切换按钮和非打印元素 */
-            .lang-switcher {
-                display: none !important;
+            
+            /* 确保所有简历内容都可见 */
+            .resume-preview * {
+                visibility: visible !important;
+                opacity: 1 !important;
             }
-            .non-print {
-                display: none !important;
-            }
+            
+            /* 隐藏不需要打印的元素 */
+            .lang-switcher,
+            .non-print,
+            .page-info,
             #save-status {
                 display: none !important;
             }
-            .resume-preview, .resume-preview * {
-                font-family: "${customStyles.fontFamily}" !important;
-                color: #000 !important;
-                visibility: visible !important;
-                opacity: 1 !important;
-            }
-            .resume-header, .resume-section, .resume-content {
-                display: block !important;
-                visibility: visible !important;
-                opacity: 1 !important;
-                color: #000 !important;
-            }
-            .resume-content * {
-                color: #000 !important;
-            }
-            .page-info {
-                display: none !important;
-            }
+            
+            /* 基本布局 */
             .resume-header {
-                margin-bottom: 8mm !important;
-                page-break-after: avoid;
-                page-break-inside: avoid;
                 display: flex !important;
                 gap: 12mm !important;
-                align-items: flex-start !important;
+                margin-bottom: 8mm !important;
             }
+            
             .resume-photo {
-                flex-shrink: 0 !important;
                 width: ${Math.round(120 * scaling / 100)}px !important;
                 height: ${Math.round(160 * scaling / 100)}px !important;
+                flex-shrink: 0 !important;
             }
-            .resume-photo img {
-                width: 100% !important;
-                height: 100% !important;
-                object-fit: cover !important;
-                border-radius: 8px !important;
-            }
+            
             .resume-basic-info {
                 flex: 1 !important;
-                height: ${Math.round(160 * scaling / 100)}px !important;
             }
-            #basicInfoPreview {
-                height: 100% !important;
-                display: flex !important;
-                flex-direction: column !important;
-                justify-content: space-between !important;
-            }
-            #basicInfoPreview > * {
-                margin: 0 !important;
-                padding: 0 !important;
-                border: none !important;
-                line-height: ${lineHeight} !important;
-            }
+            
             .resume-section {
                 margin-bottom: 6mm !important;
-                page-break-inside: auto;
             }
+            
             .resume-section h2 {
                 font-size: ${Math.round(titleFontSize * scaling / 100)}px !important;
-                padding-bottom: 2mm !important;
-                margin-bottom: 4mm !important;
-                page-break-after: avoid;
-                page-break-inside: avoid;
-                color: #000 !important;
                 font-weight: 700 !important;
-                border-bottom: 1.5px solid ${customStyles.dividerColor} !important;
-                font-family: "${customStyles.fontFamily}" !important;
+                margin-bottom: 4mm !important;
             }
-            #basicInfoPreview h3 {
-                font-size: ${Math.round(titleFontSize * scaling / 100)}px !important;
-                color: #000 !important;
-                font-weight: 600 !important;
-                font-family: "${customStyles.fontFamily}" !important;
-            }
-            #basicInfoPreview p, .resume-content {
-                font-size: ${Math.round(contentFontSize * scaling / 100)}px !important;
+            
+            .resume-content {
                 line-height: ${lineHeight} !important;
-                color: #000 !important;
-                font-family: "${customStyles.fontFamily}" !important;
             }
-            .resume-content h1,
-            .resume-content h2,
-            .resume-content h3,
-            .resume-content h4,
-            .resume-content h5,
-            .resume-content h6 {
-                color: #000 !important;
-                margin-top: 4mm !important;
-                margin-bottom: 2mm !important;
-                font-weight: 600 !important;
-                border-bottom: none !important;
-                font-family: "${customStyles.fontFamily}" !important;
+            
+            /* 重新启用模板需要的背景样式 */
+            .template-modern .resume-section h2 {
+                background: var(--custom-divider-color, #2196F3) !important;
+                background-color: var(--custom-divider-color, #2196F3) !important;
+                -webkit-print-color-adjust: exact !important;
+                color-adjust: exact !important;
+                print-color-adjust: exact !important;
             }
-            .resume-content p {
-                orphans: 3;
-                widows: 3;
-                margin-bottom: 2mm !important;
-                font-family: "${customStyles.fontFamily}" !important;
+            
+            .template-modern .resume-header {
+                background: rgba(var(--custom-divider-color-rgb, 33, 150, 243), 0.1) !important;
+                border-left: 4px solid var(--custom-divider-color, #2196F3) !important;
+                -webkit-print-color-adjust: exact !important;
+                color-adjust: exact !important;
+                print-color-adjust: exact !important;
             }
-            .resume-content li {
-                page-break-inside: avoid;
-                margin-bottom: 1mm !important;
-                font-family: "${customStyles.fontFamily}" !important;
+            
+            .template-professional .resume-section h2 {
+                background: var(--custom-divider-color, #1f4e79) !important;
+                background-color: var(--custom-divider-color, #1f4e79) !important;
+                -webkit-print-color-adjust: exact !important;
+                color-adjust: exact !important;
+                print-color-adjust: exact !important;
             }
-            .resume-content ul {
-                padding-left: 20px !important;
+            
+            .template-professional .resume-header {
+                background: rgba(var(--custom-divider-color-rgb, 31, 78, 121), 0.05) !important;
+                border-left: 5px solid var(--custom-divider-color, #1f4e79) !important;
+                -webkit-print-color-adjust: exact !important;
+                color-adjust: exact !important;
+                print-color-adjust: exact !important;
             }
-            .resume-content ul, .resume-content ol {
-                font-family: "${customStyles.fontFamily}" !important;
+            
+            
+            .template-modern .resume-content::before {
+                background: var(--custom-divider-color, #2196F3) !important;
+                background-color: var(--custom-divider-color, #2196F3) !important;
             }
-            .non-print {
-                display: none !important;
+            
+            .template-elegant .resume-section h2::after {
+                background: var(--custom-divider-color, #8e44ad) !important;
+                -webkit-print-color-adjust: exact !important;
+                color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            
+            .template-elegant .resume-header {
+                border-color: var(--custom-divider-color, #8e44ad) !important;
+                -webkit-print-color-adjust: exact !important;
+                color-adjust: exact !important;
+                print-color-adjust: exact !important;
             }
         }
     `;
@@ -357,7 +318,7 @@ function doPrint() {
     setTimeout(() => {
         window.print();
         
-        // 恢复原始样式
+        // 恢复原始样式 - 但保持用户选择的字体
         allElements.forEach((element, index) => {
             if (originalStyles[index]) {
                 element.style.fontFamily = originalStyles[index];
@@ -372,8 +333,17 @@ function doPrint() {
             resumePreview.style.removeProperty('font-family');
         }
         
+        // 重新应用自定义字体样式
+        document.documentElement.style.setProperty('--custom-font-family', customStyles.fontFamily);
+        
         // 恢复显示
         pageInfo.style.display = 'block';
-        updatePreview();
+        
+        // 重新应用自定义样式以确保字体正确
+        if (typeof applyCustomStyles === 'function') {
+            applyCustomStyles();
+        } else {
+            updatePreview();
+        }
     }, 100);
 }

@@ -413,6 +413,10 @@ textarea:focus {
     background: linear-gradient(135deg, #343a40 0%, #23272b 100%);
 }
 
+.btn-purple {
+    background: linear-gradient(135deg, #6a1b9a 0%, #4a148c 100%);
+}
+
 .glass-btn {
     /* 降低透明度，减少毛玻璃效果，增加色彩饱和度 */
     background: rgba(255, 255, 255, 0.15);
@@ -680,7 +684,6 @@ textarea:focus {
     margin: 0 !important;
     padding: 0 !important;
     border: none !important;
-    line-height: var(--live-line-height) !important;
 }
 
 #basicInfoPreview h3 {

@@ -184,7 +184,11 @@ const i18nData = {
             helpLoadError: '帮助内容加载失败，请检查网络连接',
             closeHelp: '关闭帮助',
             techSupport: '技术支持',
-            markdownTip: '💡 支持 Markdown 语法 • 自动保存 • ESC 退出'
+            markdownTip: '💡 支持 Markdown 语法 • 自动保存 • ESC 退出',
+            // 模板系统相关
+            templateSelection: '模板选择',
+            chooseTemplate: '选择模板',
+            currentTemplate: '当前模板：'
         },
         'en-US': {
             pageTitle: 'Ink Resume - Online Markdown Resume Editor',
@@ -221,7 +225,8 @@ const i18nData = {
             exportSuccessFilename: 'Resume_Data.yaml',
             importSuccess: 'Import successful',
             importError: 'Import failed. The file format might be incorrect.',
-            privacyNotice: 'Important Notice: All content on this page (including photos) is processed only in your local browser and is NOT uploaded to any server. Please feel safe to use. Data is automatically cached in your local browser and will not be lost after page refresh. To reset local cache, click the "Clear Cache" button. We recommend using the import/export function to permanently save your data.',            // Style customization related
+            privacyNotice: 'Important Notice: All content on this page (including photos) is processed only in your local browser and is NOT uploaded to any server. Please feel safe to use. Data is automatically cached in your local browser and will not be lost after page refresh. To reset local cache, click the "Clear Cache" button. We recommend using the import/export function to permanently save your data.',
+            // Style customization related
             styleCustomization: 'Style Customization',
             fontFamily: 'Font Family',
             dividerColor: 'Divider Color',
@@ -248,7 +253,11 @@ const i18nData = {
             helpLoadError: 'Failed to load help content, please check network connection',
             closeHelp: 'Close Help',
             techSupport: 'Technical Support',
-            markdownTip: '💡 Markdown syntax supported • Auto-save • ESC to exit'
+            markdownTip: '💡 Markdown syntax supported • Auto-save • ESC to exit',
+            // 模板系统相关
+            templateSelection: 'Template Selection',
+            chooseTemplate: 'Choose Template',
+            currentTemplate: 'Current Template:'
         },
         'ja-JP': {
             pageTitle: 'Ink Resume - オンライン markdown 履歴書エディタ',
@@ -311,7 +320,11 @@ const i18nData = {
             helpLoadError: 'ヘルプコンテンツの読み込みに失敗しました。ネットワーク接続を確認してください',
             closeHelp: 'ヘルプを閉じる',
             techSupport: '技術サポート',
-            markdownTip: '💡 Markdown構文対応 • 自動保存 • ESCで終了'
+            markdownTip: '💡 Markdown構文対応 • 自動保存 • ESCで終了',
+            // 模板系统相关
+            templateSelection: 'テンプレート選択',
+            chooseTemplate: 'テンプレートを選択',
+            currentTemplate: '現在のテンプレート：'
         },
         'ko-KR': {
             pageTitle: 'Ink Resume - 온라인 마크다운 이력서 편집기',
@@ -374,7 +387,11 @@ const i18nData = {
             helpLoadError: '도움말 콘텐츠 로드에 실패했습니다. 네트워크 연결을 확인해주세요',
             closeHelp: '도움말 닫기',
             techSupport: '기술 지원',
-            markdownTip: '💡 마크다운 문법 지원 • 자동 저장 • ESC로 종료'
+            markdownTip: '💡 마크다운 문법 지원 • 자동 저장 • ESC로 종료',
+            // 模板系统相关
+            templateSelection: '템플릿 선택',
+            chooseTemplate: '템플릿 선택',
+            currentTemplate: '현재 템플릿:'
         },
         'fr-FR': {
             pageTitle: 'Ink Resume - Éditeur de CV Markdown en ligne',
@@ -437,7 +454,11 @@ const i18nData = {
             helpLoadError: "Échec du chargement du contenu d'aide, veuillez vérifier la connexion réseau",
             closeHelp: "Fermer l'aide",
             techSupport: "Support Technique",
-            markdownTip: '💡 Syntaxe Markdown prise en charge • Sauvegarde automatique • Échap pour quitter'
+            markdownTip: '💡 Syntaxe Markdown prise en charge • Sauvegarde automatique • Échap pour quitter',
+            // 模板系统相关
+            templateSelection: 'Sélection de Modèle',
+            chooseTemplate: 'Choisir un Modèle',
+            currentTemplate: 'Modèle Actuel:'
         },
         'de-DE': {
             pageTitle: 'Ink Resume - Online Markdown Lebenslauf Editor',
@@ -497,10 +518,14 @@ const i18nData = {
             help: 'Hilfe',
             helpTitle: 'Benutzerhandbuch',
             helpLoading: 'Hilfeinhalt wird geladen...',
-            helpLoadError: 'Laden des Hilfeinhalts fehlgeschlagen, bitte überprüfen Sie网络连接',
+            helpLoadError: 'Laden des Hilfeinhalts fehlgeschlagen, bitte überprüfen Sie die Netzwerkverbindung',
             closeHelp: 'Hilfe schließen',
             techSupport: 'Technischer Support',
-            markdownTip: '💡 Markdown-Syntax unterstützt • Automatische Speicherung • ESC zum Beenden'
+            markdownTip: '💡 Markdown-Syntax unterstützt • Automatische Speicherung • ESC zum Beenden',
+            // 模板系统相关
+            templateSelection: 'Vorlagenauswahl',
+            chooseTemplate: 'Vorlage Wählen',
+            currentTemplate: 'Aktuelle Vorlage:'
         },
         'es-ES': {
             pageTitle: 'Ink Resume - Editor de CV Markdown en línea',
@@ -563,7 +588,11 @@ const i18nData = {
             helpLoadError: 'Error al cargar el contenido de ayuda, verifique la conexión de red',
             closeHelp: 'Cerrar ayuda',
             techSupport: 'Soporte Técnico',
-            markdownTip: '💡 Sintaxis Markdown compatible • Guardado automático • ESC para salir'
+            markdownTip: '💡 Sintaxis Markdown compatible • Guardado automático • ESC para salir',
+            // 模板系统相关
+            templateSelection: 'Selección de Plantilla',
+            chooseTemplate: 'Elegir Plantilla',
+            currentTemplate: 'Plantilla Actual:'
         }
     },
     defaultContent: {
@@ -647,10 +676,28 @@ const i18nData = {
     }
 };
 
-let currentLang = 'zh-CN'; // 默认语言
+// 从本地存储获取语言设置，如果没有则使用默认语言
+function getSavedLanguage() {
+    try {
+        return localStorage.getItem('ink-resume-language') || 'zh-CN';
+    } catch (e) {
+        return 'zh-CN';
+    }
+}
+
+// 保存语言设置到本地存储
+function saveLanguage(lang) {
+    try {
+        localStorage.setItem('ink-resume-language', lang);
+    } catch (e) {
+        // 如果localStorage不可用，忽略错误
+    }
+}
+
+let currentLang = getSavedLanguage(); // 从本地存储获取语言
 window.currentLang = currentLang; // 暴露给window对象以供帮助系统使用
 
-function setLanguage(lang, isInitialLoad = false) {
+function setLanguage(lang, isInitialLoad = false, loadDefaults = true) {
     if (!i18nData.translations[lang]) return;
 
     if (!isInitialLoad && lang !== currentLang) {
@@ -662,6 +709,9 @@ function setLanguage(lang, isInitialLoad = false) {
     currentLang = lang;
     window.currentLang = lang; // 更新window对象中的语言设置
     document.documentElement.lang = lang;
+    
+    // 保存语言设置
+    saveLanguage(lang);
 
     // 更新所有静态UI文本
     document.querySelectorAll('[data-i18n-key]').forEach(el => {
@@ -681,8 +731,13 @@ function setLanguage(lang, isInitialLoad = false) {
         btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
     });
 
+    // 更新模板系统的国际化文本
+    if (typeof ResumeTemplates !== 'undefined') {
+        ResumeTemplates.updateI18n();
+    }
+
     // 如果不是首次加载，加载默认数据
-    if (!isInitialLoad) {
+    if (!isInitialLoad && loadDefaults) {
          loadDefaultData(lang);
     }
 }
@@ -692,7 +747,11 @@ function loadDefaultData(lang) {
         basic_info: i18nData.defaultContent[lang].basic_info,
         photo: null,
         sections: i18nData.defaultContent[lang].sections,
-        print_settings: i18nData.defaultSettings
+        print_settings: i18nData.defaultSettings,
+        template: {
+            templateId: 'classic',
+            templateName: 'Classic'
+        }
     };
     applyData(dataToLoad, lang);
 }

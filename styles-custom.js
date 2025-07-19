@@ -11,8 +11,25 @@ let currentCustomStyles = { ...defaultCustomStyles };
 
 // 初始化自定义风格功能
 function initializeCustomStyles() {
-    // 设置默认值
-    document.getElementById('fontSelector').value = currentCustomStyles.fontFamily;
+    // 设置默认字体选择器
+    const fontSelector = document.getElementById('fontSelector');
+    if (fontSelector) {
+        const fontOptions = {
+            "'Microsoft YaHei', Arial, sans-serif": 0,
+            "'SimSun', serif": 1,
+            "'Times New Roman', serif": 2,
+            "'Arial', sans-serif": 3
+        };
+        
+        const optionIndex = fontOptions[currentCustomStyles.fontFamily];
+        if (optionIndex !== undefined) {
+            fontSelector.selectedIndex = optionIndex;
+        } else {
+            fontSelector.selectedIndex = 0; // 默认选择微软雅黑
+        }
+    }
+    
+    // 设置默认颜色
     document.getElementById('dividerColorPicker').value = currentCustomStyles.dividerColor;
     
     // 更新颜色值显示
@@ -51,28 +68,82 @@ function applyCustomStyles() {
     document.documentElement.style.setProperty('--custom-font-family', currentCustomStyles.fontFamily);
     document.documentElement.style.setProperty('--custom-divider-color', currentCustomStyles.dividerColor);
     
-    // 更新预览区域的字体
-    const resumePreview = document.getElementById('resumePreview');
-    if (resumePreview) {
-        resumePreview.style.fontFamily = currentCustomStyles.fontFamily;
+    // 为支持rgba()的模板添加RGB颜色变量
+    const rgbColor = hexToRgb(currentCustomStyles.dividerColor);
+    if (rgbColor) {
+        document.documentElement.style.setProperty('--custom-divider-color-rgb', `${rgbColor.r}, ${rgbColor.g}, ${rgbColor.b}`);
     }
-    
-    // 更新分割线颜色
-    const sectionHeaders = document.querySelectorAll('.resume-section h2');
-    sectionHeaders.forEach(header => {
-        header.style.borderBottomColor = currentCustomStyles.dividerColor;
-    });
     
     // 更新打印样式
     updatePrintStylesWithCustomization();
+    
+    // 触发预览更新
+    if (typeof updatePreview === 'function') {
+        updatePreview();
+    }
+}
+
+// 将十六进制颜色转换为RGB
+function hexToRgb(hex) {
+    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16)
+    } : null;
+}
+
+// 从模板更新自定义样式（不触发重新应用）
+function updateCustomStylesFromTemplate(fontFamily, dividerColor) {
+    currentCustomStyles.fontFamily = fontFamily;
+    currentCustomStyles.dividerColor = dividerColor;
+    
+    // 更新字体选择器
+    const fontSelector = document.getElementById('fontSelector');
+    if (fontSelector) {
+        const fontOptions = {
+            "'Microsoft YaHei', Arial, sans-serif": 0,
+            "'SimSun', serif": 1,
+            "'Times New Roman', serif": 2,
+            "'Arial', sans-serif": 3
+        };
+        
+        const optionIndex = fontOptions[fontFamily];
+        if (optionIndex !== undefined) {
+            fontSelector.selectedIndex = optionIndex;
+        } else {
+            fontSelector.selectedIndex = 0; // 默认选择微软雅黑
+        }
+    }
+    
+    // 更新颜色选择器
+    document.getElementById('dividerColorPicker').value = dividerColor;
+    updateColorDisplays();
 }
 
 // 重置为默认样式
 function resetCustomStyles() {
     currentCustomStyles = { ...defaultCustomStyles };
     
-    // 更新UI控件
-    document.getElementById('fontSelector').value = currentCustomStyles.fontFamily;
+    // 更新字体选择器
+    const fontSelector = document.getElementById('fontSelector');
+    if (fontSelector) {
+        const fontOptions = {
+            "'Microsoft YaHei', Arial, sans-serif": 0,
+            "'SimSun', serif": 1,
+            "'Times New Roman', serif": 2,
+            "'Arial', sans-serif": 3
+        };
+        
+        const optionIndex = fontOptions[currentCustomStyles.fontFamily];
+        if (optionIndex !== undefined) {
+            fontSelector.selectedIndex = optionIndex;
+        } else {
+            fontSelector.selectedIndex = 0;
+        }
+    }
+    
+    // 更新颜色选择器
     document.getElementById('dividerColorPicker').value = currentCustomStyles.dividerColor;
     
     // 更新显示和应用样式
