@@ -34,7 +34,7 @@ Ink Resume ist ein Markdown-basierter Online-Lebenslauf-Editor, der Echtzeit-Vor
   **Adresse:** Berlin, Deutschland
   ```
 
-### 3. Verwaltung der Lebenslauf-Abschnitte
+### 4. Verwaltung der Lebenslauf-Abschnitte
 #### Neue Abschnitte hinzufügen
 - Klicken Sie auf die Schaltfläche "+ Neuen Abschnitt hinzufügen"
 - Geben Sie den Abschnittstitel ein (z.B. "Berufserfahrung", "Ausbildung")
@@ -60,7 +60,7 @@ Ink Resume ist ein Markdown-basierter Online-Lebenslauf-Editor, der Echtzeit-Vor
 - Klicken Sie auf die "Löschen" Schaltfläche oben rechts im Abschnitt
 - Bestätigen Sie, um diesen Abschnitt zu löschen
 
-### 4. Markdown-Syntax-Unterstützung
+### 5. Markdown-Syntax-Unterstützung
 Unterstützt vollständige Markdown-Syntax:
 
 #### Überschriften
@@ -92,7 +92,7 @@ Unterstützt vollständige Markdown-Syntax:
 [Link-Text](https://example.com)
 ```
 
-### 5. Stil-Anpassung
+### 6. Stil-Anpassung
 #### Schriftauswahl
 - Standardschrift: Microsoft YaHei + Arial
 - SimSun: Geeignet für offizielle Dokumente
@@ -107,7 +107,7 @@ Unterstützt vollständige Markdown-Syntax:
 #### Stile zurücksetzen
 - Klicken Sie auf "Stile zurücksetzen", um alle Anpassungen zu restaurieren
 
-### 6. Druckeinstellungen
+### 7. Druckeinstellungen
 Klicken Sie auf die "👇Lebenslauf drucken👆" Schaltfläche rechts, um zu den Druckeinstellungen zu gelangen:
 
 #### Seiteneinstellungen
@@ -125,7 +125,7 @@ Beim Drucken im System-Druckdialog:
 - Wählen Sie "Als PDF speichern"
 - Deaktivieren Sie "Kopf- und Fußzeilen" in "Weitere Einstellungen"
 
-### 7. Datenverwaltung
+### 8. Datenverwaltung
 #### Datenexport
 - Klicken Sie auf die "Daten exportieren" Schaltfläche
 - Lädt YAML-Format Datendatei herunter
@@ -141,7 +141,7 @@ Beim Drucken im System-Druckdialog:
 - Löscht lokal gespeicherte Browser-Daten
 - Vorsichtig verwenden: löscht alle nicht exportierten Inhalte
 
-### 8. Echtzeit-Vorschau
+### 9. Echtzeit-Vorschau
 - Rechter Vorschaubereich zeigt Lebenslauf in Echtzeit an
 - Berechnet automatisch und zeigt Seitenzahl an
 - Vorschau entspricht der Druckausgabe

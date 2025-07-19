@@ -34,7 +34,7 @@ Ink Resume est un éditeur de CV en ligne basé sur Markdown qui prend en charge
   **Adresse :** Paris, France
   ```
 
-### 3. Gestion des sections du CV
+### 4. Gestion des sections du CV
 #### Ajout de nouvelles sections
 - Cliquez sur le bouton "+ Ajouter une nouvelle section"
 - Saisissez le titre de la section (par exemple "Expérience professionnelle", "Formation")
@@ -60,7 +60,7 @@ Ink Resume est un éditeur de CV en ligne basé sur Markdown qui prend en charge
 - Cliquez sur le bouton "Supprimer" en haut à droite de la section
 - Confirmez pour supprimer cette section
 
-### 4. Support de la syntaxe Markdown
+### 5. Support de la syntaxe Markdown
 Prend en charge la syntaxe Markdown complète :
 
 #### Titres
@@ -92,7 +92,7 @@ Prend en charge la syntaxe Markdown complète :
 [Texte du lien](https://example.com)
 ```
 
-### 5. Personnalisation du style
+### 6. Personnalisation du style
 #### Sélection de police
 - Police par défaut : Microsoft YaHei + Arial
 - SimSun : Convient aux documents officiels
@@ -107,7 +107,7 @@ Prend en charge la syntaxe Markdown complète :
 #### Réinitialisation des styles
 - Cliquez sur "Réinitialiser les styles" pour restaurer tous les paramètres par défaut
 
-### 6. Paramètres d'impression
+### 7. Paramètres d'impression
 Cliquez sur le bouton "👇Imprimer CV👆" à droite pour entrer dans les paramètres d'impression :
 
 #### Paramètres de page
@@ -125,7 +125,7 @@ Lors de l'impression, dans la boîte de dialogue d'impression système :
 - Sélectionnez "Enregistrer au format PDF"
 - Décochez "En-têtes et pieds de page" dans "Plus de paramètres"
 
-### 7. Gestion des données
+### 8. Gestion des données
 #### Exportation de données
 - Cliquez sur le bouton "Exporter les données"
 - Télécharge un fichier de données au format YAML
@@ -141,7 +141,7 @@ Lors de l'impression, dans la boîte de dialogue d'impression système :
 - Efface les données stockées localement dans le navigateur
 - Utilisez avec prudence : effacera tout le contenu non exporté
 
-### 8. Aperçu en temps réel
+### 9. Aperçu en temps réel
 - La zone d'aperçu de droite affiche le CV en temps réel
 - Calcule automatiquement et affiche le nombre de pages
 - L'aperçu correspond à la sortie d'impression

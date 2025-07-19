@@ -25,7 +25,7 @@ Ink Resume is a Markdown-based online resume editor that supports real-time prev
 
 #### Basic Information
 - Edit personal information using Markdown syntax
-- Supports headings, bold text, links, and other formats
+- Supports headings, bold text, links and other formats
 - Example format:
   ```markdown
   ### John Doe
@@ -34,7 +34,7 @@ Ink Resume is a Markdown-based online resume editor that supports real-time prev
   **Address:** New York, NY
   ```
 
-### 3. Resume Section Management
+### 4. Resume Section Management
 #### Adding New Sections
 - Click the "+ Add New Section" button
 - Enter section title (e.g., "Work Experience", "Education")
@@ -60,7 +60,7 @@ Ink Resume is a Markdown-based online resume editor that supports real-time prev
 - Click the "Delete" button in the top-right corner of the section
 - Confirm to delete the section
 
-### 4. Markdown Syntax Support
+### 5. Markdown Syntax Support
 Supports full Markdown syntax:
 
 #### Headings
@@ -92,7 +92,7 @@ Supports full Markdown syntax:
 [Link text](https://example.com)
 ```
 
-### 5. Style Customization
+### 6. Style Customization
 #### Font Selection
 - Default font: Microsoft YaHei + Arial
 - SimSun: Suitable for formal documents
@@ -107,7 +107,7 @@ Supports full Markdown syntax:
 #### Reset Styles
 - Click "Reset Styles" to restore all defaults
 
-### 6. Print Settings
+### 7. Print Settings
 Click the "👇Print Resume👆" button on the right to enter print settings:
 
 #### Page Settings
@@ -125,7 +125,7 @@ When printing, in the system print dialog:
 - Select "Save as PDF"
 - Uncheck "Headers and footers" in "More settings"
 
-### 7. Data Management
+### 8. Data Management
 #### Export Data
 - Click "Export Data" button
 - Downloads YAML format data file
@@ -141,7 +141,7 @@ When printing, in the system print dialog:
 - Clears locally stored browser data
 - Use with caution: will clear all non-exported content
 
-### 8. Real-time Preview
+### 9. Real-time Preview
 - Right preview area displays resume in real-time
 - Automatically calculates and displays page count
 - Preview matches print output

@@ -34,7 +34,7 @@ Ink Resume es un editor de currículum en línea basado en Markdown que admite v
   **Dirección:** Madrid, España
   ```
 
-### 3. Gestión de secciones del currículum
+### 4. Gestión de secciones del currículum
 #### Agregar nuevas secciones
 - Haga clic en el botón "+ Agregar nueva sección"
 - Ingrese el título de la sección (ej. "Experiencia laboral", "Educación")
@@ -60,7 +60,7 @@ Ink Resume es un editor de currículum en línea basado en Markdown que admite v
 - Haga clic en el botón "Eliminar" en la esquina superior derecha de la sección
 - Confirme para eliminar esa sección
 
-### 4. Soporte de sintaxis Markdown
+### 5. Soporte de sintaxis Markdown
 Admite sintaxis Markdown completa:
 
 #### Encabezados
@@ -92,7 +92,7 @@ Admite sintaxis Markdown completa:
 [Texto del enlace](https://example.com)
 ```
 
-### 5. Personalización de estilo
+### 6. Personalización de estilo
 #### Selección de fuente
 - Fuente predeterminada: Microsoft YaHei + Arial
 - SimSun: Adecuada para documentos oficiales
@@ -107,7 +107,7 @@ Admite sintaxis Markdown completa:
 #### Restablecer estilos
 - Haga clic en "Restablecer estilos" para restaurar todos los valores predeterminados
 
-### 6. Configuración de impresión
+### 7. Configuración de impresión
 Haga clic en el botón "👇Imprimir currículum👆" a la derecha para entrar a la configuración de impresión:
 
 #### Configuración de página
@@ -125,7 +125,7 @@ Al imprimir, en el diálogo de impresión del sistema:
 - Seleccione "Guardar como PDF"
 - Desmarque "Encabezados y pies de página" en "Más configuraciones"
 
-### 7. Gestión de datos
+### 8. Gestión de datos
 #### Exportar datos
 - Haga clic en el botón "Exportar datos"
 - Descarga archivo de datos en formato YAML
@@ -141,7 +141,7 @@ Al imprimir, en el diálogo de impresión del sistema:
 - Borra datos almacenados localmente en el navegador
 - Use con precaución: borrará todo el contenido no exportado
 
-### 8. Vista previa en tiempo real
+### 9. Vista previa en tiempo real
 - El área de vista previa derecha muestra el currículum en tiempo real
 - Calcula automáticamente y muestra el número de páginas
 - La vista previa coincide con la salida de impresión
