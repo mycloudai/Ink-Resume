@@ -10,7 +10,14 @@ Ink Resume ist ein Markdown-basierter Online-Lebenslauf-Editor, der Echtzeit-Vor
 - Klicken Sie auf die Sprachbuttons oben zum Wechseln
 - Lädt automatisch entsprechende Sprachvorlagen nach dem Wechsel
 
-### 2. Bearbeitung der Grundinformationen
+### 2. Vorlagenauswahl
+- Klicken Sie auf die Schaltfläche „Vorlage auswählen“, um das Vorlagenauswahlfeld von links einzublenden.
+- Bietet verschiedene voreingestellte Vorlagen (z. B. Klassisch, Modern, Elegant, Minimal, Professionell), jede mit einem einzigartigen Designstil.
+- Klicken Sie auf eine Vorlagenvorschau, um sie anzuwenden, und Ihr Lebenslauf wird sofort auf den Stil dieser Vorlage aktualisiert.
+- Vorlagen beeinflussen das Gesamtlayout, die Schriftarten, Farben und Trennlinienstile Ihres Lebenslaufs.
+- Nach der Auswahl einer Vorlage können Sie Schriftart und Trennlinienfarbe weiterhin unter „Stilanpassung“ anpassen; diese Anpassungen werden über die Vorlagenstile gelegt.
+
+### 3. Bearbeitung der Grundinformationen
 #### Persönliches Foto
 - Klicken Sie auf den Fotobereich, um ein persönliches Foto hochzuladen
 - Unterstützt gängige Bildformate (JPG, PNG, etc.)

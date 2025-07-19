@@ -6,11 +6,18 @@ Ink Resume es un editor de currículum en línea basado en Markdown que admite v
 ## Características principales
 
 ### 1. Cambio de idioma
-- Admite 7 idiomas: chino, inglés, japonés, coreano, francés, alemán, español
+- Soporta 7 idiomas: chino, inglés, japonés, coreano, francés, alemán, español
 - Haga clic en los botones de idioma en la parte superior para cambiar
-- Carga automáticamente las plantillas de idioma correspondientes después del cambio
+- Carga automáticamente las plantillas predeterminadas del idioma correspondiente después de cambiar
 
-### 2. Edición de información básica
+### 2. Selección de Plantilla
+- Haga clic en el botón "Elegir Plantilla" para que se deslice el panel de selección de plantillas desde la izquierda.
+- Ofrece varias plantillas preestablecidas (por ejemplo, Clásica, Moderna, Elegante, Minimalista, Profesional), cada una con un estilo de diseño único.
+- Haga clic en la vista previa de una plantilla para aplicarla, y su currículum se actualizará instantáneamente al estilo de esa plantilla.
+- Las plantillas afectan el diseño general, las fuentes, los colores y los estilos de los divisores de su currículum.
+- Después de seleccionar una plantilla, aún puede ajustar la fuente y el color del divisor en "Personalización de estilo"; estas personalizaciones se superpondrán a los estilos de la plantilla.
+
+### 3. Edición de la información básica
 #### Foto personal
 - Haga clic en el área de foto para subir una foto personal
 - Admite formatos de imagen comunes (JPG, PNG, etc.)

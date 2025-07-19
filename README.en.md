@@ -12,6 +12,7 @@ A concise and efficient online resume editor. It uses Markdown syntax, allowing 
 
 ## ✨ Features
 
+*   **Template System**: Built-in multiple professional templates (Classic, Modern, Elegant, etc.), switch with one click to instantly change the overall appearance of your resume. Templates affect fonts, colors, layouts, etc., and can be perfectly combined with custom styles.
 *   **Real-time Preview**: Type on the left, and instantly see the rendered resume on the right.
 *   **Markdown Support**: Use simple and intuitive Markdown syntax (e.g., `###` for headings, `-` for lists) to format your resume content.
 *   **Focus Edit Mode**: Provides a dedicated focus edit mode for each text input area, supporting:

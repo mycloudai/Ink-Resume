@@ -10,7 +10,14 @@ Ink Resume is a Markdown-based online resume editor that supports real-time prev
 - Click the language buttons at the top to switch
 - Automatically loads corresponding language templates after switching
 
-### 2. Basic Information Editing
+### 2. Template Selection
+- Click the "Choose Template" button to slide out the template selection panel from the left.
+- Provides various preset templates (e.g., Classic, Modern, Elegant, Minimal, Professional), each with a unique design style.
+- Click on a template preview to apply it, and your resume will instantly update to that template's style.
+- Templates affect the overall layout, fonts, colors, and divider styles of your resume.
+- After selecting a template, you can still adjust the font and divider color in "Style Customization"; these customizations will layer on top of the template styles.
+
+### 3. Basic Information Editing
 #### Personal Photo
 - Click the photo area to upload a personal photo
 - Supports common image formats (JPG, PNG, etc.)

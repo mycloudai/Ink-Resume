@@ -10,7 +10,14 @@ Ink Resume est un éditeur de CV en ligne basé sur Markdown qui prend en charge
 - Cliquez sur les boutons de langue en haut pour changer
 - Charge automatiquement les modèles par défaut de la langue correspondante après changement
 
-### 2. Édition des informations de base
+### 2. Sélection de Modèle
+- Cliquez sur le bouton "Choisir un Modèle" pour faire glisser le panneau de sélection de modèle depuis la gauche.
+- Fournit divers modèles prédéfinis (par exemple, Classique, Moderne, Élégant, Minimal, Professionnel), chacun avec un style de conception unique.
+- Cliquez sur l'aperçu d'un modèle pour l'appliquer, et votre CV se mettra instantanément à jour avec le style de ce modèle.
+- Les modèles affectent la mise en page globale, les polices, les couleurs et les styles de séparateur de votre CV.
+- Après avoir sélectionné un modèle, vous pouvez toujours ajuster la police et la couleur du séparateur dans "Personnalisation du style"; ces personnalisations se superposeront aux styles du modèle.
+
+### 3. Édition des informations de base
 #### Photo personnelle
 - Cliquez sur la zone photo pour télécharger une photo personnelle
 - Prend en charge les formats d'image courants (JPG, PNG, etc.)
