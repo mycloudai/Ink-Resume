@@ -156,6 +156,14 @@ const i18nData = {
             exportSuccessFilename: '简历数据.yaml',
             importSuccess: '导入成功',
             importError: '导入失败，文件格式可能不正确。',
+            importInvalidFile: '请选择有效的YAML文件',
+            importInvalidData: '导入的数据格式无效',
+            photoUploadTypeError: '请上传图片文件（jpg, png, gif等）',
+            photoUploadSizeError: '图片大小不能超过5MB',
+            storageDisabled: '浏览器存储功能已禁用（可能处于隐私浏览模式），自动保存功能无法使用。建议使用导出功能手动保存数据。',
+            autoSaveFailed: '自动保存失败',
+            resumeNameRequired: '请输入简历名称',
+            restoreDataPrompt: '发现{time}前的自动保存数据，是否恢复？',
             privacyNotice: '重要提示：本页面所有内容（包括照片）仅在您的本地浏览器中处理，不会上传至任何服务器，请放心使用。数据会自动缓存在本地浏览器中，页面刷新后不会丢失数据。如需重置本地缓存，请点击"清理缓存"按钮。建议使用导入导出功能永久保存您的数据。',
             // 风格自定义相关
             styleCustomization: '风格自定义',
@@ -225,6 +233,14 @@ const i18nData = {
             exportSuccessFilename: 'Resume_Data.yaml',
             importSuccess: 'Import successful',
             importError: 'Import failed. The file format might be incorrect.',
+            importInvalidFile: 'Please select a valid YAML file',
+            importInvalidData: 'Invalid data format',
+            photoUploadTypeError: 'Please upload an image file (jpg, png, gif, etc.)',
+            photoUploadSizeError: 'Image size cannot exceed 5MB',
+            storageDisabled: 'Browser storage is disabled (possibly in private browsing mode). Auto-save is unavailable. Please use export function to save data manually.',
+            autoSaveFailed: 'Auto-save failed',
+            resumeNameRequired: 'Please enter resume name',
+            restoreDataPrompt: 'Auto-saved data from {time} ago found. Restore?',
             privacyNotice: 'Important Notice: All content on this page (including photos) is processed only in your local browser and is NOT uploaded to any server. Please feel safe to use. Data is automatically cached in your local browser and will not be lost after page refresh. To reset local cache, click the "Clear Cache" button. We recommend using the import/export function to permanently save your data.',
             // Style customization related
             styleCustomization: 'Style Customization',
@@ -676,6 +692,14 @@ const i18nData = {
     }
 };
 
+// 支持CommonJS导出（用于build.js）
+// 必须在浏览器特定代码之前，避免Node.js环境报错
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = { i18nData };
+    // 不执行后续的浏览器代码
+} else {
+// 下面的代码只在浏览器环境中执行
+
 // 从本地存储获取语言设置，如果没有则使用默认语言
 function getSavedLanguage() {
     try {
@@ -755,3 +779,4 @@ function loadDefaultData(lang) {
     };
     applyData(dataToLoad, lang);
 }
+} // 结束浏览器环境代码块

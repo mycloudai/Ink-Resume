@@ -4,6 +4,35 @@
 let sections = [];
 let pageIndicators = [];
 
+// 性能优化相关常量
+const DEBOUNCE_DELAY = 300; // 输入防抖延迟（毫秒）
+const RESIZE_DEBOUNCE_DELAY = 150; // resize事件防抖延迟
+let updatePreviewDebounceTimer = null;
+let resizeDebounceTimer = null;
+
+// 字体选择器映射常量（避免重复定义）
+const FONT_OPTIONS_MAP = {
+    "'Microsoft YaHei', Arial, sans-serif": 0,
+    "'SimSun', serif": 1,
+    "'Times New Roman', serif": 2,
+    "'Arial', sans-serif": 3
+};
+
+// 动画相关常量
+const ANIMATION_DURATION_MS = 400; // 侧边栏动画时长
+const ANIMATION_DELAY_SHORT_MS = 100; // 短延迟
+const ANIMATION_DELAY_MEDIUM_MS = 300; // 中等延迟
+
+// 其他魔法数字常量
+const A4_HEIGHT_MM = 297;
+const MM_TO_PX_RATIO = 3.78;
+const A4_HEIGHT_PX = A4_HEIGHT_MM * MM_TO_PX_RATIO;
+const MAX_PHOTO_SIZE_MB = 5;
+const MAX_PHOTO_SIZE_BYTES = MAX_PHOTO_SIZE_MB * 1024 * 1024;
+
+// 暴露到window对象供其他模块使用
+window.FONT_OPTIONS_MAP = FONT_OPTIONS_MAP;
+
 // 全局配置 marked.js 解析器
 marked.setOptions({
     gfm: true,       // 保留：启用GitHub风格的Markdown，能更好地处理子列表。
@@ -43,8 +72,12 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // 初始化 Markdown 聚焦编辑模式
     setupMarkdownEditMode(); // 首次加载时调用
-    
-    window.addEventListener('resize', updatePageIndicators);
+
+    // 使用防抖优化resize性能
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeDebounceTimer);
+        resizeDebounceTimer = setTimeout(updatePageIndicators, RESIZE_DEBOUNCE_DELAY);
+    });
 
     // Tab键支持
     const editorPanel = document.querySelector('.editor-panel');
@@ -73,8 +106,7 @@ function updatePageIndicators() {
     const height = resumePreview.scrollHeight;
     
     // 简化页数计算，仅用于信息显示
-    const pageHeight = 297 * 3.78; // A4高度转px
-    const pageCount = Math.ceil(height / pageHeight);
+    const pageCount = Math.ceil(height / A4_HEIGHT_PX);
     
     // 仅更新页数显示，不显示分页线
     const pageInfoText = i18nData.translations[currentLang].pageInfo || 'Pages';
@@ -84,10 +116,19 @@ function updatePageIndicators() {
 // 基本信息初始化
 function initializeBasicInfo() {
     setupPhotoUpload();
-    
+
+    // 使用防抖优化性能
     document.getElementById('basicInfo').addEventListener('input', () => {
-        updatePreview();
+        debouncedUpdatePreview();
     });
+}
+
+// 防抖版本的updatePreview
+function debouncedUpdatePreview() {
+    clearTimeout(updatePreviewDebounceTimer);
+    updatePreviewDebounceTimer = setTimeout(() => {
+        updatePreview();
+    }, DEBOUNCE_DELAY);
 }
 
 // 设置照片上传功能（每次语言切换后重新设置）
@@ -118,12 +159,30 @@ function setupPhotoUpload() {
     freshPhotoInput.addEventListener('change', (e) => {
         const file = e.target.files[0];
         if (file) {
+            // 验证文件类型
+            if (!file.type.startsWith('image/')) {
+                alert(i18nData.translations[currentLang].photoUploadTypeError);
+                e.target.value = ''; // 清空输入
+                return;
+            }
+
+            // 验证文件大小（使用常量）
+            if (file.size > MAX_PHOTO_SIZE_BYTES) {
+                alert(i18nData.translations[currentLang].photoUploadSizeError);
+                e.target.value = ''; // 清空输入
+                return;
+            }
+
             const reader = new FileReader();
             reader.onload = (e) => {
                 const photoPlaceholder = document.querySelector('.photo-placeholder');
                 if(photoPlaceholder) photoPlaceholder.style.display = 'none';
                 freshPhotoPreview.innerHTML = `<img src="${e.target.result}" alt="个人照片">`;
                 updateResumePhoto(e.target.result);
+            };
+            reader.onerror = () => {
+                alert(i18nData.translations[currentLang].importError);
+                e.target.value = '';
             };
             reader.readAsDataURL(file);
         }
@@ -170,7 +229,7 @@ function renderSections() {
         div.querySelector('textarea').addEventListener('input', function () {
             const s = sections.find(s => s.id === section.id);
             if (s) s.content = this.value;
-            updatePreview();
+            debouncedUpdatePreview(); // 使用防抖版本
         });
         container.appendChild(div);
     });
@@ -324,22 +383,49 @@ function exportData() {
 
 function importData(event) {
     const file = event.target.files[0];
-    if (!file) return;
+    if (!file) {
+        alert(i18nData.translations[currentLang].importInvalidFile);
+        return;
+    }
+
+    // 验证文件扩展名
+    if (!file.name.toLowerCase().endsWith('.yaml') && !file.name.toLowerCase().endsWith('.yml')) {
+        alert(i18nData.translations[currentLang].importInvalidFile);
+        event.target.value = '';
+        return;
+    }
+
     const reader = new FileReader();
     reader.onload = (e) => {
         try {
             const data = jsyaml.load(e.target.result);
-            
+
+            // 验证数据结构
+            if (!data || typeof data !== 'object') {
+                alert(i18nData.translations[currentLang].importInvalidData);
+                return;
+            }
+
+            // 验证必需字段（至少要有 basic_info 或 sections）
+            if (!data.basic_info && !data.sections) {
+                alert(i18nData.translations[currentLang].importInvalidData);
+                return;
+            }
+
             // 检查并处理语言设置
             if (data.language && data.language !== currentLang) {
                 setLanguage(data.language, false, false); // 切换语言，但不加载默认数据
             }
-            
+
             applyData(data);
             alert(i18nData.translations[currentLang].importSuccess);
         } catch (err) {
+            console.error('Import error:', err);
             alert(i18nData.translations[currentLang].importError);
         }
+    };
+    reader.onerror = () => {
+        alert(i18nData.translations[currentLang].importError);
     };
     reader.readAsText(file);
     event.target.value = '';
@@ -428,7 +514,7 @@ function enterMarkdownEditMode(textareaElement) {
         // 稍微延迟聚焦，确保动画开始
         setTimeout(() => {
             focusEditor.focus();
-        }, 100);
+        }, ANIMATION_DELAY_SHORT_MS);
     });
     
     // 添加键盘快捷键支持
@@ -504,11 +590,11 @@ function exitMarkdownEditMode() {
     setTimeout(() => {
         overlay.style.display = 'none';
         currentEditingTextarea = null;
-        
+
         // 移除事件监听器
         focusEditor.removeEventListener('keydown', handleMarkdownEditKeydown);
         focusEditor.removeEventListener('input', handleAutoSave);
-    }, 400);
+    }, ANIMATION_DURATION_MS);
 }
 
 function handleMarkdownEditKeydown(event) {
@@ -529,45 +615,62 @@ function handleMarkdownEditKeydown(event) {
 function setupMarkdownEditMode() {
     const textareas = document.querySelectorAll('textarea');
     textareas.forEach(textarea => {
-        // 跳过已经处理过的textarea
+        // 跳过已经处理过的textarea（使用数据属性标记）
+        if (textarea.dataset.editModeSetup === 'true') {
+            return;
+        }
+
+        // 标记为已处理
+        textarea.dataset.editModeSetup = 'true';
+
+        // 跳过已经有wrapper的textarea
         if (textarea.parentNode.classList.contains('textarea-wrapper')) {
             return;
         }
-        
+
         // 创建包装容器
         const wrapper = document.createElement('div');
         wrapper.className = 'textarea-wrapper';
-        
+
         // 将textarea包装在容器中
         textarea.parentNode.insertBefore(wrapper, textarea);
         wrapper.appendChild(textarea);
-        
+
         // 创建聚焦编辑按钮
         const focusBtn = document.createElement('button');
         focusBtn.className = 'focus-edit-btn';
         focusBtn.innerHTML = '📝';
         focusBtn.type = 'button';
         focusBtn.title = i18nData.translations[currentLang].focusEdit || '聚焦编辑'; // 添加提示文本
-        
-        // 绑定点击事件
-        focusBtn.addEventListener('click', (e) => {
+
+        // 绑定点击事件（使用箭头函数避免this问题）
+        const handleFocusClick = (e) => {
             e.preventDefault();
             e.stopPropagation();
             enterMarkdownEditMode(textarea);
-        });
-        
+        };
+        focusBtn.addEventListener('click', handleFocusClick);
+
         wrapper.appendChild(focusBtn);
-        
-        // 保留双击事件作为备选
-        textarea.removeEventListener('dblclick', handleTextareaDoubleClick);
-        textarea.addEventListener('dblclick', handleTextareaDoubleClick);
+
+        // 添加双击事件（使用命名函数，存储引用以便清理）
+        const handleDblClick = function(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            enterMarkdownEditMode(this);
+        };
+
+        // 存储监听器引用以便后续清理
+        textarea._dblClickHandler = handleDblClick;
+        textarea.addEventListener('dblclick', handleDblClick);
     });
 }
 
+// 旧的双击处理函数已被内联到setupMarkdownEditMode中，此函数保留以防其他代码调用
 function handleTextareaDoubleClick(event) {
     // 防止事件冒泡
     event.preventDefault();
     event.stopPropagation();
-    
+
     enterMarkdownEditMode(this);
 }

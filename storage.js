@@ -62,10 +62,10 @@ class AutoSaveManager {
 
         try {
             // 获取当前数据（使用现有的 getCurrentSettings 函数）
-            const currentData = typeof getCurrentSettings === 'function' 
-                ? getCurrentSettings() 
+            const currentData = typeof getCurrentSettings === 'function'
+                ? getCurrentSettings()
                 : this.getCurrentDataFallback();
-            
+
             // 添加时间戳
             const dataWithTimestamp = {
                 ...currentData,
@@ -75,13 +75,22 @@ class AutoSaveManager {
 
             // 保存到localStorage
             localStorage.setItem(STORAGE_KEYS.AUTO_SAVE, JSON.stringify(dataWithTimestamp));
-            
+
             // 显示保存状态（可选）
-            this.showSaveStatus('已自动保存', 'success');
-            
+            const successMsg = i18nData.translations[currentLang]?.autoSaving || 'Auto saving...';
+            this.showSaveStatus(successMsg, 'success');
+
         } catch (error) {
             console.warn('自动保存失败:', error);
-            this.showSaveStatus('保存失败', 'error');
+            // 如果是localStorage被禁用（如私密浏览模式）
+            if (error.name === 'QuotaExceededError' || error.name === 'SecurityError') {
+                const disabledMsg = i18nData.translations[currentLang]?.storageDisabled || 'Storage disabled';
+                alert(disabledMsg);
+                this.disable(); // 禁用自动保存避免重复提示
+            } else {
+                const failMsg = i18nData.translations[currentLang]?.autoSaveFailed || 'Auto-save failed';
+                this.showSaveStatus(failMsg, 'error');
+            }
         }
     }
 
@@ -107,11 +116,14 @@ class AutoSaveManager {
                 this.applyDataFallback(data);
             }
 
-            this.showSaveStatus('已恢复之前的编辑', 'success');
+            const restoreMsg = i18nData.translations[currentLang]?.importSuccess || 'Data restored';
+            this.showSaveStatus(restoreMsg, 'success');
             return true;
 
         } catch (error) {
             console.warn('恢复数据失败:', error);
+            const errorMsg = i18nData.translations[currentLang]?.importError || 'Restore failed';
+            this.showSaveStatus(errorMsg, 'error');
             return false;
         }
     }
@@ -134,18 +146,29 @@ class AutoSaveManager {
 
         // 其他情况询问用户
         const timeStr = this.formatTimeDiff(timeDiff);
-        return confirm(`发现${timeStr}前的自动保存数据，是否恢复？`);
+        const promptTemplate = i18nData.translations[currentLang]?.restoreDataPrompt || 'Auto-saved data from {time} ago found. Restore?';
+        const promptMsg = promptTemplate.replace('{time}', timeStr);
+        return confirm(promptMsg);
     }
 
     // 格式化时间差
     formatTimeDiff(timeDiff) {
         const minutes = Math.floor(timeDiff / (1000 * 60));
         const hours = Math.floor(minutes / 60);
-        
+
+        const lang = currentLang || 'zh-CN';
         if (hours > 0) {
-            return `${hours}小时${minutes % 60}分钟`;
+            if (lang === 'zh-CN') {
+                return `${hours}小时${minutes % 60}分钟`;
+            } else {
+                return `${hours}h ${minutes % 60}m`;
+            }
         } else {
-            return `${minutes}分钟`;
+            if (lang === 'zh-CN') {
+                return `${minutes}分钟`;
+            } else {
+                return `${minutes}m`;
+            }
         }
     }
 
@@ -227,7 +250,8 @@ class AutoSaveManager {
     // 清除自动保存数据
     clearAutoSave() {
         localStorage.removeItem(STORAGE_KEYS.AUTO_SAVE);
-        this.showSaveStatus('已清除自动保存', 'info');
+        const msg = i18nData.translations[currentLang]?.clearCacheSuccess || 'Cache cleared';
+        this.showSaveStatus(msg, 'info');
     }
 }
 
@@ -260,7 +284,8 @@ class ResumeManager {
     // 保存当前简历
     saveCurrentResume(name) {
         if (!name || name.trim() === '') {
-            alert('请输入简历名称');
+            const msg = i18nData.translations[currentLang]?.resumeNameRequired || 'Please enter resume name';
+            alert(msg);
             return false;
         }
 
@@ -442,7 +467,8 @@ function clearLocalCache() {
             // 清理照片
             const photoPreview = document.getElementById('photoPreview');
             if (photoPreview) {
-                photoPreview.innerHTML = '<div class="photo-placeholder">点击上传照片</div>';
+                const placeholderText = i18nData.translations[currentLang]?.photoPlaceholder || 'Click to upload photo';
+                photoPreview.innerHTML = `<div class="photo-placeholder">${placeholderText}</div>`;
             }
             
             // 清理简历照片

@@ -14,13 +14,14 @@ function initializeCustomStyles() {
     // 设置默认字体选择器
     const fontSelector = document.getElementById('fontSelector');
     if (fontSelector) {
-        const fontOptions = {
+        // 使用共享的字体映射常量
+        const fontOptions = window.FONT_OPTIONS_MAP || {
             "'Microsoft YaHei', Arial, sans-serif": 0,
             "'SimSun', serif": 1,
             "'Times New Roman', serif": 2,
             "'Arial', sans-serif": 3
         };
-        
+
         const optionIndex = fontOptions[currentCustomStyles.fontFamily];
         if (optionIndex !== undefined) {
             fontSelector.selectedIndex = optionIndex;
@@ -101,13 +102,14 @@ function updateCustomStylesFromTemplate(fontFamily, dividerColor) {
     // 更新字体选择器
     const fontSelector = document.getElementById('fontSelector');
     if (fontSelector) {
-        const fontOptions = {
+        // 使用共享的字体映射常量
+        const fontOptions = window.FONT_OPTIONS_MAP || {
             "'Microsoft YaHei', Arial, sans-serif": 0,
             "'SimSun', serif": 1,
             "'Times New Roman', serif": 2,
             "'Arial', sans-serif": 3
         };
-        
+
         const optionIndex = fontOptions[fontFamily];
         if (optionIndex !== undefined) {
             fontSelector.selectedIndex = optionIndex;
@@ -128,13 +130,14 @@ function resetCustomStyles() {
     // 更新字体选择器
     const fontSelector = document.getElementById('fontSelector');
     if (fontSelector) {
-        const fontOptions = {
+        // 使用共享的字体映射常量
+        const fontOptions = window.FONT_OPTIONS_MAP || {
             "'Microsoft YaHei', Arial, sans-serif": 0,
             "'SimSun', serif": 1,
             "'Times New Roman', serif": 2,
             "'Arial', sans-serif": 3
         };
-        
+
         const optionIndex = fontOptions[currentCustomStyles.fontFamily];
         if (optionIndex !== undefined) {
             fontSelector.selectedIndex = optionIndex;

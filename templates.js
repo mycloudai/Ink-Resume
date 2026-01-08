@@ -393,13 +393,14 @@ const ResumeTemplates = {
         const fontSelector = document.getElementById('fontSelector');
         if (fontSelector) {
             // 如果是预定义字体，选中对应选项
-            const fontOptions = {
+            // 使用共享的字体映射常量
+            const fontOptions = window.FONT_OPTIONS_MAP || {
                 "'Microsoft YaHei', Arial, sans-serif": 0,
                 "'SimSun', serif": 1,
                 "'Times New Roman', serif": 2,
                 "'Arial', sans-serif": 3
             };
-            
+
             const optionIndex = fontOptions[styles.fontFamily];
             if (optionIndex !== undefined) {
                 fontSelector.selectedIndex = optionIndex;

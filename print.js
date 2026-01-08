@@ -53,15 +53,19 @@ function updatePrintStyle() {
     console.log('Print font family:', customStyles.fontFamily);
     
     
+    // 计算缩放后的字体大小
+    const scaledTitleFontSize = Math.round(titleFontSize * scaling / 100);
+    const scaledContentFontSize = Math.round(contentFontSize * scaling / 100);
+
     document.getElementById('titleFontValue').textContent = titleFontSize + 'px';
     document.getElementById('contentFontValue').textContent = contentFontSize + 'px';
     document.getElementById('scalingValue').textContent = scaling + '%';
     document.getElementById('pageMarginValue').textContent = pageMargin + 'mm';
     document.getElementById('lineHeightValue').textContent = lineHeight;
 
-    // 仅更新预览样式的CSS变量
-    document.documentElement.style.setProperty('--live-title-font-size', titleFontSize + 'px');
-    document.documentElement.style.setProperty('--live-content-font-size', contentFontSize + 'px');
+    // 更新预览样式的CSS变量（应用缩放到字体，但不影响照片）
+    document.documentElement.style.setProperty('--live-title-font-size', scaledTitleFontSize + 'px');
+    document.documentElement.style.setProperty('--live-content-font-size', scaledContentFontSize + 'px');
     document.documentElement.style.setProperty('--live-line-height', lineHeight);
     document.documentElement.style.setProperty('--live-page-padding', pageMargin + 'mm');
 
@@ -172,8 +176,8 @@ function updatePrintStyle() {
             }
             
             .resume-photo {
-                width: ${Math.round(120 * scaling / 100)}px !important;
-                height: ${Math.round(160 * scaling / 100)}px !important;
+                width: 120px !important;
+                height: 160px !important;
                 flex-shrink: 0 !important;
             }
             

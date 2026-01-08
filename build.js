@@ -11,40 +11,14 @@ const path = require('path');
 // 读取i18n.js文件并解析
 function loadI18nData() {
     try {
-        // 读取i18n.js文件内容
-        let i18nContent = fs.readFileSync('i18n.js', 'utf8');
-        
-        // 找到i18nData对象的开始和结束位置
-        const startMatch = i18nContent.match(/const i18nData = \{/);
-        if (!startMatch) {
-            throw new Error('Could not find i18nData declaration');
-        }
-        
-        const startPos = startMatch.index + 'const i18nData = '.length;
-        let braceCount = 0;
-        let endPos = startPos;
-        
-        // 找到匹配的闭合大括号
-        for (let i = startPos; i < i18nContent.length; i++) {
-            const char = i18nContent[i];
-            if (char === '{') braceCount++;
-            else if (char === '}') {
-                braceCount--;
-                if (braceCount === 0) {
-                    endPos = i + 1;
-                    break;
-                }
-            }
-        }
-        
-        // 提取对象内容
-        const objectContent = i18nContent.substring(startPos, endPos);
-        
-        // 创建安全的执行环境
-        const i18nData = eval('(' + objectContent + ')');
+        // 使用require()替代eval()，更安全
+        // 清除require缓存以确保每次都读取最新内容
+        delete require.cache[require.resolve('./i18n.js')];
+        const { i18nData } = require('./i18n.js');
         return i18nData;
     } catch (error) {
         console.error('Failed to load i18n data:', error);
+        console.error('Make sure i18n.js has proper CommonJS export');
         process.exit(1);
     }
 }

@@ -5,7 +5,11 @@
     --live-line-height: 0.9;
     --live-page-padding: 15mm;
     --preview-scale: 0.8;
-    
+
+    /* 照片尺寸变量（支持缩放）*/
+    --live-photo-width: 120px;
+    --live-photo-height: 160px;
+
     /* 自定义风格变量 */
     --custom-font-family: 'Microsoft YaHei', Arial, sans-serif;
     --custom-divider-color: #b8860b;
@@ -656,8 +660,8 @@ textarea:focus {
 
 .resume-photo {
     flex-shrink: 0;
-    width: 120px;
-    height: 160px;
+    width: var(--live-photo-width, 120px);
+    height: var(--live-photo-height, 160px);
 }
 
 .resume-photo img {
