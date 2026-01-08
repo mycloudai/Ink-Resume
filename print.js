@@ -78,7 +78,7 @@ function updatePrintStyle() {
         @media print {
             @page {
                 size: A4;
-                margin: 0;
+                margin: ${pageMargin}mm;
             }
 
             /* 强制所有元素背景透明 */
@@ -133,7 +133,7 @@ function updatePrintStyle() {
             .resume-preview {
                 width: 100% !important;
                 max-width: none !important;
-                padding: ${pageMargin}mm !important;
+                padding: 0 !important;
                 font-family: "${customStyles.fontFamily}" !important;
                 font-size: ${Math.round(contentFontSize * scaling / 100)}px !important;
                 /* 移除所有装饰效果，让背景透明 */
