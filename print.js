@@ -78,9 +78,9 @@ function updatePrintStyle() {
         @media print {
             @page {
                 size: A4;
-                margin: 15mm ${pageMargin}mm;
+                margin: 0;
             }
-            
+
             /* 强制所有元素背景透明 */
             * {
                 background: none !important;
@@ -90,7 +90,7 @@ function updatePrintStyle() {
                 color-adjust: exact !important;
                 print-color-adjust: exact !important;
             }
-            
+
             /* 移除所有背景 - 让浏览器使用默认白色 */
             html, body {
                 background: none !important;
@@ -99,7 +99,7 @@ function updatePrintStyle() {
                 margin: 0 !important;
                 padding: 0 !important;
             }
-            
+
             /* 移除所有容器的背景和装饰效果 */
             .container, .preview-panel {
                 background: none !important;
@@ -110,30 +110,30 @@ function updatePrintStyle() {
                 border: none !important;
                 backdrop-filter: none !important;
             }
-            
+
             /* 不要强制移除简历内容的背景 - 这会破坏模板样式 */
-            
+
             /* 隐藏编辑面板，只显示预览 */
             .editor-panel {
                 display: none !important;
             }
-            
+
             .container {
                 display: block !important;
                 background: none !important;
             }
-            
+
             .preview-panel {
                 width: 100% !important;
                 padding: 0 !important;
                 border: none !important;
                 background: none !important;
             }
-            
+
             .resume-preview {
                 width: 100% !important;
                 max-width: none !important;
-                padding: var(--live-page-padding, 15mm) !important;
+                padding: ${pageMargin}mm !important;
                 font-family: "${customStyles.fontFamily}" !important;
                 font-size: ${Math.round(contentFontSize * scaling / 100)}px !important;
                 /* 移除所有装饰效果，让背景透明 */
