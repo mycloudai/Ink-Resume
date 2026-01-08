@@ -354,9 +354,15 @@ function applyData(data, lang = 'zh-CN') {
     const photoPreview = document.getElementById('photoPreview');
     const photoPlaceholderText = i18nData.translations[currentLang].photoPlaceholder;
     photoPreview.innerHTML = photoSrc ? `<img src="${photoSrc}" alt="photo">` : `<div class="photo-placeholder">${photoPlaceholderText}</div>`;
-    
+
     sections = Array.isArray(data.sections) ? data.sections : defaultContent.sections;
-    
+
+    // 先恢复模板设置（如果存在），这会设置模板的默认样式
+    if (typeof ResumeTemplates !== 'undefined' && data.template) {
+        ResumeTemplates.restoreFromData(data.template);
+    }
+
+    // 然后应用YAML中的自定义打印设置，覆盖模板默认值
     const ps = data.print_settings || i18nData.defaultSettings;
     document.getElementById('titleFontSize').value = ps.title_font_size;
     document.getElementById('contentFontSize').value = ps.content_font_size;
@@ -366,19 +372,14 @@ function applyData(data, lang = 'zh-CN') {
 
     renderSections();
     updatePreview();
-    updatePrintStyle();
+    updatePrintStyle(); // 这会使用上面设置的自定义值更新CSS变量
     setupMarkdownEditMode(); // 导入数据后调用
-    
-    // 恢复模板设置（如果存在）
-    if (typeof ResumeTemplates !== 'undefined' && data.template) {
-        ResumeTemplates.restoreFromData(data.template);
-    }
-    
+
     // 应用自定义样式设置（如果存在），确保它在模板恢复之后执行
     if (typeof applyCustomStylesFromData === 'function') {
         applyCustomStylesFromData(data.custom_styles);
     }
-    
+
     // 重新设置照片上传功能，确保语言切换后仍能正常工作
     setupPhotoUpload();
 }
