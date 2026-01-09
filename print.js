@@ -138,7 +138,7 @@ function updatePrintStyle() {
                 width: 100% !important;
                 max-width: none !important;
                 padding: 0 !important;
-                font-family: "${customStyles.fontFamily}" !important;
+                font-family: var(--custom-font-family) !important;
                 font-size: ${Math.round(contentFontSize * scaling / 100)}px !important;
                 /* 移除所有装饰效果，让背景透明 */
                 background: none !important;

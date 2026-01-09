@@ -24,7 +24,7 @@ const ResumeTemplates = {
             },
             preview: 'templates/previews/classic.png',
             styles: {
-                fontFamily: "'Microsoft YaHei', Arial, sans-serif",
+                fontFamily: 'Microsoft YaHei, Arial, sans-serif',
                 dividerColor: '#b8860b',
                 titleFontSize: '22px',
                 contentFontSize: '14px',
@@ -55,7 +55,7 @@ const ResumeTemplates = {
             },
             preview: 'templates/previews/modern.png',
             styles: {
-                fontFamily: "'Microsoft YaHei', Arial, sans-serif",
+                fontFamily: 'Microsoft YaHei, Arial, sans-serif',
                 dividerColor: '#2196F3',
                 titleFontSize: '24px',
                 contentFontSize: '14px',
@@ -87,7 +87,7 @@ const ResumeTemplates = {
             },
             preview: 'templates/previews/elegant.png',
             styles: {
-                fontFamily: "'Microsoft YaHei', Arial, sans-serif",
+                fontFamily: 'Microsoft YaHei, Arial, sans-serif',
                 dividerColor: '#8e44ad',
                 titleFontSize: '20px',
                 contentFontSize: '13px',
@@ -119,7 +119,7 @@ const ResumeTemplates = {
             },
             preview: 'templates/previews/minimal.png',
             styles: {
-                fontFamily: "'Microsoft YaHei', Arial, sans-serif",
+                fontFamily: 'Microsoft YaHei, Arial, sans-serif',
                 dividerColor: '#333333',
                 titleFontSize: '18px',
                 contentFontSize: '12px',
@@ -150,7 +150,7 @@ const ResumeTemplates = {
             },
             preview: 'templates/previews/professional.png',
             styles: {
-                fontFamily: "'Microsoft YaHei', Arial, sans-serif",
+                fontFamily: 'Microsoft YaHei, Arial, sans-serif',
                 dividerColor: '#1f4e79',
                 titleFontSize: '21px',
                 contentFontSize: '13px',
