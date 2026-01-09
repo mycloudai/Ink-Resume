@@ -199,6 +199,12 @@ function updatePrintStyle() {
                 line-height: ${lineHeight} !important;
             }
             
+            /* 打印时移除链接样式，但不修改DOM */
+            a {
+                color: inherit !important;
+                text-decoration: none !important;
+            }
+            
             /* 重新启用模板需要的背景样式 */
             .template-modern .resume-section h2 {
                 background: var(--custom-divider-color, #2196F3) !important;
@@ -258,96 +264,28 @@ function updatePrintStyle() {
     setTimeout(updatePageIndicators, 100);
 }
 
-function stripLinks(containerElement) {
-    const links = containerElement.querySelectorAll('a');
-    links.forEach(link => {
-        const span = document.createElement('span');
-        span.textContent = link.textContent;
-        link.parentNode.replaceChild(span, link);
-    });
-}
-
 function doPrint() {
     hidePrintSettings();
     
-    // 强制移除旧的打印样式标签以确保重新生成
-    const oldPrintStyleTag = document.getElementById('original-print-styles');
-    if (oldPrintStyleTag) {
-        oldPrintStyleTag.remove();
+    // 不需要强制移除和重新生成打印样式，因为updatePrintStyle()已经在设置变化时调用了
+    // 只在打印样式不存在时才生成
+    const existingPrintStyleTag = document.getElementById('original-print-styles');
+    if (!existingPrintStyleTag) {
+        updatePrintStyle();
     }
-    
-    // 获取当前字体设置并强制更新CSS变量
-    let customStyles;
-    try {
-        customStyles = (typeof getCurrentCustomStyles === 'function') ? getCurrentCustomStyles() : null;
-    } catch (e) {
-        customStyles = null;
-    }
-    
-    if (!customStyles) {
-        customStyles = {
-            fontFamily: 'Microsoft YaHei, Arial, sans-serif',
-            dividerColor: '#b8860b'
-        };
-    }
-    
-    // 强制更新CSS变量
-    document.documentElement.style.setProperty('--custom-font-family', customStyles.fontFamily);
-    console.log('Forcing CSS variable update for print:', customStyles.fontFamily);
-    
-    // 确保打印样式是最新的，包括自定义样式
-    updatePrintStyle();
     
     // 隐藏页面信息
     const pageInfo = document.getElementById('pageInfo');
+    const originalDisplay = pageInfo.style.display;
     pageInfo.style.display = 'none';
     
-    stripLinks(document.getElementById('resumePreview'));
-    
-    // 直接修改DOM元素的字体样式作为备用方案
-    const resumePreview = document.getElementById('resumePreview');
-    const allElements = resumePreview.querySelectorAll('*');
-    const originalStyles = [];
-    
-    // 保存原始样式并应用打印字体
-    allElements.forEach((element, index) => {
-        originalStyles[index] = element.style.fontFamily;
-        element.style.setProperty('font-family', customStyles.fontFamily, 'important');
-    });
-    
-    // 也为主容器设置字体
-    const originalResumeStyle = resumePreview.style.fontFamily;
-    resumePreview.style.setProperty('font-family', customStyles.fontFamily, 'important');
+    // 不再修改DOM结构，完全依赖CSS
+    // 链接样式已经在打印CSS中处理
     
     setTimeout(() => {
         window.print();
         
-        // 恢复原始样式 - 但保持用户选择的字体
-        allElements.forEach((element, index) => {
-            if (originalStyles[index]) {
-                element.style.fontFamily = originalStyles[index];
-            } else {
-                element.style.removeProperty('font-family');
-            }
-        });
-        
-        if (originalResumeStyle) {
-            resumePreview.style.fontFamily = originalResumeStyle;
-        } else {
-            resumePreview.style.removeProperty('font-family');
-        }
-        
-        // 重新应用自定义字体样式
-        document.documentElement.style.setProperty('--custom-font-family', customStyles.fontFamily);
-        
-        // 恢复显示
-        pageInfo.style.display = 'block';
-        
-        // 重新应用自定义样式以确保字体正确
-        if (typeof applyCustomStyles === 'function') {
-            applyCustomStyles();
-        } else {
-            updatePreview();
-        }
+        // 打印完成后恢复显示
+        pageInfo.style.display = originalDisplay;
     }, 100);
 }
