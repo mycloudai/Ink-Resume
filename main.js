@@ -547,6 +547,17 @@ function autoSaveContent() {
     // 保存内容到原始textarea
     currentEditingTextarea.value = focusEditor.value;
     
+    // 同步更新sections数组（关键修复：确保数据同步）
+    if (currentEditingTextarea.id === 'basicInfo') {
+        // 基本信息textarea不需要更新sections数组
+    } else {
+        // 查找对应的section并更新内容
+        const section = sections.find(s => s.id === currentEditingTextarea.id);
+        if (section) {
+            section.content = focusEditor.value;
+        }
+    }
+    
     // 触发输入事件以更新预览
     const event = new Event('input', { bubbles: true });
     currentEditingTextarea.dispatchEvent(event);
@@ -580,8 +591,26 @@ function exitMarkdownEditMode() {
         autoSaveTimer = null;
     }
     
+    // 保存textarea的ID，以便重新查找
+    const textareaId = currentEditingTextarea.id;
+    
     // 最后一次保存
     autoSaveContent();
+    
+    // 重新查找textarea元素（防止DOM重新渲染后引用失效）
+    const freshTextarea = document.getElementById(textareaId);
+    if (freshTextarea && freshTextarea !== currentEditingTextarea) {
+        // 如果找到了新的textarea，确保其值是最新的
+        freshTextarea.value = focusEditor.value;
+        
+        // 同步更新sections数组
+        if (textareaId !== 'basicInfo') {
+            const section = sections.find(s => s.id === textareaId);
+            if (section) {
+                section.content = focusEditor.value;
+            }
+        }
+    }
     
     // 隐藏编辑模式
     panel.style.transform = 'translateX(-100%)';
