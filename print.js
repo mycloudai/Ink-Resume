@@ -266,26 +266,118 @@ function updatePrintStyle() {
 
 function doPrint() {
     hidePrintSettings();
-    
+
     // 不需要强制移除和重新生成打印样式，因为updatePrintStyle()已经在设置变化时调用了
     // 只在打印样式不存在时才生成
     const existingPrintStyleTag = document.getElementById('original-print-styles');
     if (!existingPrintStyleTag) {
         updatePrintStyle();
     }
-    
+
     // 隐藏页面信息
     const pageInfo = document.getElementById('pageInfo');
     const originalDisplay = pageInfo.style.display;
     pageInfo.style.display = 'none';
-    
+
+    // 隐藏浏览器扩展元素（如聊天机器人插件）
+    const extensionElements = hideExtensionElements();
+
     // 不再修改DOM结构，完全依赖CSS
     // 链接样式已经在打印CSS中处理
-    
+
     setTimeout(() => {
         window.print();
-        
+
         // 打印完成后恢复显示
         pageInfo.style.display = originalDisplay;
+
+        // 恢复浏览器扩展元素的显示
+        restoreExtensionElements(extensionElements);
     }, 100);
+}
+
+// 隐藏浏览器扩展元素
+function hideExtensionElements() {
+    const hiddenElements = [];
+
+    // 查找所有可能是浏览器扩展的元素
+    const selectors = [
+        // 高z-index的固定定位元素
+        'body > *[style*="position: fixed"][style*="z-index"]',
+        'body > *[style*="position:fixed"][style*="z-index"]',
+        // 常见的扩展元素特征
+        '[id*="chatbot"]',
+        '[id*="chat-bot"]',
+        '[id*="extension"]',
+        '[class*="chatbot"]',
+        '[class*="chat-bot"]',
+        '[class*="chrome-extension"]',
+        // iframe扩展元素
+        'iframe[src*="chrome-extension"]',
+        'iframe[src*="chatbot"]'
+    ];
+
+    selectors.forEach(selector => {
+        try {
+            const elements = document.querySelectorAll(selector);
+            elements.forEach(el => {
+                // 确保不是简历内容的一部分
+                if (!el.closest('.resume-preview') && !el.closest('.editor-panel')) {
+                    const originalDisplay = el.style.display;
+                    const originalVisibility = el.style.visibility;
+                    el.style.display = 'none';
+                    el.style.visibility = 'hidden';
+                    hiddenElements.push({
+                        element: el,
+                        display: originalDisplay,
+                        visibility: originalVisibility
+                    });
+                }
+            });
+        } catch (e) {
+            // 忽略选择器错误
+            console.warn('Extension element selector error:', selector, e);
+        }
+    });
+
+    // 额外处理：隐藏所有高z-index的body直接子元素
+    const bodyChildren = Array.from(document.body.children);
+    bodyChildren.forEach(el => {
+        try {
+            const zIndex = parseInt(window.getComputedStyle(el).zIndex);
+            const position = window.getComputedStyle(el).position;
+
+            // 如果是高z-index且固定定位的元素（且不是我们的内容）
+            if (zIndex > 1000 && position === 'fixed' &&
+                !el.closest('.resume-preview') &&
+                !el.closest('.editor-panel') &&
+                !el.id.includes('print') &&
+                !el.id.includes('dialog')) {
+
+                const originalDisplay = el.style.display;
+                const originalVisibility = el.style.visibility;
+                el.style.display = 'none';
+                el.style.visibility = 'hidden';
+                hiddenElements.push({
+                    element: el,
+                    display: originalDisplay,
+                    visibility: originalVisibility
+                });
+            }
+        } catch (e) {
+            // 忽略样式读取错误
+        }
+    });
+
+    console.log(`Hidden ${hiddenElements.length} extension elements for printing`);
+    return hiddenElements;
+}
+
+// 恢复浏览器扩展元素的显示
+function restoreExtensionElements(hiddenElements) {
+    hiddenElements.forEach(item => {
+        item.element.style.display = item.display;
+        item.element.style.visibility = item.visibility;
+    });
+    console.log(`Restored ${hiddenElements.length} extension elements after printing`);
 }

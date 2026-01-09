@@ -338,6 +338,9 @@ function renderSections() {
         
         container.appendChild(div);
     });
+
+    // 渲染完成后，为所有新创建的textarea设置聚焦编辑模式
+    setupMarkdownEditMode();
 }
 
 // 对话框管理

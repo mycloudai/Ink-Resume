@@ -1557,4 +1557,38 @@ input[type="color"]::-webkit-color-swatch-wrapper {
     .toast-container {
         display: none !important;
     }
+
+    /* 隐藏浏览器扩展插件元素 */
+    /* 隐藏所有高z-index的固定定位元素（通常是浏览器扩展） */
+    body > *[style*="position: fixed"],
+    body > *[style*="position:fixed"] {
+        display: none !important;
+    }
+
+    /* 隐藏高z-index的元素 */
+    *[style*="z-index: 999"],
+    *[style*="z-index: 9999"],
+    *[style*="z-index:999"],
+    *[style*="z-index:9999"],
+    *[style*="z-index: 2147483647"] {
+        display: none !important;
+    }
+
+    /* 专门针对聊天机器人扩展的常见元素 */
+    [id*="chatbot"],
+    [id*="chat-bot"],
+    [id*="extension"],
+    [class*="chatbot"],
+    [class*="chat-bot"],
+    [class*="chrome-extension"],
+    [data-chatbot],
+    iframe[src*="chrome-extension"],
+    iframe[src*="chatbot"] {
+        display: none !important;
+    }
+
+    /* 隐藏Shadow DOM宿主元素（扩展常用） */
+    body > div:not([class]):not([id]) {
+        display: none !important;
+    }
 }
