@@ -7,8 +7,26 @@ let pageIndicators = [];
 // 性能优化相关常量
 const DEBOUNCE_DELAY = 300; // 输入防抖延迟（毫秒）
 const RESIZE_DEBOUNCE_DELAY = 150; // resize事件防抖延迟
-let updatePreviewDebounceTimer = null;
-let resizeDebounceTimer = null;
+
+// 统一的防抖定时器管理对象，避免竞态条件
+const debounceTimers = {
+    updatePreview: null,
+    resize: null,
+    autoSave: null,
+    autoSaveStatusShow: null,  // 显示"已保存"状态的定时器
+    autoSaveStatusHide: null   // 隐藏状态的定时器
+};
+
+// 通用防抖函数
+function debounce(key, callback, delay) {
+    if (debounceTimers[key]) {
+        clearTimeout(debounceTimers[key]);
+    }
+    debounceTimers[key] = setTimeout(() => {
+        callback();
+        debounceTimers[key] = null;
+    }, delay);
+}
 
 // 字体选择器映射常量（避免重复定义）
 const FONT_OPTIONS_MAP = {
@@ -75,8 +93,34 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // 使用防抖优化resize性能
     window.addEventListener('resize', () => {
-        clearTimeout(resizeDebounceTimer);
-        resizeDebounceTimer = setTimeout(updatePageIndicators, RESIZE_DEBOUNCE_DELAY);
+        debounce('resize', updatePageIndicators, RESIZE_DEBOUNCE_DELAY);
+    });
+    
+    // 页面关闭前的保护：如果正在聚焦编辑，先保存再关闭
+    window.addEventListener('beforeunload', function(e) {
+        // 如果正在聚焦编辑模式，先保存数据
+        if (currentEditingTextarea) {
+            const focusEditor = document.getElementById('markdownFocusEditor');
+            if (focusEditor && currentEditingTextarea) {
+                try {
+                    // 立即保存到textarea
+                    currentEditingTextarea.value = focusEditor.value;
+                    
+                    // 同步更新sections数组
+                    if (currentEditingTextarea.id !== 'basicInfo') {
+                        const section = sections.find(s => s.id === currentEditingTextarea.id);
+                        if (section) {
+                            section.content = focusEditor.value;
+                        }
+                    }
+                } catch (error) {
+                    console.error('页面关闭前保存失败:', error);
+                }
+            }
+            
+            // 提示用户有未保存的编辑（现代浏览器会自动显示确认对话框）
+            e.preventDefault();
+        }
     });
 
     // Tab键支持
@@ -125,9 +169,14 @@ function initializeBasicInfo() {
 
 // 防抖版本的updatePreview
 function debouncedUpdatePreview() {
-    clearTimeout(updatePreviewDebounceTimer);
-    updatePreviewDebounceTimer = setTimeout(() => {
-        updatePreview();
+    debounce('updatePreview', () => {
+        try {
+            updatePreview();
+        } catch (error) {
+            console.error('预览更新失败:', error);
+            const errorMsg = i18nData.translations[currentLang]?.updatePreviewError || '预览更新失败';
+            showTemporaryMessage(errorMsg, 'error');
+        }
     }, DEBOUNCE_DELAY);
 }
 
@@ -161,27 +210,41 @@ function setupPhotoUpload() {
         if (file) {
             // 验证文件类型
             if (!file.type.startsWith('image/')) {
-                alert(i18nData.translations[currentLang].photoUploadTypeError);
+                const errorMsg = i18nData.translations[currentLang]?.photoUploadTypeError || '请上传图片文件';
+                showTemporaryMessage(errorMsg, 'error');
                 e.target.value = ''; // 清空输入
                 return;
             }
 
-            // 验证文件大小（使用常量）
+            // 验证文件大小（限制5MB以内）
             if (file.size > MAX_PHOTO_SIZE_BYTES) {
-                alert(i18nData.translations[currentLang].photoUploadSizeError);
+                const errorMsg = i18nData.translations[currentLang]?.photoUploadSizeError || '图片大小不能超过5MB';
+                const sizeInMB = (file.size / (1024 * 1024)).toFixed(2);
+                showTemporaryMessage(`${errorMsg} (当前: ${sizeInMB}MB)`, 'error');
                 e.target.value = ''; // 清空输入
                 return;
             }
 
             const reader = new FileReader();
             reader.onload = (e) => {
-                const photoPlaceholder = document.querySelector('.photo-placeholder');
-                if(photoPlaceholder) photoPlaceholder.style.display = 'none';
-                freshPhotoPreview.innerHTML = `<img src="${e.target.result}" alt="个人照片">`;
-                updateResumePhoto(e.target.result);
+                try {
+                    const photoPlaceholder = document.querySelector('.photo-placeholder');
+                    if(photoPlaceholder) photoPlaceholder.style.display = 'none';
+                    freshPhotoPreview.innerHTML = `<img src="${e.target.result}" alt="个人照片">`;
+                    updateResumePhoto(e.target.result);
+                    
+                    const successMsg = i18nData.translations[currentLang]?.photoUploadSuccess || '照片上传成功';
+                    showTemporaryMessage(successMsg, 'success');
+                } catch (error) {
+                    console.error('照片处理失败:', error);
+                    const errorMsg = i18nData.translations[currentLang]?.photoUploadError || '照片处理失败';
+                    showTemporaryMessage(errorMsg, 'error');
+                }
             };
-            reader.onerror = () => {
-                alert(i18nData.translations[currentLang].importError);
+            reader.onerror = (error) => {
+                console.error('文件读取失败:', error);
+                const errorMsg = i18nData.translations[currentLang]?.importError || '文件读取失败';
+                showTemporaryMessage(errorMsg, 'error');
                 e.target.value = '';
             };
             reader.readAsDataURL(file);
@@ -219,18 +282,37 @@ function renderSections() {
             <div class="section-header">
                 <div style="display: flex; align-items: center; gap: 8px;">
                     <button title="${dragText}" style="cursor: move; padding: 4px 8px; border: none; background: #dee2e6; border-radius: 4px; font-size: 12px;">↕</button>
-                    <h3 style="margin: 0;">${section.title}</h3>
+                    <h3 class="editable-title" data-section-id="${section.id}" style="margin: 0; cursor: pointer; padding: 4px 8px; border-radius: 4px; transition: background 0.2s;" title="点击编辑标题">${section.title}</h3>
                 </div>
                 <button class="delete-section-btn" onclick="deleteSection('${section.id}')">${deleteText}</button>
             </div>
             <div class="form-group">
                 <textarea id="${section.id}">${section.content || ''}</textarea>
             </div>`;
+        
+        // 为textarea添加input事件监听
         div.querySelector('textarea').addEventListener('input', function () {
             const s = sections.find(s => s.id === section.id);
             if (s) s.content = this.value;
             debouncedUpdatePreview(); // 使用防抖版本
         });
+        
+        // 为标题添加点击编辑功能
+        const titleElement = div.querySelector('.editable-title');
+        titleElement.addEventListener('click', function() {
+            editSectionTitle(this);
+        });
+        
+        // 添加鼠标悬停效果
+        titleElement.addEventListener('mouseenter', function() {
+            this.style.background = 'rgba(102, 126, 234, 0.1)';
+        });
+        titleElement.addEventListener('mouseleave', function() {
+            if (!this.classList.contains('editing')) {
+                this.style.background = 'transparent';
+            }
+        });
+        
         container.appendChild(div);
     });
 }
@@ -268,6 +350,86 @@ function deleteSection(id) {
         renderSections();
         updatePreview();
     }
+}
+
+// 编辑section标题
+function editSectionTitle(titleElement) {
+    // 如果已经在编辑状态，不处理
+    if (titleElement.classList.contains('editing')) {
+        return;
+    }
+    
+    const sectionId = titleElement.getAttribute('data-section-id');
+    const section = sections.find(s => s.id === sectionId);
+    if (!section) return;
+    
+    const originalTitle = section.title;
+    
+    // 标记为编辑状态
+    titleElement.classList.add('editing');
+    titleElement.style.background = 'rgba(102, 126, 234, 0.15)';
+    
+    // 创建输入框
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.value = originalTitle;
+    input.style.cssText = `
+        width: 100%;
+        padding: 4px 8px;
+        border: 2px solid #667eea;
+        border-radius: 4px;
+        font-size: 16px;
+        font-weight: 600;
+        color: #3c4043;
+        font-family: inherit;
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    `;
+    
+    // 替换标题为输入框
+    const currentText = titleElement.textContent;
+    titleElement.textContent = '';
+    titleElement.appendChild(input);
+    input.focus();
+    input.select();
+    
+    // 保存函数
+    const saveTitle = () => {
+        const newTitle = input.value.trim();
+        if (newTitle && newTitle !== originalTitle) {
+            section.title = newTitle;
+            titleElement.textContent = newTitle;
+            updatePreview();
+        } else {
+            titleElement.textContent = originalTitle;
+        }
+        titleElement.classList.remove('editing');
+        titleElement.style.background = 'transparent';
+    };
+    
+    // 取消函数
+    const cancelEdit = () => {
+        titleElement.textContent = originalTitle;
+        titleElement.classList.remove('editing');
+        titleElement.style.background = 'transparent';
+    };
+    
+    // 监听回车键保存
+    input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            saveTitle();
+        } else if (e.key === 'Escape') {
+            e.preventDefault();
+            cancelEdit();
+        }
+    });
+    
+    // 失去焦点时保存
+    input.addEventListener('blur', () => {
+        // 使用setTimeout避免与点击事件冲突
+        setTimeout(saveTitle, 100);
+    });
 }
 
 // 预览更新
@@ -472,8 +634,7 @@ function applyData(data, lang = 'zh-CN') {
 
 // Markdown 聚焦编辑功能
 let currentEditingTextarea = null;
-let autoSaveTimer = null;
-let autoSaveDelay = 1000; // 1秒延迟自动保存
+const autoSaveDelay = 1000; // 1秒延迟自动保存
 
 function enterMarkdownEditMode(textareaElement) {
     currentEditingTextarea = textareaElement;
@@ -517,120 +678,175 @@ function enterMarkdownEditMode(textareaElement) {
         }, ANIMATION_DELAY_SHORT_MS);
     });
     
+    // 移除旧的事件监听器（防止重复添加）
+    focusEditor.removeEventListener('keydown', handleMarkdownEditKeydown);
+    focusEditor.removeEventListener('input', handleFocusEditorInput);
+    
     // 添加键盘快捷键支持
     focusEditor.addEventListener('keydown', handleMarkdownEditKeydown);
     
-    // 添加自动保存功能
-    focusEditor.addEventListener('input', handleAutoSave);
+    // 添加input监听器：更新预览 + 自动保存
+    focusEditor.addEventListener('input', handleFocusEditorInput);
 }
 
-// 自动保存处理函数
-function handleAutoSave() {
-    // 清除之前的计时器
-    if (autoSaveTimer) {
-        clearTimeout(autoSaveTimer);
-    }
-    
-    // 设置新的计时器
-    autoSaveTimer = setTimeout(() => {
-        autoSaveContent();
-    }, autoSaveDelay);
-}
-
-// 执行自动保存
-function autoSaveContent() {
+// 聚焦编辑器input处理函数：更新预览 + 自动保存
+function handleFocusEditorInput() {
     if (!currentEditingTextarea) return;
     
     const focusEditor = document.getElementById('markdownFocusEditor');
-    const autoSaveStatus = document.getElementById('autoSaveStatus');
+    if (!focusEditor) return;
     
-    // 保存内容到原始textarea
+    // 1. 立即静默同步内容到textarea（不触发事件）
     currentEditingTextarea.value = focusEditor.value;
     
-    // 同步更新sections数组（关键修复：确保数据同步）
-    if (currentEditingTextarea.id === 'basicInfo') {
-        // 基本信息textarea不需要更新sections数组
-    } else {
-        // 查找对应的section并更新内容
+    // 2. 立即更新sections数组
+    if (currentEditingTextarea.id !== 'basicInfo') {
         const section = sections.find(s => s.id === currentEditingTextarea.id);
         if (section) {
             section.content = focusEditor.value;
         }
     }
     
-    // 触发输入事件以更新预览
-    const event = new Event('input', { bubbles: true });
-    currentEditingTextarea.dispatchEvent(event);
+    // 3. 使用防抖更新预览（避免频繁渲染）
+    debouncedUpdatePreview();
     
-    // 显示自动保存状态
-    autoSaveStatus.textContent = i18nData.translations[currentLang].autoSaving || '自动保存中...';
-    autoSaveStatus.style.opacity = '1';
-    
-    // 2秒后隐藏状态
-    setTimeout(() => {
-        autoSaveStatus.style.opacity = '0';
-    }, 2000);
+    // 4. 使用防抖显示自动保存状态
+    debounce('autoSave', () => {
+        showAutoSaveStatus();
+    }, autoSaveDelay);
 }
+
+// 显示自动保存状态
+function showAutoSaveStatus() {
+    const autoSaveStatus = document.getElementById('autoSaveStatus');
+    if (!autoSaveStatus) return;
+    
+    // 清除所有之前的定时器
+    if (debounceTimers.autoSaveStatusShow) {
+        clearTimeout(debounceTimers.autoSaveStatusShow);
+        debounceTimers.autoSaveStatusShow = null;
+    }
+    if (debounceTimers.autoSaveStatusHide) {
+        clearTimeout(debounceTimers.autoSaveStatusHide);
+        debounceTimers.autoSaveStatusHide = null;
+    }
+    
+    // 显示保存中状态
+    autoSaveStatus.textContent = i18nData.translations[currentLang]?.autoSaving || '自动保存中...';
+    autoSaveStatus.style.opacity = '1';
+    autoSaveStatus.style.color = '#666';
+    
+    // 短暂延迟后显示成功状态
+    debounceTimers.autoSaveStatusShow = setTimeout(() => {
+        const savedMsg = i18nData.translations[currentLang]?.autoSaved || '已保存';
+        autoSaveStatus.textContent = '✓ ' + savedMsg;
+        autoSaveStatus.style.color = '#28a745';
+        debounceTimers.autoSaveStatusShow = null;
+        
+        // 1.5秒后淡出
+        debounceTimers.autoSaveStatusHide = setTimeout(() => {
+            autoSaveStatus.style.opacity = '0';
+            debounceTimers.autoSaveStatusHide = null;
+        }, 1500);
+    }, 300);
+}
+
 
 // 兼容旧函数名，自动保存并退出
 function saveAndExitMarkdownEdit() {
     exitMarkdownEditMode();
 }
 
-// 退出聚焦编辑模式（由于有自动保存，只需要退出）
+// 退出聚焦编辑模式（先保存再退出，确保数据不丢失）
 function exitMarkdownEditMode() {
     if (!currentEditingTextarea) return;
     
     const focusEditor = document.getElementById('markdownFocusEditor');
     const overlay = document.getElementById('markdownEditOverlay');
     const panel = document.getElementById('markdownEditPanel');
+    const autoSaveStatus = document.getElementById('autoSaveStatus');
     
-    // 清除自动保存计时器
-    if (autoSaveTimer) {
-        clearTimeout(autoSaveTimer);
-        autoSaveTimer = null;
+    // 清除自动保存计时器（使用统一的防抖管理）
+    if (debounceTimers.autoSave) {
+        clearTimeout(debounceTimers.autoSave);
+        debounceTimers.autoSave = null;
+    }
+    
+    // 清除自动保存状态显示定时器
+    if (debounceTimers.autoSaveStatusShow) {
+        clearTimeout(debounceTimers.autoSaveStatusShow);
+        debounceTimers.autoSaveStatusShow = null;
+    }
+    if (debounceTimers.autoSaveStatusHide) {
+        clearTimeout(debounceTimers.autoSaveStatusHide);
+        debounceTimers.autoSaveStatusHide = null;
     }
     
     // 保存textarea的ID，以便重新查找
     const textareaId = currentEditingTextarea.id;
     
-    // 最后一次保存
-    autoSaveContent();
+    // 显示正在保存的状态
+    if (autoSaveStatus) {
+        autoSaveStatus.textContent = i18nData.translations[currentLang]?.autoSaving || '正在保存...';
+        autoSaveStatus.style.opacity = '1';
+        autoSaveStatus.style.color = '#667eea';
+    }
     
-    // 重新查找textarea元素（防止DOM重新渲染后引用失效）
-    const freshTextarea = document.getElementById(textareaId);
-    if (freshTextarea && freshTextarea !== currentEditingTextarea) {
-        // 如果找到了新的textarea，确保其值是最新的
-        freshTextarea.value = focusEditor.value;
+    // 最后一次静默保存（数据已经通过input事件同步了，这里只是确保）
+    try {
+        currentEditingTextarea.value = focusEditor.value;
         
-        // 同步更新sections数组
-        if (textareaId !== 'basicInfo') {
-            const section = sections.find(s => s.id === textareaId);
+        if (currentEditingTextarea.id !== 'basicInfo') {
+            const section = sections.find(s => s.id === currentEditingTextarea.id);
             if (section) {
                 section.content = focusEditor.value;
             }
         }
+        
+        // 显示保存成功状态
+        if (autoSaveStatus) {
+            const savedMsg = i18nData.translations[currentLang]?.autoSaved || '已保存';
+            autoSaveStatus.textContent = '✓ ' + savedMsg;
+            autoSaveStatus.style.color = '#28a745';
+        }
+        
+    } catch (error) {
+        console.error('保存失败:', error);
+        // 即使保存失败也继续退出，但显示错误
+        if (autoSaveStatus) {
+            const errorMsg = i18nData.translations[currentLang]?.autoSaveFailed || '保存失败';
+            autoSaveStatus.textContent = '✗ ' + errorMsg;
+            autoSaveStatus.style.color = '#dc3545';
+        }
     }
     
-    // 隐藏编辑模式
-    panel.style.transform = 'translateX(-100%)';
-    
-    // 等待动画完成后隐藏元素
+    // 短暂延迟后开始退出动画（让用户看到保存状态）
     setTimeout(() => {
-        overlay.style.display = 'none';
-        currentEditingTextarea = null;
+        // 隐藏编辑模式
+        panel.style.transform = 'translateX(-100%)';
+        
+        // 淡出保存状态提示
+        if (autoSaveStatus) {
+            autoSaveStatus.style.opacity = '0';
+        }
+        
+        // 等待动画完成后隐藏元素
+        setTimeout(() => {
+            overlay.style.display = 'none';
+            currentEditingTextarea = null;
 
-        // 移除事件监听器
-        focusEditor.removeEventListener('keydown', handleMarkdownEditKeydown);
-        focusEditor.removeEventListener('input', handleAutoSave);
-    }, ANIMATION_DURATION_MS);
+            // 移除事件监听器
+            focusEditor.removeEventListener('keydown', handleMarkdownEditKeydown);
+            focusEditor.removeEventListener('input', handleFocusEditorInput);
+        }, ANIMATION_DURATION_MS);
+    }, 200); // 200ms让用户看到"已保存"状态
 }
 
 function handleMarkdownEditKeydown(event) {
-    // Ctrl+S 快速保存（现在只是触发自动保存）
+    // Ctrl+S 快速保存（显示保存状态）
     if (event.ctrlKey && event.key === 's') {
         event.preventDefault();
-        autoSaveContent();
+        showAutoSaveStatus();
     }
     
     // ESC 退出编辑模式
@@ -639,6 +855,9 @@ function handleMarkdownEditKeydown(event) {
         exitMarkdownEditMode();
     }
 }
+
+// 存储所有事件监听器的引用，用于清理
+const eventListeners = new WeakMap();
 
 // 为所有 textarea 添加聚焦编辑功能
 function setupMarkdownEditMode() {
@@ -670,7 +889,7 @@ function setupMarkdownEditMode() {
         focusBtn.className = 'focus-edit-btn';
         focusBtn.innerHTML = '📝';
         focusBtn.type = 'button';
-        focusBtn.title = i18nData.translations[currentLang].focusEdit || '聚焦编辑'; // 添加提示文本
+        focusBtn.title = i18nData.translations[currentLang]?.focusEdit || '聚焦编辑';
 
         // 绑定点击事件（使用箭头函数避免this问题）
         const handleFocusClick = (e) => {
@@ -689,10 +908,27 @@ function setupMarkdownEditMode() {
             enterMarkdownEditMode(this);
         };
 
-        // 存储监听器引用以便后续清理
-        textarea._dblClickHandler = handleDblClick;
+        // 使用 WeakMap 存储监听器引用，自动垃圾回收
+        if (!eventListeners.has(textarea)) {
+            eventListeners.set(textarea, []);
+        }
+        const listeners = eventListeners.get(textarea);
+        listeners.push({ type: 'dblclick', handler: handleDblClick });
+        listeners.push({ type: 'click', handler: handleFocusClick, target: focusBtn });
+        
         textarea.addEventListener('dblclick', handleDblClick);
     });
+}
+
+// 清理事件监听器的辅助函数
+function cleanupEventListeners(element) {
+    if (eventListeners.has(element)) {
+        const listeners = eventListeners.get(element);
+        listeners.forEach(({ type, handler, target }) => {
+            (target || element).removeEventListener(type, handler);
+        });
+        eventListeners.delete(element);
+    }
 }
 
 // 旧的双击处理函数已被内联到setupMarkdownEditMode中，此函数保留以防其他代码调用
@@ -702,4 +938,49 @@ function handleTextareaDoubleClick(event) {
     event.stopPropagation();
 
     enterMarkdownEditMode(this);
+}
+
+// 通用的临时消息提示函数
+function showTemporaryMessage(message, type = 'info', duration = 3000) {
+    let messageEl = document.getElementById('temp-message');
+    if (!messageEl) {
+        messageEl = document.createElement('div');
+        messageEl.id = 'temp-message';
+        messageEl.style.cssText = `
+            position: fixed;
+            top: 70px;
+            right: 20px;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            z-index: 1001;
+            transition: all 0.3s ease;
+            pointer-events: none;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            max-width: 300px;
+            word-wrap: break-word;
+        `;
+        document.body.appendChild(messageEl);
+    }
+
+    const colors = {
+        success: { bg: '#d4edda', color: '#155724', border: '#c3e6cb' },
+        error: { bg: '#f8d7da', color: '#721c24', border: '#f5c6cb' },
+        warning: { bg: '#fff3cd', color: '#856404', border: '#ffeaa7' },
+        info: { bg: '#d1ecf1', color: '#0c5460', border: '#bee5eb' }
+    };
+
+    const color = colors[type] || colors.info;
+    messageEl.textContent = message;
+    messageEl.style.backgroundColor = color.bg;
+    messageEl.style.color = color.color;
+    messageEl.style.border = `1px solid ${color.border}`;
+    messageEl.style.opacity = '1';
+    messageEl.style.transform = 'translateY(0)';
+
+    setTimeout(() => {
+        messageEl.style.opacity = '0';
+        messageEl.style.transform = 'translateY(-10px)';
+    }, duration);
 }
