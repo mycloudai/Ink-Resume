@@ -81,8 +81,13 @@ function processTemplate(template, langCode, i18nData) {
         .replace(/{{NEW_SECTION_TITLE_PLACEHOLDER}}/g, translations.newSectionTitlePlaceholder || 'Enter section title')
         .replace(/{{OK}}/g, translations.ok || 'OK')
         .replace(/{{HELP}}/g, translations.help || 'Help')
+        .replace(/{{TECH_SUPPORT}}/g, translations.techSupport || 'Technical Support')
         .replace(/{{HELP_TITLE}}/g, translations.helpTitle || 'Help')
-        .replace(/{{HELP_LOADING}}/g, translations.helpLoading || 'Loading help content...');
+        .replace(/{{HELP_LOADING}}/g, translations.helpLoading || 'Loading help content...')
+        .replace(/{{EDIT_MODE}}/g, translations.editMode || 'Edit Mode')
+        .replace(/{{EXIT_FOCUS_EDIT}}/g, translations.exitFocusEdit || 'Exit Focus Edit')
+        .replace(/{{MARKDOWN_TIP}}/g, translations.markdownTip || '💡 Markdown syntax supported • Auto-save • ESC to exit')
+        .replace(/{{PRINT_NOTICE}}/g, translations.printNotice || 'Print notice');
     
     // 加载并嵌入所有语言的帮助内容
     result = embedAllHelpContent(result, languages);

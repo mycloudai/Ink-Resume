@@ -105,7 +105,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 try {
                     // 立即保存到textarea
                     currentEditingTextarea.value = focusEditor.value;
-                    
+
                     // 同步更新sections数组
                     if (currentEditingTextarea.id !== 'basicInfo') {
                         const section = sections.find(s => s.id === currentEditingTextarea.id);
@@ -113,13 +113,27 @@ document.addEventListener('DOMContentLoaded', function() {
                             section.content = focusEditor.value;
                         }
                     }
+
+                    // 立即触发持久化保存到 localStorage
+                    if (typeof autoSaveManager !== 'undefined' && autoSaveManager) {
+                        autoSaveManager.saveImmediately();
+                    }
                 } catch (error) {
                     console.error('页面关闭前保存失败:', error);
                 }
             }
-            
+
             // 提示用户有未保存的编辑（现代浏览器会自动显示确认对话框）
             e.preventDefault();
+        } else {
+            // 即使不在编辑模式，也确保最后的更改被保存
+            try {
+                if (typeof autoSaveManager !== 'undefined' && autoSaveManager) {
+                    autoSaveManager.saveImmediately();
+                }
+            } catch (error) {
+                console.error('页面关闭前自动保存失败:', error);
+            }
         }
     });
 
@@ -255,6 +269,15 @@ function setupPhotoUpload() {
 // 渲染部分
 function renderSections() {
     const container = document.getElementById('dynamicSections');
+
+    // 在清空容器前,先清理所有旧textarea的事件监听器,防止内存泄漏
+    const oldTextareas = container.querySelectorAll('textarea');
+    oldTextareas.forEach(textarea => {
+        cleanupEventListeners(textarea);
+        // 移除标记,确保新元素可以重新设置
+        textarea.dataset.editModeSetup = 'false';
+    });
+
     container.innerHTML = '';
     sections.forEach((section, index) => {
         const div = document.createElement('div');
@@ -333,7 +356,7 @@ function hideAddSectionDialog() {
 function addNewSection() {
     const title = document.getElementById('newSectionTitle').value.trim();
     if (!title) {
-        alert(i18nData.translations[currentLang].enterSectionTitlePrompt);
+        getToast().warning(i18nData.translations[currentLang].enterSectionTitlePrompt);
         return;
     }
     sections.push({ id: 'section-' + Date.now(), title: title, content: '' });
@@ -342,6 +365,7 @@ function addNewSection() {
     hideAddSectionDialog();
     // 重新设置新添加的textarea的编辑模式
     setupMarkdownEditMode();
+    getToast().success(i18nData.translations[currentLang].addSection || '部分已添加');
 }
 
 function deleteSection(id) {
@@ -538,21 +562,22 @@ function exportData() {
         a.download = i18nData.translations[currentLang].exportSuccessFilename;
         a.click();
         URL.revokeObjectURL(url);
+        getToast().success(i18nData.translations[currentLang].exportData || '导出成功');
     } catch (error) {
-        alert(i18nData.translations[currentLang].exportError + error.message);
+        getToast().error(i18nData.translations[currentLang].exportError + error.message);
     }
 }
 
 function importData(event) {
     const file = event.target.files[0];
     if (!file) {
-        alert(i18nData.translations[currentLang].importInvalidFile);
+        getToast().warning(i18nData.translations[currentLang].importInvalidFile);
         return;
     }
 
     // 验证文件扩展名
     if (!file.name.toLowerCase().endsWith('.yaml') && !file.name.toLowerCase().endsWith('.yml')) {
-        alert(i18nData.translations[currentLang].importInvalidFile);
+        getToast().error(i18nData.translations[currentLang].importInvalidFile);
         event.target.value = '';
         return;
     }
@@ -564,13 +589,13 @@ function importData(event) {
 
             // 验证数据结构
             if (!data || typeof data !== 'object') {
-                alert(i18nData.translations[currentLang].importInvalidData);
+                getToast().error(i18nData.translations[currentLang].importInvalidData);
                 return;
             }
 
             // 验证必需字段（至少要有 basic_info 或 sections）
             if (!data.basic_info && !data.sections) {
-                alert(i18nData.translations[currentLang].importInvalidData);
+                getToast().error(i18nData.translations[currentLang].importInvalidData);
                 return;
             }
 
@@ -580,14 +605,14 @@ function importData(event) {
             }
 
             applyData(data);
-            alert(i18nData.translations[currentLang].importSuccess);
+            getToast().success(i18nData.translations[currentLang].importSuccess);
         } catch (err) {
             console.error('Import error:', err);
-            alert(i18nData.translations[currentLang].importError);
+            getToast().error(i18nData.translations[currentLang].importError);
         }
     };
     reader.onerror = () => {
-        alert(i18nData.translations[currentLang].importError);
+        getToast().error(i18nData.translations[currentLang].importError);
     };
     reader.readAsText(file);
     event.target.value = '';
@@ -940,47 +965,139 @@ function handleTextareaDoubleClick(event) {
     enterMarkdownEditMode(this);
 }
 
-// 通用的临时消息提示函数
-function showTemporaryMessage(message, type = 'info', duration = 3000) {
-    let messageEl = document.getElementById('temp-message');
-    if (!messageEl) {
-        messageEl = document.createElement('div');
-        messageEl.id = 'temp-message';
-        messageEl.style.cssText = `
-            position: fixed;
-            top: 70px;
-            right: 20px;
-            padding: 12px 20px;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 500;
-            z-index: 1001;
-            transition: all 0.3s ease;
-            pointer-events: none;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            max-width: 300px;
-            word-wrap: break-word;
-        `;
-        document.body.appendChild(messageEl);
+// 增强的 Toast 通知系统
+class ToastNotification {
+    constructor() {
+        this.container = null;
+        this.toasts = [];
+        this.maxToasts = 5;
+        this.init();
     }
 
-    const colors = {
-        success: { bg: '#d4edda', color: '#155724', border: '#c3e6cb' },
-        error: { bg: '#f8d7da', color: '#721c24', border: '#f5c6cb' },
-        warning: { bg: '#fff3cd', color: '#856404', border: '#ffeaa7' },
-        info: { bg: '#d1ecf1', color: '#0c5460', border: '#bee5eb' }
-    };
+    init() {
+        // 延迟初始化，确保DOM已加载
+        if (document.body) {
+            this.createContainer();
+        } else {
+            // 如果DOM还没加载，等待DOMContentLoaded
+            document.addEventListener('DOMContentLoaded', () => {
+                this.createContainer();
+            });
+        }
+    }
 
-    const color = colors[type] || colors.info;
-    messageEl.textContent = message;
-    messageEl.style.backgroundColor = color.bg;
-    messageEl.style.color = color.color;
-    messageEl.style.border = `1px solid ${color.border}`;
-    messageEl.style.opacity = '1';
-    messageEl.style.transform = 'translateY(0)';
+    createContainer() {
+        // 创建Toast容器
+        if (!document.getElementById('toast-container')) {
+            this.container = document.createElement('div');
+            this.container.id = 'toast-container';
+            this.container.className = 'toast-container';
+            document.body.appendChild(this.container);
+        } else {
+            this.container = document.getElementById('toast-container');
+        }
+    }
 
-    setTimeout(() => {
-        messageEl.style.opacity = '0';
-        messageEl.style.transform = 'translateY(-10px)';
-    }, duration);
+    show(message, type = 'info', duration = 3000) {
+        // 确保容器已创建
+        if (!this.container) {
+            this.createContainer();
+        }
+
+        // 如果容器仍然不存在，fallback到console
+        if (!this.container) {
+            console.log(`[${type}] ${message}`);
+            return null;
+        }
+
+        // 如果已经有太多Toast,移除最旧的
+        if (this.toasts.length >= this.maxToasts) {
+            this.remove(this.toasts[0]);
+        }
+
+        // 创建Toast元素
+        const toast = document.createElement('div');
+        toast.className = `toast toast-${type}`;
+
+        // 图标映射
+        const icons = {
+            success: '✓',
+            error: '✕',
+            warning: '⚠',
+            info: 'ℹ'
+        };
+
+        toast.innerHTML = `
+            <span class="toast-icon">${icons[type] || icons.info}</span>
+            <span class="toast-message">${message}</span>
+        `;
+
+        // 添加到容器
+        this.container.appendChild(toast);
+        this.toasts.push(toast);
+
+        // 触发动画
+        requestAnimationFrame(() => {
+            toast.classList.add('toast-show');
+        });
+
+        // 自动移除
+        if (duration > 0) {
+            setTimeout(() => {
+                this.remove(toast);
+            }, duration);
+        }
+
+        return toast;
+    }
+
+    remove(toast) {
+        if (!toast || !toast.parentNode) return;
+
+        toast.classList.remove('toast-show');
+        toast.classList.add('toast-hide');
+
+        setTimeout(() => {
+            if (toast.parentNode) {
+                toast.parentNode.removeChild(toast);
+            }
+            const index = this.toasts.indexOf(toast);
+            if (index > -1) {
+                this.toasts.splice(index, 1);
+            }
+        }, 300);
+    }
+
+    success(message, duration = 3000) {
+        return this.show(message, 'success', duration);
+    }
+
+    error(message, duration = 4000) {
+        return this.show(message, 'error', duration);
+    }
+
+    warning(message, duration = 3500) {
+        return this.show(message, 'warning', duration);
+    }
+
+    info(message, duration = 3000) {
+        return this.show(message, 'info', duration);
+    }
+}
+
+// 延迟创建全局Toast实例，避免在DOM加载前初始化
+let toast = null;
+
+// 获取Toast实例，确保懒加载
+function getToast() {
+    if (!toast) {
+        toast = new ToastNotification();
+        window.toast = toast;
+    }
+    return toast;
+}
+
+// 保留旧函数名以兼容现有代码
+function showTemporaryMessage(message, type = 'info', duration = 3000) {
+    return getToast().show(message, type, duration);
 }
