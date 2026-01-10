@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 /**
+ * Maintainer: Gee
  * 多语言HTML构建脚本
  * 根据i18n.js中的配置，从template.html生成不同语言版本的HTML文件
  */
