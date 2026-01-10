@@ -1,5 +1,58 @@
 // 打印相关功能模块
 
+// ===== 打印结束后，强制恢复编辑与交互状态 =====
+window.addEventListener('afterprint', () => {
+    // 清除浏览器残留焦点
+    document.activeElement?.blur();
+
+    // 强制恢复指针事件（Chrome / Edge 必须）
+    document.body.style.pointerEvents = 'auto';
+
+    // 解锁编辑状态（如果存在）
+    if (typeof isEditing !== 'undefined') {
+        isEditing = false;
+    }
+
+    // 强制重置聚焦编辑面板的状态（关键修复）
+    const markdownOverlay = document.getElementById('markdownEditOverlay');
+    const markdownPanel = document.getElementById('markdownEditPanel');
+    if (markdownOverlay) {
+        markdownOverlay.style.display = 'none';
+        markdownOverlay.style.pointerEvents = 'auto';
+        markdownOverlay.style.visibility = 'visible';
+        markdownOverlay.style.opacity = '1';
+    }
+    if (markdownPanel) {
+        markdownPanel.style.transform = 'translateX(-100%)';
+        markdownPanel.style.pointerEvents = 'auto';
+        markdownPanel.style.visibility = 'visible';
+        markdownPanel.style.opacity = '1';
+    }
+
+    // 重置所有 textarea 和按钮的 pointer-events
+    setTimeout(() => {
+        const allTextareas = document.querySelectorAll('textarea');
+        allTextareas.forEach(textarea => {
+            textarea.style.pointerEvents = 'auto';
+            const wrapper = textarea.parentNode;
+            if (wrapper && wrapper.classList.contains('textarea-wrapper')) {
+                wrapper.style.pointerEvents = 'auto';
+                const focusBtn = wrapper.querySelector('.focus-edit-btn');
+                if (focusBtn) {
+                    focusBtn.style.pointerEvents = 'auto';
+                }
+            }
+        });
+
+        // 确保编辑器面板也恢复 pointer-events
+        const editorPanel = document.querySelector('.editor-panel');
+        if (editorPanel) {
+            editorPanel.style.pointerEvents = 'auto';
+        }
+    }, 50);
+});
+
+
 function showPrintSettings() { 
     const sidebar = document.getElementById('printSettingsSidebar');
     const overlay = document.getElementById('printSidebarOverlay');

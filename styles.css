@@ -1560,8 +1560,9 @@ input[type="color"]::-webkit-color-swatch-wrapper {
 
     /* 隐藏浏览器扩展插件元素 */
     /* 隐藏所有高z-index的固定定位元素（通常是浏览器扩展） */
-    body > *[style*="position: fixed"],
-    body > *[style*="position:fixed"] {
+    /* 但排除聚焦编辑面板 */
+    body > *[style*="position: fixed"]:not(#markdownEditOverlay),
+    body > *[style*="position:fixed"]:not(#markdownEditOverlay) {
         display: none !important;
     }
 
@@ -1588,7 +1589,8 @@ input[type="color"]::-webkit-color-swatch-wrapper {
     }
 
     /* 隐藏Shadow DOM宿主元素（扩展常用） */
-    body > div:not([class]):not([id]) {
+    /* 排除聚焦编辑面板 */
+    body > div:not([class]):not([id]):not(#markdownEditOverlay) {
         display: none !important;
     }
 }
